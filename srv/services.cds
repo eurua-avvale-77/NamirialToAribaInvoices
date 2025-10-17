@@ -24,8 +24,8 @@ service AdminService {
     entity Invoices as projection on my.Invoices;
     entity InvoicesStatus as projection on my.InvoicesStatus; 
 
-    action getInvoices() returns Invoices;
-    action sendInvoices() returns Invoices;
+    action getInvoices() returns Invoices; //commented for verison
+    action sendInvoices() returns Invoices; //comment for version
     action retryInvoices() returns Invoices;
     }
 

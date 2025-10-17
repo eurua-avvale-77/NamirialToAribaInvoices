@@ -1,17 +1,17 @@
-using { cuid, managed } from '@sap/cds/common';
+using { cuid } from '@sap/cds/common'; //Rimosso 'Managed'
 namespace sap.capire.invoices;
 
 entity Invoices {
   key ID        : String;
   title         : String(200);
-  content       : LargeString;          // holds XML text (CLOB)
+  content       : LargeString;          
   contentType   : String(32);
   createdAt     : Timestamp;
 }
 entity InvoicesStatus : cuid {
     key ID : String;
     title         : String(200);
-    createdAt     : Timestamp;
+    createdAt     : Timestamp;         
     status        : String;          
     sendedAt      : Timestamp;
     message       : String;
