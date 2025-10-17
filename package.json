@@ -1,0 +1,76 @@
+{
+  "name": "NamirialToAriba",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "dependencies": {
+    "@cap-js/hana": "^2",
+    "@sap-cloud-sdk/connectivity": "^4.1.2",
+    "@sap-cloud-sdk/http-client": "^4.1.2",
+    "@sap/cds": "^9",
+    "@sap/cds-common-content": "^3.0.1",
+    "@sap/xssec": "^4",
+    "express": "^4",
+    "soap": "^1.5.0",
+    "strong-soap": "^5.0.2",
+    "xml2js": "^0.6.2"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^2",
+    "@sap/cds-dk": "^9"
+  },
+  "scripts": {
+    "start": "cds-serve"
+  },
+  "private": true,
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "sqlite"
+      },
+      "GetFatture": {
+        "kind": "SOAP",
+        "credentials": {
+          "destination": "NAMI",
+          "path": ""
+        }
+      },
+      "[hybrid]": {
+        "db": {
+          "kind": "hana-cloud",
+          "binding": {
+            "type": "cf",
+            "apiEndpoint": "https://api.cf.eu10.hana.ondemand.com",
+            "org": "Avvale_dev-zyotztxl",
+            "space": "dev",
+            "instance": "NamirialToAriba-hdiNamirialT9Wm2PIVINeEXWypKyhLhLg",
+            "key": "NamirialToAriba-hdiNamirialT9Wm2PIVINeEXWypKyhLhLg-key"
+          },
+          "vcap": {
+            "name": "NamirialToAriba"
+          }
+        },
+        "destination": {
+          "kind": "rest",
+          "binding": {
+            "type": "cf",
+            "instance": "NamirialInvoice-dest",
+            "key": "NamirialInvoice-dest-key"
+          }
+        },
+         "auth": {
+          "kind": "mocked"
+        },
+        "GetFatture": {
+        "kind": "SOAP",
+        "credentials": {
+          "destination": "NAMI",
+          "path": ""
+        }
+      }
+      },
+      "[production]": {
+        "auth": "xsuaa"
+      }
+    }
+  }
+}

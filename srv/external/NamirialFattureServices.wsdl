@@ -1,0 +1,2521 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:i0="http://tempuri.org/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://www.2csolution.it/FatturaPassivaPA/V1.0" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="FatturaPassivaPA" targetNamespace="http://www.2csolution.it/FatturaPassivaPA/V1.0">
+<wsp:Policy wsu:Id="BasicHttpsBinding_IFatturaPassivaPA_policy">
+<wsp:ExactlyOne>
+<wsp:All>
+<sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+<wsp:Policy>
+<sp:TransportToken>
+<wsp:Policy>
+<sp:HttpsToken RequireClientCertificate="false"/>
+</wsp:Policy>
+</sp:TransportToken>
+<sp:AlgorithmSuite>
+<wsp:Policy>
+<sp:Basic256/>
+</wsp:Policy>
+</sp:AlgorithmSuite>
+<sp:Layout>
+<wsp:Policy>
+<sp:Strict/>
+</wsp:Policy>
+</sp:Layout>
+</wsp:Policy>
+</sp:TransportBinding>
+</wsp:All>
+</wsp:ExactlyOne>
+</wsp:Policy>
+<wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.2csolution.it/FatturaPassivaPA/V1.0">
+<xs:import namespace="http://2csolution.it/FatturaPassivaPA/DTO/V1.0"/>
+<xs:import namespace="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO"/>
+<xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+<xs:import namespace="http://schemas.datacontract.org/2004/07/ElectronicInvoiceCounters"/>
+<xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+<xs:element name="Contatto">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="codiceCliente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="passwordServizi" nillable="true" type="xs:base64Binary"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="ContattoResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="ContattoResult" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetVersion">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="codiceCliente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="passwordServizi" nillable="true" type="xs:base64Binary"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetVersionResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="GetVersionResult" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetAutorizzazioni">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="codiceCliente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="passwordServizi" nillable="true" type="xs:base64Binary"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetAutorizzazioniResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q1="http://2csolution.it/FatturaPassivaPA/DTO/V1.0" minOccurs="0" name="GetAutorizzazioniResult" nillable="true" type="q1:Autorizzazione"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetFatture">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="codiceCliente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="passwordServizi" nillable="true" type="xs:base64Binary"/>
+<xs:element minOccurs="0" name="codiceUfficio" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetFattureResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q2="http://2csolution.it/FatturaPassivaPA/DTO/V1.0" minOccurs="0" name="GetFattureResult" nillable="true" type="q2:ArrayOfDatiFattura"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetFattureParam">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="codiceCliente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="passwordServizi" nillable="true" type="xs:base64Binary"/>
+<xs:element minOccurs="0" name="codiceUfficio" nillable="true" type="xs:string"/>
+<xs:element xmlns:q3="http://2csolution.it/FatturaPassivaPA/DTO/V1.0" minOccurs="0" name="request" nillable="true" type="q3:GetFattureRequest"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetFattureParamResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q4="http://2csolution.it/FatturaPassivaPA/DTO/V1.0" minOccurs="0" name="GetFattureParamResult" nillable="true" type="q4:ArrayOfDatiFattura"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetFattureFilter">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="codiceCliente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="passwordServizi" nillable="true" type="xs:base64Binary"/>
+<xs:element minOccurs="0" name="codiceUfficio" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="start" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="end" nillable="true" type="xs:dateTime"/>
+<xs:element xmlns:q5="http://2csolution.it/FatturaPassivaPA/DTO/V1.0" minOccurs="0" name="request" nillable="true" type="q5:GetFattureRequest"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetFattureFilterResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q6="http://2csolution.it/FatturaPassivaPA/DTO/V1.0" minOccurs="0" name="GetFattureFilterResult" nillable="true" type="q6:ArrayOfDatiFattura"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetFattura">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="codiceCliente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="passwordServizi" nillable="true" type="xs:base64Binary"/>
+<xs:element minOccurs="0" name="codiceUfficio" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="idSdi" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetFatturaResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q7="http://2csolution.it/FatturaPassivaPA/DTO/V1.0" minOccurs="0" name="GetFatturaResult" nillable="true" type="q7:Fattura"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetFatturaDisinbustata">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="codiceCliente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="passwordServizi" nillable="true" type="xs:base64Binary"/>
+<xs:element minOccurs="0" name="codiceUfficio" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="idSdi" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetFatturaDisinbustataResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q8="http://2csolution.it/FatturaPassivaPA/DTO/V1.0" minOccurs="0" name="GetFatturaDisinbustataResult" nillable="true" type="q8:Fattura"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetEsito">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="codiceCliente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="passwordServizi" nillable="true" type="xs:base64Binary"/>
+<xs:element minOccurs="0" name="codiceUfficio" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="idSdi" type="xs:long"/>
+<xs:element minOccurs="0" name="idEsito" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetEsitoResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="GetEsitoResult" nillable="true" type="xs:base64Binary"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetProtocollo">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="codiceCliente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="passwordServizi" nillable="true" type="xs:base64Binary"/>
+<xs:element minOccurs="0" name="codiceUfficio" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="idSdi" type="xs:long"/>
+<xs:element minOccurs="0" name="numeroFattura" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="numeroProtocollo" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="dataProtocollo" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="numeroRegistrazione" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="dataRegistrazione" nillable="true" type="xs:dateTime"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetProtocolloResponse">
+<xs:complexType>
+<xs:sequence/>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetProtocolloSezionale">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="codiceCliente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="passwordServizi" nillable="true" type="xs:base64Binary"/>
+<xs:element minOccurs="0" name="codiceUfficio" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="idSdi" type="xs:long"/>
+<xs:element minOccurs="0" name="numeroFattura" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="numeroProtocollo" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="dataProtocollo" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="numeroRegistrazione" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="dataRegistrazione" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="sezionale" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetProtocolloSezionaleResponse">
+<xs:complexType>
+<xs:sequence/>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetDatiProtocollo">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="codiceCliente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="passwordServizi" nillable="true" type="xs:base64Binary"/>
+<xs:element minOccurs="0" name="codiceUfficio" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="idSdi" type="xs:long"/>
+<xs:element minOccurs="0" name="numeroFattura" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="numeroProtocollo" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="dataProtocollo" nillable="true" type="xs:dateTime"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetDatiProtocolloResponse">
+<xs:complexType>
+<xs:sequence/>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetDatiProtocolloLottoIntero">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="codiceCliente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="passwordServizi" nillable="true" type="xs:base64Binary"/>
+<xs:element minOccurs="0" name="codiceUfficio" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="idSdi" type="xs:long"/>
+<xs:element minOccurs="0" name="numeroProtocollo" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="dataProtocollo" nillable="true" type="xs:dateTime"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetDatiProtocolloLottoInteroResponse">
+<xs:complexType>
+<xs:sequence/>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetDatiRegistrazione">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="codiceCliente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="passwordServizi" nillable="true" type="xs:base64Binary"/>
+<xs:element minOccurs="0" name="codiceUfficio" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="idSdi" type="xs:long"/>
+<xs:element minOccurs="0" name="numeroFattura" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="numeroRegistrazione" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="dataRegistrazione" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="sezionale" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetDatiRegistrazioneResponse">
+<xs:complexType>
+<xs:sequence/>
+</xs:complexType>
+</xs:element>
+<xs:element name="CreaEsitoCommittente">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="codiceCliente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="passwordServizi" nillable="true" type="xs:base64Binary"/>
+<xs:element minOccurs="0" name="codiceUfficio" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="idSdi" type="xs:long"/>
+<xs:element xmlns:q9="http://2csolution.it/FatturaPassivaPA/DTO/V1.0" minOccurs="0" name="esitoCommittente" type="q9:TipoEsitoCommittenteEnum"/>
+<xs:element minOccurs="0" name="note" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="CreaEsitoCommittenteResponse">
+<xs:complexType>
+<xs:sequence/>
+</xs:complexType>
+</xs:element>
+<xs:element name="CreaEsitoCommittenteSingolaFattura">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="codiceCliente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="passwordServizi" nillable="true" type="xs:base64Binary"/>
+<xs:element minOccurs="0" name="codiceUfficio" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="idSdi" type="xs:long"/>
+<xs:element minOccurs="0" name="numeroFattura" nillable="true" type="xs:string"/>
+<xs:element xmlns:q10="http://2csolution.it/FatturaPassivaPA/DTO/V1.0" minOccurs="0" name="esitoCommittente" type="q10:TipoEsitoCommittenteEnum"/>
+<xs:element minOccurs="0" name="note" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="CreaEsitoCommittenteSingolaFatturaResponse">
+<xs:complexType>
+<xs:sequence/>
+</xs:complexType>
+</xs:element>
+<xs:element name="ResetData">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="codiceCliente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="passwordServizi" nillable="true" type="xs:base64Binary"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="ResetDataResponse">
+<xs:complexType>
+<xs:sequence/>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetStatePassiveElectronicInvoice">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="codiceCliente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="passwordServizi" nillable="true" type="xs:base64Binary"/>
+<xs:element minOccurs="0" name="idSdi" type="xs:long"/>
+<xs:element minOccurs="0" name="newstate" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetStatePassiveElectronicInvoiceResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="SetStatePassiveElectronicInvoiceResult" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetStatesPassiveElectronicInvoice">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="codiceCliente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="passwordServizi" nillable="true" type="xs:base64Binary"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetStatesPassiveElectronicInvoiceResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q11="http://2csolution.it/FatturaPassivaPA/DTO/V1.0" minOccurs="0" name="GetStatesPassiveElectronicInvoiceResult" nillable="true" type="q11:ArrayOfElectronicInvoiceState"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetUploadImport">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="codiceCliente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="passwordServizi" nillable="true" type="xs:base64Binary"/>
+<xs:element minOccurs="0" name="zipFile" nillable="true" type="xs:base64Binary"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetUploadImportResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="SetUploadImportResult" nillable="true" type="q12:PassiveInvoiceUploadResponse"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetStateImport">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="customerCode" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="servicePassword" nillable="true" type="xs:base64Binary"/>
+<xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="uploadId" nillable="true" type="q13:guid"/>
+<xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="statesToInclude" nillable="true" type="q14:ArrayOfePassiveInvoiceUploadState"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetStateImportResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="GetStateImportResult" nillable="true" type="q15:ArrayOfPassiveInvoiceUploadResponse"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetUploadLimits">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="codiceCliente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="passwordServizi" nillable="true" type="xs:base64Binary"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetUploadLimitsResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="GetUploadLimitsResult" nillable="true" type="q16:PassiveInvoiceUploadLimit"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetElectronicInvoiceToPdf">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="codiceCliente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="passwordServizi" nillable="true" type="xs:base64Binary"/>
+<xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="paramFilter" nillable="true" type="q17:ElectronicInvoiceFilterPdf"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetElectronicInvoiceToPdfResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="GetElectronicInvoiceToPdfResult" nillable="true" type="q18:ElectronicInvoicePdfResponse"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetElectronicInvoices">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="auth" nillable="true" type="q19:Auth"/>
+<xs:element xmlns:q20="http://2csolution.it/FatturaPassivaPA/DTO/V1.0" minOccurs="0" name="paramFilter" nillable="true" type="q20:GetElectronicInvoicesFilter"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetElectronicInvoicesResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q21="http://2csolution.it/FatturaPassivaPA/DTO/V1.0" minOccurs="0" name="GetElectronicInvoicesResult" nillable="true" type="q21:ArrayOfDatiFattura"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetStatesDataProcessingPassiveElectronicInvoice">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="auth" nillable="true" type="q22:Auth"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetStatesDataProcessingPassiveElectronicInvoiceResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/ElectronicInvoiceCounters" minOccurs="0" name="GetStatesDataProcessingPassiveElectronicInvoiceResult" nillable="true" type="q23:ArrayOfElectronicInvoiceStateDataProcessing"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetStatesDataProcessingPassiveElectronicInvoice">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="auth" nillable="true" type="q24:Auth"/>
+<xs:element xmlns:q25="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="idSdiList" nillable="true" type="q25:ArrayOflong"/>
+<xs:element minOccurs="0" name="newStateDataProcessing" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetStatesDataProcessingPassiveElectronicInvoiceResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="SetStatesDataProcessingPassiveElectronicInvoiceResult" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetRapportoVersamentoUA">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="codiceCliente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="passwordServizi" nillable="true" type="xs:base64Binary"/>
+<xs:element xmlns:q26="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="listaIdRdV" nillable="true" type="q26:ArrayOfstring"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetRapportoVersamentoUAResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="GetRapportoVersamentoUAResult" nillable="true" type="xs:base64Binary"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetPacchettoDistribuzioneUA">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="codiceCliente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="passwordServizi" nillable="true" type="xs:base64Binary"/>
+<xs:element xmlns:q27="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="listaIdFattura" nillable="true" type="q27:ArrayOfstring"/>
+<xs:element xmlns:q28="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="listaIdEsito" nillable="true" type="q28:ArrayOfstring"/>
+<xs:element minOccurs="0" name="nomeUtente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="cognomeUtente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="codiceFiscalePaese" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="codiceFiscale" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="partitaIvaPaese" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="partitaIva" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetPacchettoDistribuzioneUAResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="GetPacchettoDistribuzioneUAResult" nillable="true" type="xs:base64Binary"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetAuthorizationAccountingNotes">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="auth" nillable="true" type="q29:Auth"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetAuthorizationAccountingNotesResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="GetAuthorizationAccountingNotesResult" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetConfigurationAccountingNotes">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="auth" nillable="true" type="q30:Auth"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetConfigurationAccountingNotesResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="GetConfigurationAccountingNotesResult" nillable="true" type="q31:ConfigurationAccountingNotes"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetConfigurationAccountingNotes">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="auth" nillable="true" type="q32:Auth"/>
+<xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="request" nillable="true" type="q33:ConfigurationAccountingNotes"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetConfigurationAccountingNotesResponse">
+<xs:complexType>
+<xs:sequence/>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetPassiveInvoiceAccountingNotes">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="auth" nillable="true" type="q34:Auth"/>
+<xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="param" nillable="true" type="q35:PassiveInvoiceAccountingNotesRequest"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetPassiveInvoiceAccountingNotesResponse">
+<xs:complexType>
+<xs:sequence/>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetAttachment">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="auth" nillable="true" type="q36:Auth"/>
+<xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="request" nillable="true" type="q37:AttachmentRequest"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetAttachmentResponse">
+<xs:complexType>
+<xs:sequence/>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetListAttachments">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="auth" nillable="true" type="q38:Auth"/>
+<xs:element xmlns:q39="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="request" nillable="true" type="q39:AttachmentsRequest"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetListAttachmentsResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q40="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="GetListAttachmentsResult" nillable="true" type="q40:ArrayOfAttachmentsResponse"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetFileAttachment">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q41="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="auth" nillable="true" type="q41:Auth"/>
+<xs:element xmlns:q42="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="request" nillable="true" type="q42:AttachmentIdentifier"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetFileAttachmentResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q43="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="GetFileAttachmentResult" nillable="true" type="q43:ElectronicInvoiceResponseFile"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="DeleteFileAttachment">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q44="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="auth" nillable="true" type="q44:Auth"/>
+<xs:element xmlns:q45="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="request" nillable="true" type="q45:AttachmentIdentifier"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="DeleteFileAttachmentResponse">
+<xs:complexType>
+<xs:sequence/>
+</xs:complexType>
+</xs:element>
+<xs:element name="UpdateAttachmentDescription">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q46="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="paramAuth" nillable="true" type="q46:Auth"/>
+<xs:element xmlns:q47="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="param" nillable="true" type="q47:AttachmentDescriptionRequest"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="UpdateAttachmentDescriptionResponse">
+<xs:complexType>
+<xs:sequence/>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetInvoiceByIdSdi">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q48="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="auth" nillable="true" type="q48:Auth"/>
+<xs:element minOccurs="0" name="idSdi" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetInvoiceByIdSdiResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q49="http://2csolution.it/FatturaPassivaPA/DTO/V1.0" minOccurs="0" name="GetInvoiceByIdSdiResult" nillable="true" type="q49:DatiFattura"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetElectronicInvoicesLegalStorageRdV">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q50="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="auth" nillable="true" type="q50:Auth"/>
+<xs:element xmlns:q51="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="param" nillable="true" type="q51:LegalStorageRdV"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetElectronicInvoicesLegalStorageRdVResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q52="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="GetElectronicInvoicesLegalStorageRdVResult" nillable="true" type="q52:FileResponse"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetElectronicInvoicesLegalStoragePdD">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q53="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="auth" nillable="true" type="q53:Auth"/>
+<xs:element xmlns:q54="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="param" nillable="true" type="q54:LegalStoragePdD"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetElectronicInvoicesLegalStoragePdDResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q55="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="GetElectronicInvoicesLegalStoragePdDResult" nillable="true" type="q55:FileResponse"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetRequestLegalStoragePdd">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q56="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="paramAuth" nillable="true" type="q56:Auth"/>
+<xs:element xmlns:q57="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="request" nillable="true" type="q57:LegalStorageRequestPdd"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetRequestLegalStoragePddResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q58="http://2csolution.it/FatturaPassivaPA/DTO/V1.0" minOccurs="0" name="SetRequestLegalStoragePddResult" nillable="true" type="q58:StandardResponse"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetRequestLegalStoragePddHistory">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q59="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="paramAuth" nillable="true" type="q59:Auth"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetRequestLegalStoragePddHistoryResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q60="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="GetRequestLegalStoragePddHistoryResult" nillable="true" type="q60:GetRequestLegalStoragePddHistoryResponse"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetElectronicInvoiceTotal">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q61="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="auth" nillable="true" type="q61:Auth"/>
+<xs:element xmlns:q62="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="param" nillable="true" type="q62:UpdateBodyTotalRequest"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetElectronicInvoiceTotalResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q63="http://2csolution.it/FatturaPassivaPA/DTO/V1.0" minOccurs="0" name="SetElectronicInvoiceTotalResult" nillable="true" type="q63:StandardResponse"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetServiceDeactivationStatus">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q64="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="paramAuth" nillable="true" type="q64:Auth"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetServiceDeactivationStatusResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q65="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="GetServiceDeactivationStatusResult" nillable="true" type="q65:GetServiceDeactivationStatusResponse"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetElectronicInvoiceLegalStorageCounters">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q66="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="paramAuth" nillable="true" type="q66:Auth"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="GetElectronicInvoiceLegalStorageCountersResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q67="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="GetElectronicInvoiceLegalStorageCountersResult" nillable="true" type="q67:GetElectronicInvoiceLegalStorageCountersResponse"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/">
+<xs:element name="anyType" nillable="true" type="xs:anyType"/>
+<xs:element name="anyURI" nillable="true" type="xs:anyURI"/>
+<xs:element name="base64Binary" nillable="true" type="xs:base64Binary"/>
+<xs:element name="boolean" nillable="true" type="xs:boolean"/>
+<xs:element name="byte" nillable="true" type="xs:byte"/>
+<xs:element name="dateTime" nillable="true" type="xs:dateTime"/>
+<xs:element name="decimal" nillable="true" type="xs:decimal"/>
+<xs:element name="double" nillable="true" type="xs:double"/>
+<xs:element name="float" nillable="true" type="xs:float"/>
+<xs:element name="int" nillable="true" type="xs:int"/>
+<xs:element name="long" nillable="true" type="xs:long"/>
+<xs:element name="QName" nillable="true" type="xs:QName"/>
+<xs:element name="short" nillable="true" type="xs:short"/>
+<xs:element name="string" nillable="true" type="xs:string"/>
+<xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte"/>
+<xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt"/>
+<xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong"/>
+<xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort"/>
+<xs:element name="char" nillable="true" type="tns:char"/>
+<xs:simpleType name="char">
+<xs:restriction base="xs:int"/>
+</xs:simpleType>
+<xs:element name="duration" nillable="true" type="tns:duration"/>
+<xs:simpleType name="duration">
+<xs:restriction base="xs:duration">
+<xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?"/>
+<xs:minInclusive value="-P10675199DT2H48M5.4775808S"/>
+<xs:maxInclusive value="P10675199DT2H48M5.4775807S"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:element name="guid" nillable="true" type="tns:guid"/>
+<xs:simpleType name="guid">
+<xs:restriction base="xs:string">
+<xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:attribute name="FactoryType" type="xs:QName"/>
+<xs:attribute name="Id" type="xs:ID"/>
+<xs:attribute name="Ref" type="xs:IDREF"/>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://2csolution.it/FatturaPassivaPA/DTO/V1.0" elementFormDefault="qualified" targetNamespace="http://2csolution.it/FatturaPassivaPA/DTO/V1.0">
+<xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+<xs:import namespace="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO"/>
+<xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+<xs:complexType name="Autorizzazione">
+<xs:sequence>
+<xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="CodiciIpaAutorizzatiLettura" nillable="true" type="q1:ArrayOfstring"/>
+<xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="CodiciIpaAutorizzatiScrittura" nillable="true" type="q2:ArrayOfstring"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Autorizzazione" nillable="true" type="tns:Autorizzazione"/>
+<xs:complexType name="ArrayOfDatiFattura">
+<xs:sequence>
+<xs:element minOccurs="0" maxOccurs="unbounded" name="DatiFattura" nillable="true" type="tns:DatiFattura"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ArrayOfDatiFattura" nillable="true" type="tns:ArrayOfDatiFattura"/>
+<xs:complexType name="DatiFattura">
+<xs:sequence>
+<xs:element minOccurs="0" name="AttachmentsCount" type="xs:long"/>
+<xs:element minOccurs="0" name="CanaleSdi" type="tns:CanaleSdiEnum"/>
+<xs:element minOccurs="0" name="CodiceFiscaleMittente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="CodiceUfficio" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="CodiceUfficioUnivoco" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="DataPdA" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="DataPdV" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="DataPredisposizioneSupporto" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="DataRdV" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="DataSdi" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="ElectronicInvoiceState" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Formato" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="IdDocumento" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="IdPdV" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="IdRdV" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="IdSdi" type="xs:long"/>
+<xs:element minOccurs="0" name="IsImported" type="xs:boolean"/>
+<xs:element minOccurs="0" name="ListaCorpiFattura" nillable="true" type="tns:ArrayOfCorpoFattura"/>
+<xs:element minOccurs="0" name="ListaEsitiFattura" nillable="true" type="tns:ArrayOfEsitoFattura"/>
+<xs:element minOccurs="0" name="ListaLogFattura" nillable="true" type="tns:ArrayOfLogFattura"/>
+<xs:element minOccurs="0" name="MittenteFattura" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="NomeFile" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="PartitaIvaMittente" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="StateDataProcessing" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="StatoArchiviazione" type="tns:StatoArchiviazioneEnum"/>
+<xs:element minOccurs="0" name="StatoEsiti" type="tns:StatoEsitiEnum"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="DatiFattura" nillable="true" type="tns:DatiFattura"/>
+<xs:simpleType name="CanaleSdiEnum">
+<xs:restriction base="xs:string">
+<xs:enumeration value="PEC"/>
+<xs:enumeration value="SPCoop"/>
+<xs:enumeration value="SdIFtp"/>
+<xs:enumeration value="SdiCoop"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:element name="CanaleSdiEnum" nillable="true" type="tns:CanaleSdiEnum"/>
+<xs:complexType name="ArrayOfCorpoFattura">
+<xs:sequence>
+<xs:element minOccurs="0" maxOccurs="unbounded" name="CorpoFattura" nillable="true" type="tns:CorpoFattura"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ArrayOfCorpoFattura" nillable="true" type="tns:ArrayOfCorpoFattura"/>
+<xs:complexType name="CorpoFattura">
+<xs:sequence>
+<xs:element minOccurs="0" name="DataFattura" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="DataProtocollo" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="DataRegistrazione" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="ImportoPagamento" type="xs:decimal"/>
+<xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="MetaData" nillable="true" type="q3:ArrayOfInvoiceMetaData"/>
+<xs:element minOccurs="0" name="NumeroFattura" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="NumeroProtocollo" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="NumeroRegistrazione" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Sezionale" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="StatoEsiti" type="tns:StatoEsitiEnum"/>
+<xs:element minOccurs="0" name="TipoDocumento" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="CorpoFattura" nillable="true" type="tns:CorpoFattura"/>
+<xs:simpleType name="StatoEsitiEnum">
+<xs:restriction base="xs:string">
+<xs:enumeration value="Sconosciuto">
+<xs:annotation>
+<xs:appinfo>
+<EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">-1</EnumerationValue>
+</xs:appinfo>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="InAttesaEsito">
+<xs:annotation>
+<xs:appinfo>
+<EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">0</EnumerationValue>
+</xs:appinfo>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="EsitoAccettazione">
+<xs:annotation>
+<xs:appinfo>
+<EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+</xs:appinfo>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="EsitoRifiuto">
+<xs:annotation>
+<xs:appinfo>
+<EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+</xs:appinfo>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="EsitoScartato">
+<xs:annotation>
+<xs:appinfo>
+<EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+</xs:appinfo>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="DecorrenzaTermini">
+<xs:annotation>
+<xs:appinfo>
+<EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+</xs:appinfo>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="LottoFatture">
+<xs:annotation>
+<xs:appinfo>
+<EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+</xs:appinfo>
+</xs:annotation>
+</xs:enumeration>
+</xs:restriction>
+</xs:simpleType>
+<xs:element name="StatoEsitiEnum" nillable="true" type="tns:StatoEsitiEnum"/>
+<xs:complexType name="ArrayOfEsitoFattura">
+<xs:sequence>
+<xs:element minOccurs="0" maxOccurs="unbounded" name="EsitoFattura" nillable="true" type="tns:EsitoFattura"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ArrayOfEsitoFattura" nillable="true" type="tns:ArrayOfEsitoFattura"/>
+<xs:complexType name="EsitoFattura">
+<xs:sequence>
+<xs:element minOccurs="0" name="Accettazione" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="Consegna" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="ContenutoEsito" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="DataEsito" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="DataPdA" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="DataPdv" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="DataRdV" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="IdDocumento" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="IdEsito" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="IdPdv" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="IdRdV" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="NomeFile" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="NumeroFatturaRiferimento" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="StatoArchiviazione" type="tns:StatoArchiviazioneEnum"/>
+<xs:element minOccurs="0" name="TipoEsito" type="tns:TipoEsitoFatturaEnum"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="EsitoFattura" nillable="true" type="tns:EsitoFattura"/>
+<xs:simpleType name="StatoArchiviazioneEnum">
+<xs:restriction base="xs:string">
+<xs:enumeration value="DaConservare"/>
+<xs:enumeration value="VersataPdV"/>
+<xs:enumeration value="VersataRdV"/>
+<xs:enumeration value="Conservata"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:element name="StatoArchiviazioneEnum" nillable="true" type="tns:StatoArchiviazioneEnum"/>
+<xs:simpleType name="TipoEsitoFatturaEnum">
+<xs:restriction base="xs:string">
+<xs:enumeration value="NotificaEsitoCommittenteAccettazione"/>
+<xs:enumeration value="NotificaEsitoCommittenteRifiuto"/>
+<xs:enumeration value="ScartoEsitoCommittente"/>
+<xs:enumeration value="NotificaDecorrenzaTermini"/>
+<xs:enumeration value="MetadatiInvioFattura"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:element name="TipoEsitoFatturaEnum" nillable="true" type="tns:TipoEsitoFatturaEnum"/>
+<xs:complexType name="ArrayOfLogFattura">
+<xs:sequence>
+<xs:element minOccurs="0" maxOccurs="unbounded" name="LogFattura" nillable="true" type="tns:LogFattura"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ArrayOfLogFattura" nillable="true" type="tns:ArrayOfLogFattura"/>
+<xs:complexType name="LogFattura">
+<xs:sequence>
+<xs:element minOccurs="0" name="Contenuto" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Data" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="KeyS3" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="LogFattura" nillable="true" type="tns:LogFattura"/>
+<xs:complexType name="GetFattureRequest">
+<xs:sequence>
+<xs:element minOccurs="0" name="DataFine" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="DataInizio" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="DataProtocolloFine" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="DataProtocolloInizio" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="DataRegistrazioneFine" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="DataRegistrazioneInizio" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="DocumentType" nillable="true" type="tns:NumberConditionOfString"/>
+<xs:element minOccurs="0" name="ElectronicInvoiceOutcome" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="ElectronicInvoiceState" nillable="true" type="tns:NumberConditionOfString"/>
+<xs:element minOccurs="0" name="FilenameInvoice" nillable="true" type="tns:StringCondition"/>
+<xs:element minOccurs="0" name="IdSdi" nillable="true" type="tns:NumberConditionOfLong"/>
+<xs:element minOccurs="0" name="InvoiceDate" nillable="true" type="tns:NumberConditionOfDateTime"/>
+<xs:element minOccurs="0" name="InvoiceNumber" nillable="true" type="tns:StringCondition"/>
+<xs:element minOccurs="0" name="NumeroProtocollo" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="NumeroRegistrazione" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="SenderFiscalCode" nillable="true" type="tns:StringCondition"/>
+<xs:element minOccurs="0" name="SenderName" nillable="true" type="tns:StringCondition"/>
+<xs:element minOccurs="0" name="SenderVat" nillable="true" type="tns:StringCondition"/>
+<xs:element minOccurs="0" name="Sezionale" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="StateDataProcessing" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="StatoArchiviazione" nillable="true" type="tns:StatoArchiviazioneEnum"/>
+<xs:element minOccurs="0" name="StatoEsiti" nillable="true" type="tns:StatoEsitiEnum"/>
+<xs:element minOccurs="0" name="StatoProtocollo" type="tns:StatoProtocolloEnum"/>
+<xs:element minOccurs="0" name="StatoRegistrazione" type="tns:StatoRegistrazioneEnum"/>
+<xs:element minOccurs="0" name="TransmissionFormat" nillable="true" type="tns:NumberConditionOfString"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="GetFattureRequest" nillable="true" type="tns:GetFattureRequest"/>
+<xs:complexType name="NumberConditionOfString">
+<xs:complexContent mixed="false">
+<xs:extension base="tns:BasicConditionOfString">
+<xs:sequence>
+<xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="In" nillable="true" type="q4:ArrayOfstring"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:element name="NumberConditionOfString" nillable="true" type="tns:NumberConditionOfString"/>
+<xs:complexType name="BasicConditionOfString">
+<xs:sequence>
+<xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Between" nillable="true" type="q5:ArrayOfstring"/>
+<xs:element minOccurs="0" name="GreaterThan" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="GreaterThanOrEqual" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="IsEqual" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="IsNotEqual" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="IsNull" nillable="true" type="xs:boolean"/>
+<xs:element minOccurs="0" name="LessThan" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="LessThanOrEqual" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BasicConditionOfString" nillable="true" type="tns:BasicConditionOfString"/>
+<xs:complexType name="StringCondition">
+<xs:complexContent mixed="false">
+<xs:extension base="tns:NumberConditionOfString">
+<xs:sequence>
+<xs:element minOccurs="0" name="Contains" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="StartsWith" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:element name="StringCondition" nillable="true" type="tns:StringCondition"/>
+<xs:complexType name="NumberConditionOfLong">
+<xs:complexContent mixed="false">
+<xs:extension base="tns:BasicConditionOfLong">
+<xs:sequence>
+<xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="In" nillable="true" type="q6:ArrayOflong"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:element name="NumberConditionOfLong" nillable="true" type="tns:NumberConditionOfLong"/>
+<xs:complexType name="BasicConditionOfLong">
+<xs:sequence>
+<xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Between" nillable="true" type="q7:ArrayOflong"/>
+<xs:element minOccurs="0" name="GreaterThan" type="xs:long"/>
+<xs:element minOccurs="0" name="GreaterThanOrEqual" type="xs:long"/>
+<xs:element minOccurs="0" name="IsEqual" type="xs:long"/>
+<xs:element minOccurs="0" name="IsNotEqual" type="xs:long"/>
+<xs:element minOccurs="0" name="IsNull" nillable="true" type="xs:boolean"/>
+<xs:element minOccurs="0" name="LessThan" type="xs:long"/>
+<xs:element minOccurs="0" name="LessThanOrEqual" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BasicConditionOfLong" nillable="true" type="tns:BasicConditionOfLong"/>
+<xs:complexType name="NumberConditionOfDateTime">
+<xs:complexContent mixed="false">
+<xs:extension base="tns:BasicConditionOfDateTime">
+<xs:sequence>
+<xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="In" nillable="true" type="q8:ArrayOfdateTime"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:element name="NumberConditionOfDateTime" nillable="true" type="tns:NumberConditionOfDateTime"/>
+<xs:complexType name="BasicConditionOfDateTime">
+<xs:sequence>
+<xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Between" nillable="true" type="q9:ArrayOfdateTime"/>
+<xs:element minOccurs="0" name="GreaterThan" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="GreaterThanOrEqual" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="IsEqual" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="IsNotEqual" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="IsNull" nillable="true" type="xs:boolean"/>
+<xs:element minOccurs="0" name="LessThan" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="LessThanOrEqual" type="xs:dateTime"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BasicConditionOfDateTime" nillable="true" type="tns:BasicConditionOfDateTime"/>
+<xs:simpleType name="StatoProtocolloEnum">
+<xs:restriction base="xs:string">
+<xs:enumeration value="NonSpecificato"/>
+<xs:enumeration value="Protocollato"/>
+<xs:enumeration value="DaProtocollare"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:element name="StatoProtocolloEnum" nillable="true" type="tns:StatoProtocolloEnum"/>
+<xs:simpleType name="StatoRegistrazioneEnum">
+<xs:restriction base="xs:string">
+<xs:enumeration value="NonSpecificato"/>
+<xs:enumeration value="Registrato"/>
+<xs:enumeration value="DaRegistrare"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:element name="StatoRegistrazioneEnum" nillable="true" type="tns:StatoRegistrazioneEnum"/>
+<xs:complexType name="Fattura">
+<xs:sequence>
+<xs:element minOccurs="0" name="DatiFattura" nillable="true" type="tns:DatiFattura"/>
+<xs:element minOccurs="0" name="FileFattura" nillable="true" type="xs:base64Binary"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Fattura" nillable="true" type="tns:Fattura"/>
+<xs:simpleType name="TipoEsitoCommittenteEnum">
+<xs:restriction base="xs:string">
+<xs:enumeration value="EsitoCommittenteRifiuto"/>
+<xs:enumeration value="EsitoCommittenteAccettazione"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:element name="TipoEsitoCommittenteEnum" nillable="true" type="tns:TipoEsitoCommittenteEnum"/>
+<xs:complexType name="ArrayOfElectronicInvoiceState">
+<xs:sequence>
+<xs:element minOccurs="0" maxOccurs="unbounded" name="ElectronicInvoiceState" nillable="true" type="tns:ElectronicInvoiceState"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ArrayOfElectronicInvoiceState" nillable="true" type="tns:ArrayOfElectronicInvoiceState"/>
+<xs:complexType name="ElectronicInvoiceState">
+<xs:sequence>
+<xs:element minOccurs="0" name="Description" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Value" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ElectronicInvoiceState" nillable="true" type="tns:ElectronicInvoiceState"/>
+<xs:complexType name="GetElectronicInvoicesFilter">
+<xs:sequence>
+<xs:element minOccurs="0" name="CodiceUfficio" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="EndDate" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="StartDate" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="StateDataProcessing" nillable="true" type="tns:StateDataProcessingEnum"/>
+<xs:element minOccurs="0" name="request" nillable="true" type="tns:GetFattureRequest"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="GetElectronicInvoicesFilter" nillable="true" type="tns:GetElectronicInvoicesFilter"/>
+<xs:simpleType name="StateDataProcessingEnum">
+<xs:restriction base="xs:string">
+<xs:enumeration value="Undefined"/>
+<xs:enumeration value="ToDownload"/>
+<xs:enumeration value="Downloaded"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:element name="StateDataProcessingEnum" nillable="true" type="tns:StateDataProcessingEnum"/>
+<xs:complexType name="StandardResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string"/>
+<xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" minOccurs="0" name="ResponseType" type="q10:ResponseType"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="StandardResponse" nillable="true" type="tns:StandardResponse"/>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/Arrays" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+<xs:complexType name="ArrayOfstring">
+<xs:sequence>
+<xs:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ArrayOfstring" nillable="true" type="tns:ArrayOfstring"/>
+<xs:complexType name="ArrayOflong">
+<xs:sequence>
+<xs:element minOccurs="0" maxOccurs="unbounded" name="long" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ArrayOflong" nillable="true" type="tns:ArrayOflong"/>
+<xs:complexType name="ArrayOfdateTime">
+<xs:sequence>
+<xs:element minOccurs="0" maxOccurs="unbounded" name="dateTime" type="xs:dateTime"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ArrayOfdateTime" nillable="true" type="tns:ArrayOfdateTime"/>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO" xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/FPPA.Wcf.DTO">
+<xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+<xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+<xs:import namespace="http://2csolution.it/FatturaPassivaPA/DTO/V1.0"/>
+<xs:complexType name="ArrayOfInvoiceMetaData">
+<xs:sequence>
+<xs:element minOccurs="0" maxOccurs="unbounded" name="InvoiceMetaData" nillable="true" type="tns:InvoiceMetaData"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ArrayOfInvoiceMetaData" nillable="true" type="tns:ArrayOfInvoiceMetaData"/>
+<xs:complexType name="InvoiceMetaData">
+<xs:sequence>
+<xs:element minOccurs="0" name="IndexMetaData" type="xs:int"/>
+<xs:element minOccurs="0" name="LabelMetaData" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="ValueMetada" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="InvoiceMetaData" nillable="true" type="tns:InvoiceMetaData"/>
+<xs:complexType name="PassiveInvoiceUploadResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="FileData" nillable="true" type="tns:ArrayOfPassiveInvoiceUploadDto"/>
+<xs:element minOccurs="0" name="OutCome" type="tns:ePassiveInvoiceUploadState"/>
+<xs:element minOccurs="0" name="OutComeDescription" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="UploadId" nillable="true" type="ser:guid"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="PassiveInvoiceUploadResponse" nillable="true" type="tns:PassiveInvoiceUploadResponse"/>
+<xs:complexType name="ArrayOfPassiveInvoiceUploadDto">
+<xs:sequence>
+<xs:element minOccurs="0" maxOccurs="unbounded" name="PassiveInvoiceUploadDto" nillable="true" type="tns:PassiveInvoiceUploadDto"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ArrayOfPassiveInvoiceUploadDto" nillable="true" type="tns:ArrayOfPassiveInvoiceUploadDto"/>
+<xs:complexType name="PassiveInvoiceUploadDto">
+<xs:sequence>
+<xs:element minOccurs="0" name="EndImportDate" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="IdSdi" nillable="true" type="xs:long"/>
+<xs:element minOccurs="0" name="InvoiceFileName" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="MetaDatoFileName" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="OutCome" type="tns:ePassiveInvoiceUploadState"/>
+<xs:element minOccurs="0" name="OutComeDescription" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="StartUploadDate" nillable="true" type="xs:dateTime"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="PassiveInvoiceUploadDto" nillable="true" type="tns:PassiveInvoiceUploadDto"/>
+<xs:simpleType name="ePassiveInvoiceUploadState">
+<xs:restriction base="xs:string">
+<xs:enumeration value="Processing"/>
+<xs:enumeration value="Success"/>
+<xs:enumeration value="Failed"/>
+<xs:enumeration value="ValidFile"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:element name="ePassiveInvoiceUploadState" nillable="true" type="tns:ePassiveInvoiceUploadState"/>
+<xs:complexType name="ArrayOfePassiveInvoiceUploadState">
+<xs:sequence>
+<xs:element minOccurs="0" maxOccurs="unbounded" name="ePassiveInvoiceUploadState" type="tns:ePassiveInvoiceUploadState"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ArrayOfePassiveInvoiceUploadState" nillable="true" type="tns:ArrayOfePassiveInvoiceUploadState"/>
+<xs:complexType name="ArrayOfPassiveInvoiceUploadResponse">
+<xs:sequence>
+<xs:element minOccurs="0" maxOccurs="unbounded" name="PassiveInvoiceUploadResponse" nillable="true" type="tns:PassiveInvoiceUploadResponse"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ArrayOfPassiveInvoiceUploadResponse" nillable="true" type="tns:ArrayOfPassiveInvoiceUploadResponse"/>
+<xs:complexType name="PassiveInvoiceUploadLimit">
+<xs:sequence>
+<xs:element minOccurs="0" name="MaxFilesCount" nillable="true" type="xs:int"/>
+<xs:element minOccurs="0" name="MaxZipSizeKB" nillable="true" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="PassiveInvoiceUploadLimit" nillable="true" type="tns:PassiveInvoiceUploadLimit"/>
+<xs:complexType name="ElectronicInvoiceFilterPdf">
+<xs:sequence>
+<xs:element minOccurs="0" name="CodiceUfficio" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="FileType" nillable="true" type="tns:TipoFile"/>
+<xs:element minOccurs="0" name="Filename" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="GetAttachments" type="xs:boolean"/>
+<xs:element minOccurs="0" name="IdEsito" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="IdSdi" nillable="true" type="xs:long"/>
+<xs:element minOccurs="0" name="SimplifiedView" nillable="true" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ElectronicInvoiceFilterPdf" nillable="true" type="tns:ElectronicInvoiceFilterPdf"/>
+<xs:simpleType name="TipoFile">
+<xs:restriction base="xs:string">
+<xs:enumeration value="FatturaAttiva">
+<xs:annotation>
+<xs:appinfo>
+<EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+</xs:appinfo>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="FatturaPassiva">
+<xs:annotation>
+<xs:appinfo>
+<EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+</xs:appinfo>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="EsitoFatturaAttiva">
+<xs:annotation>
+<xs:appinfo>
+<EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+</xs:appinfo>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="EsitoFatturaPassiva">
+<xs:annotation>
+<xs:appinfo>
+<EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+</xs:appinfo>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="AllegatoFattura">
+<xs:annotation>
+<xs:appinfo>
+<EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+</xs:appinfo>
+</xs:annotation>
+</xs:enumeration>
+</xs:restriction>
+</xs:simpleType>
+<xs:element name="TipoFile" nillable="true" type="tns:TipoFile"/>
+<xs:complexType name="ElectronicInvoicePdfResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="Files" nillable="true" type="tns:ArrayOfElectronicInvoiceResponseFile"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ElectronicInvoicePdfResponse" nillable="true" type="tns:ElectronicInvoicePdfResponse"/>
+<xs:complexType name="ArrayOfElectronicInvoiceResponseFile">
+<xs:sequence>
+<xs:element minOccurs="0" maxOccurs="unbounded" name="ElectronicInvoiceResponseFile" nillable="true" type="tns:ElectronicInvoiceResponseFile"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ArrayOfElectronicInvoiceResponseFile" nillable="true" type="tns:ArrayOfElectronicInvoiceResponseFile"/>
+<xs:complexType name="ElectronicInvoiceResponseFile">
+<xs:sequence>
+<xs:element minOccurs="0" name="Content" nillable="true" type="xs:base64Binary"/>
+<xs:element minOccurs="0" name="Description" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Filename" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Type" type="tns:TipoFile"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ElectronicInvoiceResponseFile" nillable="true" type="tns:ElectronicInvoiceResponseFile"/>
+<xs:complexType name="Auth">
+<xs:sequence>
+<xs:element minOccurs="0" name="CustomerCode" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Password" nillable="true" type="xs:base64Binary"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Auth" nillable="true" type="tns:Auth"/>
+<xs:complexType name="ConfigurationAccountingNotes">
+<xs:sequence>
+<xs:element minOccurs="0" name="DefaultInvoiceState" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="MetadataDescriptionAndVisibility" nillable="true" type="tns:ArrayOfInvoiceAccountingNotesData"/>
+<xs:element minOccurs="0" name="MetadataInvoiceState" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ConfigurationAccountingNotes" nillable="true" type="tns:ConfigurationAccountingNotes"/>
+<xs:complexType name="ArrayOfInvoiceAccountingNotesData">
+<xs:sequence>
+<xs:element minOccurs="0" maxOccurs="unbounded" name="InvoiceAccountingNotesData" nillable="true" type="tns:InvoiceAccountingNotesData"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ArrayOfInvoiceAccountingNotesData" nillable="true" type="tns:ArrayOfInvoiceAccountingNotesData"/>
+<xs:complexType name="InvoiceAccountingNotesData">
+<xs:sequence>
+<xs:element minOccurs="0" name="Description" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Index" type="xs:int"/>
+<xs:element minOccurs="0" name="Required" type="xs:boolean"/>
+<xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Values" nillable="true" type="q1:ArrayOfstring"/>
+<xs:element minOccurs="0" name="Visible" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="InvoiceAccountingNotesData" nillable="true" type="tns:InvoiceAccountingNotesData"/>
+<xs:complexType name="PassiveInvoiceAccountingNotesRequest">
+<xs:sequence>
+<xs:element minOccurs="0" name="BodyNumber" type="xs:int"/>
+<xs:element minOccurs="0" name="IdSdi" type="xs:long"/>
+<xs:element minOccurs="0" name="InvoiceMetaData" nillable="true" type="tns:ArrayOfInvoiceMetaData"/>
+<xs:element minOccurs="0" name="SetState" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="PassiveInvoiceAccountingNotesRequest" nillable="true" type="tns:PassiveInvoiceAccountingNotesRequest"/>
+<xs:complexType name="AttachmentRequest">
+<xs:sequence>
+<xs:element minOccurs="0" name="BodyNumber" type="xs:int"/>
+<xs:element minOccurs="0" name="FileContent" nillable="true" type="xs:base64Binary"/>
+<xs:element minOccurs="0" name="FileDescription" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="IdSdi" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="AttachmentRequest" nillable="true" type="tns:AttachmentRequest"/>
+<xs:complexType name="AttachmentsRequest">
+<xs:sequence>
+<xs:element minOccurs="0" name="BodyNumber" nillable="true" type="xs:int"/>
+<xs:element minOccurs="0" name="FromDate" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="IdSdi" nillable="true" type="xs:long"/>
+<xs:element minOccurs="0" name="KeyS3" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="ToDate" nillable="true" type="xs:dateTime"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="AttachmentsRequest" nillable="true" type="tns:AttachmentsRequest"/>
+<xs:complexType name="ArrayOfAttachmentsResponse">
+<xs:sequence>
+<xs:element minOccurs="0" maxOccurs="unbounded" name="AttachmentsResponse" nillable="true" type="tns:AttachmentsResponse"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ArrayOfAttachmentsResponse" nillable="true" type="tns:ArrayOfAttachmentsResponse"/>
+<xs:complexType name="AttachmentsResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="AttachmentKbSize" type="xs:long"/>
+<xs:element minOccurs="0" name="BodyNumber" nillable="true" type="xs:int"/>
+<xs:element minOccurs="0" name="DatePdA" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="DatePdV" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="DateRdV" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="FileDescription" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="IdDocument" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="IdPdV" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="IdRdV" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="IdSdi" nillable="true" type="xs:long"/>
+<xs:element minOccurs="0" name="KeyS3" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="StatusLegalStorage" type="xs:int"/>
+<xs:element minOccurs="0" name="UploadDate" nillable="true" type="xs:dateTime"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="AttachmentsResponse" nillable="true" type="tns:AttachmentsResponse"/>
+<xs:complexType name="AttachmentIdentifier">
+<xs:sequence>
+<xs:element minOccurs="0" name="IdSdi" type="xs:long"/>
+<xs:element minOccurs="0" name="KeyS3" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="AttachmentIdentifier" nillable="true" type="tns:AttachmentIdentifier"/>
+<xs:complexType name="AttachmentDescriptionRequest">
+<xs:complexContent mixed="false">
+<xs:extension base="tns:AttachmentIdentifier">
+<xs:sequence>
+<xs:element minOccurs="0" name="NewDescription" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:element name="AttachmentDescriptionRequest" nillable="true" type="tns:AttachmentDescriptionRequest"/>
+<xs:complexType name="LegalStorageRdV">
+<xs:sequence>
+<xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="IdsRdV" nillable="true" type="q2:ArrayOfstring"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="LegalStorageRdV" nillable="true" type="tns:LegalStorageRdV"/>
+<xs:complexType name="FileResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="File" nillable="true" type="xs:base64Binary"/>
+<xs:element minOccurs="0" name="Filename" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="FileResponse" nillable="true" type="tns:FileResponse"/>
+<xs:complexType name="LegalStoragePdD">
+<xs:sequence>
+<xs:element minOccurs="0" name="CountryTaxCode" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="CountryVatNumber" nillable="true" type="xs:string"/>
+<xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="IdsDocAttachment" nillable="true" type="q3:ArrayOfstring"/>
+<xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="IdsDocInvoice" nillable="true" type="q4:ArrayOfstring"/>
+<xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="IdsDocOutcome" nillable="true" type="q5:ArrayOfstring"/>
+<xs:element minOccurs="0" name="TaxCode" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="UserLastname" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="VatNumber" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="LegalStoragePdD" nillable="true" type="tns:LegalStoragePdD"/>
+<xs:complexType name="LegalStorageRequestPdd">
+<xs:sequence>
+<xs:element minOccurs="0" name="CountryTaxCode" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="CountryVatNumber" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Email" nillable="true" type="xs:string"/>
+<xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="IdsDocAttachment" nillable="true" type="q6:ArrayOfstring"/>
+<xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="IdsDocInvoice" nillable="true" type="q7:ArrayOfstring"/>
+<xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="IdsDocOutcome" nillable="true" type="q8:ArrayOfstring"/>
+<xs:element minOccurs="0" name="TaxCode" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="UserLastname" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="VatNumber" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Year" nillable="true" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="LegalStorageRequestPdd" nillable="true" type="tns:LegalStorageRequestPdd"/>
+<xs:simpleType name="ResponseType">
+<xs:restriction base="xs:string">
+<xs:enumeration value="Success"/>
+<xs:enumeration value="Failed"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:element name="ResponseType" nillable="true" type="tns:ResponseType"/>
+<xs:complexType name="GetRequestLegalStoragePddHistoryResponse">
+<xs:complexContent mixed="false">
+<xs:extension xmlns:q9="http://2csolution.it/FatturaPassivaPA/DTO/V1.0" base="q9:StandardResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="History" nillable="true" type="tns:ArrayOfRequestLegalStorageHistory"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:element name="GetRequestLegalStoragePddHistoryResponse" nillable="true" type="tns:GetRequestLegalStoragePddHistoryResponse"/>
+<xs:complexType name="ArrayOfRequestLegalStorageHistory">
+<xs:sequence>
+<xs:element minOccurs="0" maxOccurs="unbounded" name="RequestLegalStorageHistory" nillable="true" type="tns:RequestLegalStorageHistory"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ArrayOfRequestLegalStorageHistory" nillable="true" type="tns:ArrayOfRequestLegalStorageHistory"/>
+<xs:complexType name="RequestLegalStorageHistory">
+<xs:sequence>
+<xs:element minOccurs="0" name="Deleted" nillable="true" type="xs:boolean"/>
+<xs:element minOccurs="0" name="ID_ConservationSystem" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="ID_RequestLegalStorageHistory" nillable="true" type="xs:long"/>
+<xs:element minOccurs="0" name="IdCustomerService" nillable="true" type="xs:long"/>
+<xs:element minOccurs="0" name="InsertDate" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="OpCompleted" type="xs:boolean"/>
+<xs:element minOccurs="0" name="OpErrors" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="OpState" type="tns:RequestLegalStorageHistoryState"/>
+<xs:element minOccurs="0" name="ServiceType" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="UpdateDate" nillable="true" type="xs:dateTime"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="RequestLegalStorageHistory" nillable="true" type="tns:RequestLegalStorageHistory"/>
+<xs:simpleType name="RequestLegalStorageHistoryState">
+<xs:restriction base="xs:string">
+<xs:enumeration value="Running"/>
+<xs:enumeration value="Completed"/>
+<xs:enumeration value="Error">
+<xs:annotation>
+<xs:appinfo>
+<EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">255</EnumerationValue>
+</xs:appinfo>
+</xs:annotation>
+</xs:enumeration>
+</xs:restriction>
+</xs:simpleType>
+<xs:element name="RequestLegalStorageHistoryState" nillable="true" type="tns:RequestLegalStorageHistoryState"/>
+<xs:complexType name="UpdateBodyTotalRequest">
+<xs:sequence>
+<xs:element minOccurs="0" name="BodyIndex" type="xs:int"/>
+<xs:element minOccurs="0" name="IdSdi" type="xs:long"/>
+<xs:element minOccurs="0" name="NewTotal" type="xs:decimal"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="UpdateBodyTotalRequest" nillable="true" type="tns:UpdateBodyTotalRequest"/>
+<xs:complexType name="GetServiceDeactivationStatusResponse">
+<xs:complexContent mixed="false">
+<xs:extension xmlns:q10="http://2csolution.it/FatturaPassivaPA/DTO/V1.0" base="q10:StandardResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="Data" nillable="true" type="tns:ArrayOfGetServiceDeactivationStatusResponseItem"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:element name="GetServiceDeactivationStatusResponse" nillable="true" type="tns:GetServiceDeactivationStatusResponse"/>
+<xs:complexType name="ArrayOfGetServiceDeactivationStatusResponseItem">
+<xs:sequence>
+<xs:element minOccurs="0" maxOccurs="unbounded" name="GetServiceDeactivationStatusResponseItem" nillable="true" type="tns:GetServiceDeactivationStatusResponseItem"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ArrayOfGetServiceDeactivationStatusResponseItem" nillable="true" type="tns:ArrayOfGetServiceDeactivationStatusResponseItem"/>
+<xs:complexType name="GetServiceDeactivationStatusResponseItem">
+<xs:sequence>
+<xs:element minOccurs="0" name="CustomerId" type="xs:int"/>
+<xs:element minOccurs="0" name="DocType" type="tns:DocType"/>
+<xs:element minOccurs="0" name="IsError" type="xs:boolean"/>
+<xs:element minOccurs="0" name="IsRunning" type="xs:boolean"/>
+<xs:element minOccurs="0" name="LastErrorMessage" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="PDALastErrorMessage" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="PDAMailTo" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="PDAState" type="tns:StorageState"/>
+<xs:element minOccurs="0" name="PDATotalDocuments" type="xs:long"/>
+<xs:element minOccurs="0" name="PDDLastErrorMessage" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="PDDMailTo" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="PDDState" type="tns:StorageState"/>
+<xs:element minOccurs="0" name="PDVLastErrorMessage" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="PDVState" type="tns:StorageState"/>
+<xs:element minOccurs="0" name="PDVTotalDocuments" type="xs:long"/>
+<xs:element minOccurs="0" name="RDVLastErrorMessage" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="RDVState" type="tns:StorageState"/>
+<xs:element minOccurs="0" name="RDVTotalDocuments" type="xs:long"/>
+<xs:element minOccurs="0" name="ScheduledStartDate" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="ServiceType" type="tns:ServiceType"/>
+<xs:element minOccurs="0" name="State" type="tns:StorageState"/>
+<xs:element minOccurs="0" name="TotalDocuments" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="GetServiceDeactivationStatusResponseItem" nillable="true" type="tns:GetServiceDeactivationStatusResponseItem"/>
+<xs:simpleType name="DocType">
+<xs:restriction base="xs:string">
+<xs:enumeration value="Invoice"/>
+<xs:enumeration value="Outcome"/>
+<xs:enumeration value="Attachment"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:element name="DocType" nillable="true" type="tns:DocType"/>
+<xs:simpleType name="StorageState">
+<xs:restriction base="xs:string">
+<xs:enumeration value="NotStarted"/>
+<xs:enumeration value="Started"/>
+<xs:enumeration value="Finished">
+<xs:annotation>
+<xs:appinfo>
+<EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">255</EnumerationValue>
+</xs:appinfo>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="Error">
+<xs:annotation>
+<xs:appinfo>
+<EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">-255</EnumerationValue>
+</xs:appinfo>
+</xs:annotation>
+</xs:enumeration>
+</xs:restriction>
+</xs:simpleType>
+<xs:element name="StorageState" nillable="true" type="tns:StorageState"/>
+<xs:simpleType name="ServiceType">
+<xs:restriction base="xs:string">
+<xs:enumeration value="ElectronicInvoiceActive"/>
+<xs:enumeration value="ElectronicInvoicePassive"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:element name="ServiceType" nillable="true" type="tns:ServiceType"/>
+<xs:complexType name="GetElectronicInvoiceLegalStorageCountersResponse">
+<xs:complexContent mixed="false">
+<xs:extension xmlns:q11="http://2csolution.it/FatturaPassivaPA/DTO/V1.0" base="q11:StandardResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="Data" nillable="true" type="tns:ArrayOfGetElectronicInvoiceLegalStorageCountersResponseItem"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:element name="GetElectronicInvoiceLegalStorageCountersResponse" nillable="true" type="tns:GetElectronicInvoiceLegalStorageCountersResponse"/>
+<xs:complexType name="ArrayOfGetElectronicInvoiceLegalStorageCountersResponseItem">
+<xs:sequence>
+<xs:element minOccurs="0" maxOccurs="unbounded" name="GetElectronicInvoiceLegalStorageCountersResponseItem" nillable="true" type="tns:GetElectronicInvoiceLegalStorageCountersResponseItem"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ArrayOfGetElectronicInvoiceLegalStorageCountersResponseItem" nillable="true" type="tns:ArrayOfGetElectronicInvoiceLegalStorageCountersResponseItem"/>
+<xs:complexType name="GetElectronicInvoiceLegalStorageCountersResponseItem">
+<xs:sequence>
+<xs:element minOccurs="0" name="DocType" type="tns:DocType"/>
+<xs:element minOccurs="0" name="ServiceType" type="tns:ServiceType"/>
+<xs:element minOccurs="0" name="TotalDocuments" type="xs:long"/>
+<xs:element minOccurs="0" name="TotalPDA" type="xs:long"/>
+<xs:element minOccurs="0" name="TotalPDV" type="xs:long"/>
+<xs:element minOccurs="0" name="TotalRDV" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="GetElectronicInvoiceLegalStorageCountersResponseItem" nillable="true" type="tns:GetElectronicInvoiceLegalStorageCountersResponseItem"/>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/ElectronicInvoiceCounters" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/ElectronicInvoiceCounters">
+<xs:complexType name="ArrayOfElectronicInvoiceStateDataProcessing">
+<xs:sequence>
+<xs:element minOccurs="0" maxOccurs="unbounded" name="ElectronicInvoiceStateDataProcessing" nillable="true" type="tns:ElectronicInvoiceStateDataProcessing"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ArrayOfElectronicInvoiceStateDataProcessing" nillable="true" type="tns:ArrayOfElectronicInvoiceStateDataProcessing"/>
+<xs:complexType name="ElectronicInvoiceStateDataProcessing">
+<xs:sequence>
+<xs:element minOccurs="0" name="Description" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Value" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ElectronicInvoiceStateDataProcessing" nillable="true" type="tns:ElectronicInvoiceStateDataProcessing"/>
+</xs:schema>
+</wsdl:types>
+<wsdl:message name="IFatturaPassivaPA_Contatto_InputMessage">
+<wsdl:part name="parameters" element="tns:Contatto"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_Contatto_OutputMessage">
+<wsdl:part name="parameters" element="tns:ContattoResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetVersion_InputMessage">
+<wsdl:part name="parameters" element="tns:GetVersion"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetVersion_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetVersionResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetAutorizzazioni_InputMessage">
+<wsdl:part name="parameters" element="tns:GetAutorizzazioni"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetAutorizzazioni_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetAutorizzazioniResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetFatture_InputMessage">
+<wsdl:part name="parameters" element="tns:GetFatture"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetFatture_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetFattureResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetFattureParam_InputMessage">
+<wsdl:part name="parameters" element="tns:GetFattureParam"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetFattureParam_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetFattureParamResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetFattureFilter_InputMessage">
+<wsdl:part name="parameters" element="tns:GetFattureFilter"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetFattureFilter_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetFattureFilterResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetFattura_InputMessage">
+<wsdl:part name="parameters" element="tns:GetFattura"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetFattura_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetFatturaResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetFatturaDisinbustata_InputMessage">
+<wsdl:part name="parameters" element="tns:GetFatturaDisinbustata"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetFatturaDisinbustata_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetFatturaDisinbustataResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetEsito_InputMessage">
+<wsdl:part name="parameters" element="tns:GetEsito"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetEsito_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetEsitoResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_SetProtocollo_InputMessage">
+<wsdl:part name="parameters" element="tns:SetProtocollo"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_SetProtocollo_OutputMessage">
+<wsdl:part name="parameters" element="tns:SetProtocolloResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_SetProtocolloSezionale_InputMessage">
+<wsdl:part name="parameters" element="tns:SetProtocolloSezionale"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_SetProtocolloSezionale_OutputMessage">
+<wsdl:part name="parameters" element="tns:SetProtocolloSezionaleResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_SetDatiProtocollo_InputMessage">
+<wsdl:part name="parameters" element="tns:SetDatiProtocollo"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_SetDatiProtocollo_OutputMessage">
+<wsdl:part name="parameters" element="tns:SetDatiProtocolloResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_SetDatiProtocolloLottoIntero_InputMessage">
+<wsdl:part name="parameters" element="tns:SetDatiProtocolloLottoIntero"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_SetDatiProtocolloLottoIntero_OutputMessage">
+<wsdl:part name="parameters" element="tns:SetDatiProtocolloLottoInteroResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_SetDatiRegistrazione_InputMessage">
+<wsdl:part name="parameters" element="tns:SetDatiRegistrazione"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_SetDatiRegistrazione_OutputMessage">
+<wsdl:part name="parameters" element="tns:SetDatiRegistrazioneResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_CreaEsitoCommittente_InputMessage">
+<wsdl:part name="parameters" element="tns:CreaEsitoCommittente"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_CreaEsitoCommittente_OutputMessage">
+<wsdl:part name="parameters" element="tns:CreaEsitoCommittenteResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_CreaEsitoCommittenteSingolaFattura_InputMessage">
+<wsdl:part name="parameters" element="tns:CreaEsitoCommittenteSingolaFattura"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_CreaEsitoCommittenteSingolaFattura_OutputMessage">
+<wsdl:part name="parameters" element="tns:CreaEsitoCommittenteSingolaFatturaResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_ResetData_InputMessage">
+<wsdl:part name="parameters" element="tns:ResetData"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_ResetData_OutputMessage">
+<wsdl:part name="parameters" element="tns:ResetDataResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_SetStatePassiveElectronicInvoice_InputMessage">
+<wsdl:part name="parameters" element="tns:SetStatePassiveElectronicInvoice"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_SetStatePassiveElectronicInvoice_OutputMessage">
+<wsdl:part name="parameters" element="tns:SetStatePassiveElectronicInvoiceResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetStatesPassiveElectronicInvoice_InputMessage">
+<wsdl:part name="parameters" element="tns:GetStatesPassiveElectronicInvoice"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetStatesPassiveElectronicInvoice_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetStatesPassiveElectronicInvoiceResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_SetUploadImport_InputMessage">
+<wsdl:part name="parameters" element="tns:SetUploadImport"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_SetUploadImport_OutputMessage">
+<wsdl:part name="parameters" element="tns:SetUploadImportResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetStateImport_InputMessage">
+<wsdl:part name="parameters" element="tns:GetStateImport"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetStateImport_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetStateImportResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetUploadLimits_InputMessage">
+<wsdl:part name="parameters" element="tns:GetUploadLimits"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetUploadLimits_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetUploadLimitsResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetElectronicInvoiceToPdf_InputMessage">
+<wsdl:part name="parameters" element="tns:GetElectronicInvoiceToPdf"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetElectronicInvoiceToPdf_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetElectronicInvoiceToPdfResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetElectronicInvoices_InputMessage">
+<wsdl:part name="parameters" element="tns:GetElectronicInvoices"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetElectronicInvoices_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetElectronicInvoicesResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetStatesDataProcessingPassiveElectronicInvoice_InputMessage">
+<wsdl:part name="parameters" element="tns:GetStatesDataProcessingPassiveElectronicInvoice"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetStatesDataProcessingPassiveElectronicInvoice_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetStatesDataProcessingPassiveElectronicInvoiceResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_SetStatesDataProcessingPassiveElectronicInvoice_InputMessage">
+<wsdl:part name="parameters" element="tns:SetStatesDataProcessingPassiveElectronicInvoice"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_SetStatesDataProcessingPassiveElectronicInvoice_OutputMessage">
+<wsdl:part name="parameters" element="tns:SetStatesDataProcessingPassiveElectronicInvoiceResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetRapportoVersamentoUA_InputMessage">
+<wsdl:part name="parameters" element="tns:GetRapportoVersamentoUA"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetRapportoVersamentoUA_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetRapportoVersamentoUAResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetPacchettoDistribuzioneUA_InputMessage">
+<wsdl:part name="parameters" element="tns:GetPacchettoDistribuzioneUA"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetPacchettoDistribuzioneUA_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetPacchettoDistribuzioneUAResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetAuthorizationAccountingNotes_InputMessage">
+<wsdl:part name="parameters" element="tns:GetAuthorizationAccountingNotes"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetAuthorizationAccountingNotes_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetAuthorizationAccountingNotesResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetConfigurationAccountingNotes_InputMessage">
+<wsdl:part name="parameters" element="tns:GetConfigurationAccountingNotes"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetConfigurationAccountingNotes_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetConfigurationAccountingNotesResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_SetConfigurationAccountingNotes_InputMessage">
+<wsdl:part name="parameters" element="tns:SetConfigurationAccountingNotes"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_SetConfigurationAccountingNotes_OutputMessage">
+<wsdl:part name="parameters" element="tns:SetConfigurationAccountingNotesResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_SetPassiveInvoiceAccountingNotes_InputMessage">
+<wsdl:part name="parameters" element="tns:SetPassiveInvoiceAccountingNotes"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_SetPassiveInvoiceAccountingNotes_OutputMessage">
+<wsdl:part name="parameters" element="tns:SetPassiveInvoiceAccountingNotesResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_SetAttachment_InputMessage">
+<wsdl:part name="parameters" element="tns:SetAttachment"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_SetAttachment_OutputMessage">
+<wsdl:part name="parameters" element="tns:SetAttachmentResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetListAttachments_InputMessage">
+<wsdl:part name="parameters" element="tns:GetListAttachments"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetListAttachments_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetListAttachmentsResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetFileAttachment_InputMessage">
+<wsdl:part name="parameters" element="tns:GetFileAttachment"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetFileAttachment_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetFileAttachmentResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_DeleteFileAttachment_InputMessage">
+<wsdl:part name="parameters" element="tns:DeleteFileAttachment"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_DeleteFileAttachment_OutputMessage">
+<wsdl:part name="parameters" element="tns:DeleteFileAttachmentResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_UpdateAttachmentDescription_InputMessage">
+<wsdl:part name="parameters" element="tns:UpdateAttachmentDescription"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_UpdateAttachmentDescription_OutputMessage">
+<wsdl:part name="parameters" element="tns:UpdateAttachmentDescriptionResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetInvoiceByIdSdi_InputMessage">
+<wsdl:part name="parameters" element="tns:GetInvoiceByIdSdi"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetInvoiceByIdSdi_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetInvoiceByIdSdiResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetElectronicInvoicesLegalStorageRdV_InputMessage">
+<wsdl:part name="parameters" element="tns:GetElectronicInvoicesLegalStorageRdV"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetElectronicInvoicesLegalStorageRdV_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetElectronicInvoicesLegalStorageRdVResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetElectronicInvoicesLegalStoragePdD_InputMessage">
+<wsdl:part name="parameters" element="tns:GetElectronicInvoicesLegalStoragePdD"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetElectronicInvoicesLegalStoragePdD_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetElectronicInvoicesLegalStoragePdDResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_SetRequestLegalStoragePdd_InputMessage">
+<wsdl:part name="parameters" element="tns:SetRequestLegalStoragePdd"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_SetRequestLegalStoragePdd_OutputMessage">
+<wsdl:part name="parameters" element="tns:SetRequestLegalStoragePddResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetRequestLegalStoragePddHistory_InputMessage">
+<wsdl:part name="parameters" element="tns:GetRequestLegalStoragePddHistory"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetRequestLegalStoragePddHistory_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetRequestLegalStoragePddHistoryResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_SetElectronicInvoiceTotal_InputMessage">
+<wsdl:part name="parameters" element="tns:SetElectronicInvoiceTotal"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_SetElectronicInvoiceTotal_OutputMessage">
+<wsdl:part name="parameters" element="tns:SetElectronicInvoiceTotalResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetServiceDeactivationStatus_InputMessage">
+<wsdl:part name="parameters" element="tns:GetServiceDeactivationStatus"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetServiceDeactivationStatus_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetServiceDeactivationStatusResponse"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetElectronicInvoiceLegalStorageCounters_InputMessage">
+<wsdl:part name="parameters" element="tns:GetElectronicInvoiceLegalStorageCounters"/>
+</wsdl:message>
+<wsdl:message name="IFatturaPassivaPA_GetElectronicInvoiceLegalStorageCounters_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetElectronicInvoiceLegalStorageCountersResponse"/>
+</wsdl:message>
+<wsdl:portType name="IFatturaPassivaPA">
+<wsdl:operation name="Contatto">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/Contatto" message="tns:IFatturaPassivaPA_Contatto_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/ContattoResponse" message="tns:IFatturaPassivaPA_Contatto_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetVersion">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetVersion" message="tns:IFatturaPassivaPA_GetVersion_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetVersionResponse" message="tns:IFatturaPassivaPA_GetVersion_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetAutorizzazioni">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetAutorizzazioni" message="tns:IFatturaPassivaPA_GetAutorizzazioni_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetAutorizzazioniResponse" message="tns:IFatturaPassivaPA_GetAutorizzazioni_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetFatture">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetFatture" message="tns:IFatturaPassivaPA_GetFatture_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetFattureResponse" message="tns:IFatturaPassivaPA_GetFatture_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetFattureParam">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetFattureParam" message="tns:IFatturaPassivaPA_GetFattureParam_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetFattureParamResponse" message="tns:IFatturaPassivaPA_GetFattureParam_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetFattureFilter">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetFattureFilter" message="tns:IFatturaPassivaPA_GetFattureFilter_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetFattureFilterResponse" message="tns:IFatturaPassivaPA_GetFattureFilter_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetFattura">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetFattura" message="tns:IFatturaPassivaPA_GetFattura_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetFatturaResponse" message="tns:IFatturaPassivaPA_GetFattura_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetFatturaDisinbustata">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetFatturaDisinbustata" message="tns:IFatturaPassivaPA_GetFatturaDisinbustata_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetFatturaDisinbustataResponse" message="tns:IFatturaPassivaPA_GetFatturaDisinbustata_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetEsito">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetEsito" message="tns:IFatturaPassivaPA_GetEsito_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetEsitoResponse" message="tns:IFatturaPassivaPA_GetEsito_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="SetProtocollo">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetProtocollo" message="tns:IFatturaPassivaPA_SetProtocollo_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetProtocolloResponse" message="tns:IFatturaPassivaPA_SetProtocollo_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="SetProtocolloSezionale">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetProtocolloSezionale" message="tns:IFatturaPassivaPA_SetProtocolloSezionale_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetProtocolloSezionaleResponse" message="tns:IFatturaPassivaPA_SetProtocolloSezionale_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="SetDatiProtocollo">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetDatiProtocollo" message="tns:IFatturaPassivaPA_SetDatiProtocollo_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetDatiProtocolloResponse" message="tns:IFatturaPassivaPA_SetDatiProtocollo_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="SetDatiProtocolloLottoIntero">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetDatiProtocolloLottoIntero" message="tns:IFatturaPassivaPA_SetDatiProtocolloLottoIntero_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetDatiProtocolloLottoInteroResponse" message="tns:IFatturaPassivaPA_SetDatiProtocolloLottoIntero_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="SetDatiRegistrazione">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetDatiRegistrazione" message="tns:IFatturaPassivaPA_SetDatiRegistrazione_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetDatiRegistrazioneResponse" message="tns:IFatturaPassivaPA_SetDatiRegistrazione_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="CreaEsitoCommittente">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/CreaEsitoCommittente" message="tns:IFatturaPassivaPA_CreaEsitoCommittente_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/CreaEsitoCommittenteResponse" message="tns:IFatturaPassivaPA_CreaEsitoCommittente_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="CreaEsitoCommittenteSingolaFattura">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/CreaEsitoCommittenteSingolaFattura" message="tns:IFatturaPassivaPA_CreaEsitoCommittenteSingolaFattura_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/CreaEsitoCommittenteSingolaFatturaResponse" message="tns:IFatturaPassivaPA_CreaEsitoCommittenteSingolaFattura_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="ResetData">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/ResetData" message="tns:IFatturaPassivaPA_ResetData_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/ResetDataResponse" message="tns:IFatturaPassivaPA_ResetData_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="SetStatePassiveElectronicInvoice">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetStatePassiveElectronicInvoice" message="tns:IFatturaPassivaPA_SetStatePassiveElectronicInvoice_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetStatePassiveElectronicInvoiceResponse" message="tns:IFatturaPassivaPA_SetStatePassiveElectronicInvoice_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetStatesPassiveElectronicInvoice">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetStatesPassiveElectronicInvoice" message="tns:IFatturaPassivaPA_GetStatesPassiveElectronicInvoice_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetStatesPassiveElectronicInvoiceResponse" message="tns:IFatturaPassivaPA_GetStatesPassiveElectronicInvoice_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="SetUploadImport">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetUploadImport" message="tns:IFatturaPassivaPA_SetUploadImport_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetUploadImportResponse" message="tns:IFatturaPassivaPA_SetUploadImport_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetStateImport">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetStateImport" message="tns:IFatturaPassivaPA_GetStateImport_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetStateImportResponse" message="tns:IFatturaPassivaPA_GetStateImport_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetUploadLimits">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetUploadLimits" message="tns:IFatturaPassivaPA_GetUploadLimits_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetUploadLimitsResponse" message="tns:IFatturaPassivaPA_GetUploadLimits_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetElectronicInvoiceToPdf">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetElectronicInvoiceToPdf" message="tns:IFatturaPassivaPA_GetElectronicInvoiceToPdf_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetElectronicInvoiceToPdfResponse" message="tns:IFatturaPassivaPA_GetElectronicInvoiceToPdf_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetElectronicInvoices">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetElectronicInvoices" message="tns:IFatturaPassivaPA_GetElectronicInvoices_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetElectronicInvoicesResponse" message="tns:IFatturaPassivaPA_GetElectronicInvoices_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetStatesDataProcessingPassiveElectronicInvoice">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetStatesDataProcessingPassiveElectronicInvoice" message="tns:IFatturaPassivaPA_GetStatesDataProcessingPassiveElectronicInvoice_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetStatesDataProcessingPassiveElectronicInvoiceResponse" message="tns:IFatturaPassivaPA_GetStatesDataProcessingPassiveElectronicInvoice_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="SetStatesDataProcessingPassiveElectronicInvoice">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetStatesDataProcessingPassiveElectronicInvoice" message="tns:IFatturaPassivaPA_SetStatesDataProcessingPassiveElectronicInvoice_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetStatesDataProcessingPassiveElectronicInvoiceResponse" message="tns:IFatturaPassivaPA_SetStatesDataProcessingPassiveElectronicInvoice_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetRapportoVersamentoUA">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetRapportoVersamentoUA" message="tns:IFatturaPassivaPA_GetRapportoVersamentoUA_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetRapportoVersamentoUAResponse" message="tns:IFatturaPassivaPA_GetRapportoVersamentoUA_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetPacchettoDistribuzioneUA">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetPacchettoDistribuzioneUA" message="tns:IFatturaPassivaPA_GetPacchettoDistribuzioneUA_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetPacchettoDistribuzioneUAResponse" message="tns:IFatturaPassivaPA_GetPacchettoDistribuzioneUA_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetAuthorizationAccountingNotes">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetAuthorizationAccountingNotes" message="tns:IFatturaPassivaPA_GetAuthorizationAccountingNotes_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetAuthorizationAccountingNotesResponse" message="tns:IFatturaPassivaPA_GetAuthorizationAccountingNotes_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetConfigurationAccountingNotes">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetConfigurationAccountingNotes" message="tns:IFatturaPassivaPA_GetConfigurationAccountingNotes_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetConfigurationAccountingNotesResponse" message="tns:IFatturaPassivaPA_GetConfigurationAccountingNotes_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="SetConfigurationAccountingNotes">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetConfigurationAccountingNotes" message="tns:IFatturaPassivaPA_SetConfigurationAccountingNotes_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetConfigurationAccountingNotesResponse" message="tns:IFatturaPassivaPA_SetConfigurationAccountingNotes_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="SetPassiveInvoiceAccountingNotes">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetPassiveInvoiceAccountingNotes" message="tns:IFatturaPassivaPA_SetPassiveInvoiceAccountingNotes_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetPassiveInvoiceAccountingNotesResponse" message="tns:IFatturaPassivaPA_SetPassiveInvoiceAccountingNotes_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="SetAttachment">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetAttachment" message="tns:IFatturaPassivaPA_SetAttachment_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetAttachmentResponse" message="tns:IFatturaPassivaPA_SetAttachment_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetListAttachments">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetListAttachments" message="tns:IFatturaPassivaPA_GetListAttachments_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetListAttachmentsResponse" message="tns:IFatturaPassivaPA_GetListAttachments_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetFileAttachment">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetFileAttachment" message="tns:IFatturaPassivaPA_GetFileAttachment_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetFileAttachmentResponse" message="tns:IFatturaPassivaPA_GetFileAttachment_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="DeleteFileAttachment">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/DeleteFileAttachment" message="tns:IFatturaPassivaPA_DeleteFileAttachment_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/DeleteFileAttachmentResponse" message="tns:IFatturaPassivaPA_DeleteFileAttachment_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="UpdateAttachmentDescription">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/UpdateAttachmentDescription" message="tns:IFatturaPassivaPA_UpdateAttachmentDescription_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/UpdateAttachmentDescriptionResponse" message="tns:IFatturaPassivaPA_UpdateAttachmentDescription_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetInvoiceByIdSdi">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetInvoiceByIdSdi" message="tns:IFatturaPassivaPA_GetInvoiceByIdSdi_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetInvoiceByIdSdiResponse" message="tns:IFatturaPassivaPA_GetInvoiceByIdSdi_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetElectronicInvoicesLegalStorageRdV">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetElectronicInvoicesLegalStorageRdV" message="tns:IFatturaPassivaPA_GetElectronicInvoicesLegalStorageRdV_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetElectronicInvoicesLegalStorageRdVResponse" message="tns:IFatturaPassivaPA_GetElectronicInvoicesLegalStorageRdV_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetElectronicInvoicesLegalStoragePdD">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetElectronicInvoicesLegalStoragePdD" message="tns:IFatturaPassivaPA_GetElectronicInvoicesLegalStoragePdD_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetElectronicInvoicesLegalStoragePdDResponse" message="tns:IFatturaPassivaPA_GetElectronicInvoicesLegalStoragePdD_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="SetRequestLegalStoragePdd">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetRequestLegalStoragePdd" message="tns:IFatturaPassivaPA_SetRequestLegalStoragePdd_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetRequestLegalStoragePddResponse" message="tns:IFatturaPassivaPA_SetRequestLegalStoragePdd_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetRequestLegalStoragePddHistory">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetRequestLegalStoragePddHistory" message="tns:IFatturaPassivaPA_GetRequestLegalStoragePddHistory_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetRequestLegalStoragePddHistoryResponse" message="tns:IFatturaPassivaPA_GetRequestLegalStoragePddHistory_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="SetElectronicInvoiceTotal">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetElectronicInvoiceTotal" message="tns:IFatturaPassivaPA_SetElectronicInvoiceTotal_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetElectronicInvoiceTotalResponse" message="tns:IFatturaPassivaPA_SetElectronicInvoiceTotal_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetServiceDeactivationStatus">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetServiceDeactivationStatus" message="tns:IFatturaPassivaPA_GetServiceDeactivationStatus_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetServiceDeactivationStatusResponse" message="tns:IFatturaPassivaPA_GetServiceDeactivationStatus_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetElectronicInvoiceLegalStorageCounters">
+<wsdl:input wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetElectronicInvoiceLegalStorageCounters" message="tns:IFatturaPassivaPA_GetElectronicInvoiceLegalStorageCounters_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetElectronicInvoiceLegalStorageCountersResponse" message="tns:IFatturaPassivaPA_GetElectronicInvoiceLegalStorageCounters_OutputMessage"/>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="BasicHttpsBinding_IFatturaPassivaPA" type="tns:IFatturaPassivaPA">
+<wsp:PolicyReference URI="#BasicHttpsBinding_IFatturaPassivaPA_policy"/>
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="Contatto">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/Contatto" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetVersion">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetVersion" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetAutorizzazioni">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetAutorizzazioni" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetFatture">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetFatture" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetFattureParam">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetFattureParam" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetFattureFilter">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetFattureFilter" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetFattura">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetFattura" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetFatturaDisinbustata">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetFatturaDisinbustata" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetEsito">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetEsito" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="SetProtocollo">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetProtocollo" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="SetProtocolloSezionale">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetProtocolloSezionale" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="SetDatiProtocollo">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetDatiProtocollo" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="SetDatiProtocolloLottoIntero">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetDatiProtocolloLottoIntero" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="SetDatiRegistrazione">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetDatiRegistrazione" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="CreaEsitoCommittente">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/CreaEsitoCommittente" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="CreaEsitoCommittenteSingolaFattura">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/CreaEsitoCommittenteSingolaFattura" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ResetData">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/ResetData" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="SetStatePassiveElectronicInvoice">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetStatePassiveElectronicInvoice" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetStatesPassiveElectronicInvoice">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetStatesPassiveElectronicInvoice" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="SetUploadImport">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetUploadImport" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetStateImport">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetStateImport" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetUploadLimits">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetUploadLimits" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetElectronicInvoiceToPdf">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetElectronicInvoiceToPdf" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetElectronicInvoices">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetElectronicInvoices" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetStatesDataProcessingPassiveElectronicInvoice">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetStatesDataProcessingPassiveElectronicInvoice" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="SetStatesDataProcessingPassiveElectronicInvoice">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetStatesDataProcessingPassiveElectronicInvoice" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetRapportoVersamentoUA">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetRapportoVersamentoUA" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetPacchettoDistribuzioneUA">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetPacchettoDistribuzioneUA" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetAuthorizationAccountingNotes">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetAuthorizationAccountingNotes" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetConfigurationAccountingNotes">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetConfigurationAccountingNotes" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="SetConfigurationAccountingNotes">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetConfigurationAccountingNotes" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="SetPassiveInvoiceAccountingNotes">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetPassiveInvoiceAccountingNotes" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="SetAttachment">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetAttachment" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetListAttachments">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetListAttachments" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetFileAttachment">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetFileAttachment" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="DeleteFileAttachment">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/DeleteFileAttachment" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="UpdateAttachmentDescription">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/UpdateAttachmentDescription" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetInvoiceByIdSdi">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetInvoiceByIdSdi" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetElectronicInvoicesLegalStorageRdV">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetElectronicInvoicesLegalStorageRdV" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetElectronicInvoicesLegalStoragePdD">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetElectronicInvoicesLegalStoragePdD" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="SetRequestLegalStoragePdd">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetRequestLegalStoragePdd" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetRequestLegalStoragePddHistory">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetRequestLegalStoragePddHistory" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="SetElectronicInvoiceTotal">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/SetElectronicInvoiceTotal" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetServiceDeactivationStatus">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetServiceDeactivationStatus" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetElectronicInvoiceLegalStorageCounters">
+<soap:operation soapAction="http://www.2csolution.it/FatturaPassivaPA/V1.0/IFatturaPassivaPA/GetElectronicInvoiceLegalStorageCounters" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="FatturaPassivaPA">
+<wsdl:port name="BasicHttpsBinding_IFatturaPassivaPA" binding="tns:BasicHttpsBinding_IFatturaPassivaPA">
+<soap:address location="https://testfppa.solutiondocondemand.com/CustomerTest/FatturaPassivaPA.svc"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>
