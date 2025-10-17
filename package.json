@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A simple CAP project.",
   "dependencies": {
-    "@cap-js/hana": "^2",
+    "@cap-js/hana": "^2.3.3",
     "@sap-cloud-sdk/connectivity": "^4.1.2",
     "@sap-cloud-sdk/http-client": "^4.1.2",
     "@sap/cds": "^9",
@@ -57,16 +57,16 @@
             "key": "NamirialInvoice-dest-key"
           }
         },
-         "auth": {
+        "auth": {
           "kind": "mocked"
         },
         "GetFatture": {
-        "kind": "SOAP",
-        "credentials": {
-          "destination": "NAMI",
-          "path": ""
+          "kind": "SOAP",
+          "credentials": {
+            "destination": "NAMI",
+            "path": ""
+          }
         }
-      }
       },
       "[production]": {
         "auth": "xsuaa"
