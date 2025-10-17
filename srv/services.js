@@ -18,9 +18,6 @@ module.exports = cds.service.impl(async function (srv) {
     } = this.entities;
 
     /*** HANDLERS REGISTRATION ***/
-    // ON events
-    //this.on('READ', Invoices, readInvoices);
-    //this.on('READ', Invoices, sendInvoices);
     this.on('getInvoices', getInvoices);
     this.on('sendInvoices', sendInvoices);
     this.on('retryInvoices', retryInvoices);

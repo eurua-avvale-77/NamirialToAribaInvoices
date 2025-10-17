@@ -8,12 +8,6 @@ const axios = require('axios');
 let getFattureServicePromise = null;
 let getFattureServiceEndpoint = { url: null };
 
-//(async function () {
-    // Connect to external S/4HC SOAP service
-    //getFattureServicePromise = getSoapService('GetFatture', './srv/external/NamirialFattureServices.wsdl', getFattureServiceEndpoint);
-//})();
-
-
 async function getInvoices(req) {
     try {
         // Get the SOAP client for the GetFatture service
