@@ -34,7 +34,7 @@ async function getInvoices(req) {
         const LtInvoices = [];
        
         //if (resp && resp[0] && resp[0].GetElectronicInvoicesResult.DatiFattura) {
-          if (resp[0].GetElectronicInvoicesResult.DatiFattura) {
+          if (resp[0].GetElectronicInvoicesResult) {                                  //V1.4 Corretto Fitro
             resp[0].GetElectronicInvoicesResult.DatiFattura.forEach(DatiFattura => {
                 LtInvoices.push({
                     ID            : DatiFattura.IdSdi,
@@ -44,7 +44,7 @@ async function getInvoices(req) {
                     createdAt     : new Date()
                 });
             });
-        }
+        //V1.4 spostato chiusura IF in fondo
         
         // Salvo in DB Fatture Estratte, ID NomeFile e data
         await UPSERT.into(Invoices).entries(LtInvoices);
@@ -54,7 +54,7 @@ async function getInvoices(req) {
 
         //Estraggo le fatture Salvate da Namirial
         const LtIds = [];
-        const Ids = await SELECT.from(Invoices).columns('ID', 'title', 'createdAt')//.where('ID =', {in: sdiIds});
+        const Ids = await SELECT.from(Invoices).columns('ID', 'title', 'createdAt').where('ID =', {in: sdiIds}); //V1.4 ripristinato Where Condition
         //Preparo la Tabella locale come 'InvoiceStatus' per inserire in tabella
         Ids.forEach(Ids => {
               LtIds.push({
@@ -87,7 +87,7 @@ async function getInvoices(req) {
         // Invoke SetStatesDataProcessingPassiveElectronicInvoice method asynchronously and wait for the response, 
         // NB 'SetStatesDataProcessingPassiveElectronicInvoiceAsync' viene creato dal nostro Handler Soap, non esiste nel wsdl originale
         const resp2 = await getFattureService.SetStatesDataProcessingPassiveElectronicInvoiceAsync(param2);
-
+      } //V1.4 Nuova Chiusura If In fondo
 
         return LtInvoices;
     } catch (err) {
@@ -150,7 +150,7 @@ async function sendInvoices(req) {
     
       await UPSERT.into(InvoicesStatus).entries(LtIds);
 
-  return LtInvoices;
+  return LtIds; //V1.4 Cambiata Tabella Output
     } catch (err) {
         req.error(err.code, err.message);
     }
@@ -206,7 +206,7 @@ async function retryInvoices(req) {
     
       await UPSERT.into(InvoicesStatus).entries(LtIds);
 
-  return LtInvoices;
+  return LtIds; //V1.4 Cambiata tabella Output
     } catch (err) {
         req.error(err.code, err.message);
     }
