@@ -54,7 +54,7 @@ async function getInvoices(req) {
 
         //Estraggo le fatture Salvate da Namirial
         const LtIds = [];
-        const Ids = await SELECT.from(Invoices).columns('ID', 'title', 'createdAt').where('ID =', {in: sdiIds}); //V1.4 ripristinato Where Condition
+        const Ids = await SELECT.from(Invoices).columns('ID', 'title', 'createdAt').where('ID in', sdiIds); //V1.4 ripristinato Where Condition
         //Preparo la Tabella locale come 'InvoiceStatus' per inserire in tabella
         Ids.forEach(Ids => {
               LtIds.push({
@@ -103,6 +103,7 @@ async function sendInvoices(req) {
     const LtInvoices = [];
     const esito  = [];
     const LtIds = [];
+    const LtIdsOks = [];
 
     const LtInvoicesStatus = await SELECT.from(InvoicesStatus).where('status =', 'Readed');
 
@@ -129,6 +130,12 @@ async function sendInvoices(req) {
                         sendedAt  : new Date(),
                         message : '',
                          });
+
+                          LtIdsOks.push({
+                            ID            : Invoice[0].ID
+                          }); 
+
+
                         } else {
                           esito.push({
                         status    : 'AribaError',
@@ -145,10 +152,18 @@ async function sendInvoices(req) {
             message       : esito[0].message
                 }); 
         
+
        }
     //)
     
+      // Map to an array of numbers
+      const sdiIds = LtIdsOks.map(inv => inv.ID);
+
       await UPSERT.into(InvoicesStatus).entries(LtIds);
+
+      //Aggiunta cancellazione righe tabella invoices dopo che l'esito è andato a buon fine
+
+      await DELETE.from(Invoices).where({ ID: { in: sdiIds } });
 
   return LtIds; //V1.4 Cambiata Tabella Output
     } catch (err) {
@@ -163,6 +178,7 @@ async function retryInvoices(req) {
     const LtInvoices = [];
     const esito  = [];
     const LtIds = [];
+    const LtIdsOks = [];
 
     const LtInvoicesStatus = await SELECT.from(InvoicesStatus).where('status =', 'AribaError');
 
@@ -191,6 +207,11 @@ async function retryInvoices(req) {
                         sendedAt  : new Date(),
                         message : '',
                          });
+
+                           LtIdsOks.push({
+                            ID  : Invoice[0].ID
+                          }); 
+
                         };
 
 
@@ -204,7 +225,14 @@ async function retryInvoices(req) {
        }
     //)
     
+      // Map to an array of numbers
+      const sdiIds = LtIdsOks.map(inv => inv.ID);
+
       await UPSERT.into(InvoicesStatus).entries(LtIds);
+
+      //Aggiunta cancellazione righe tabella invoices dopo che l'esito è andato a buon fine
+
+      await DELETE.from(Invoices).where({ ID: { in: sdiIds } });
 
   return LtIds; //V1.4 Cambiata tabella Output
     } catch (err) {
