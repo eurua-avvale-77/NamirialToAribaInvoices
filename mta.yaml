@@ -4,6 +4,7 @@ version: 1.0.0
 description: "A simple CAP project."
 parameters:
   enable-parallel-deployments: true
+  deploy_mode: html5-repo
 build-parameters:
   before-all:
     - builder: custom
@@ -27,14 +28,6 @@ modules:
       - name: NamirialToAriba-auth
       - name: NamirialToAriba-db
 
-  - name: NamirialToAriba-db-deployer
-    type: hdb
-    path: gen/db
-    parameters:
-      buildpack: nodejs_buildpack
-    requires:
-      - name: NamirialToAriba-db
-
   - name: NamirialToAriba
     type: approuter.nodejs
     path: app/router
@@ -50,12 +43,90 @@ modules:
           url: ~{srv-url}
           forwardAuthToken: true
       - name: NamirialToAriba-auth
+      - name: NamirialToAriba-html5-runtime
+      - name: NamirialToAriba-portal
+      - name: mtx-api
+        group: destinations
+        properties:
+          name: mtx-api # must be used in xs-app.json as well
+          url: ~{mtx-url}
     provides:
       - name: app-api
         properties:
           app-protocol: ${protocol}
           app-uri: ${default-uri}
+    properties:
+      TENANT_HOST_PATTERN: "^(.*)-${default-uri}"
 
+  - name: NamirialToAriba-app-deployer
+    type: com.sap.application.content
+    path: gen
+    requires:
+      - name: NamirialToAriba-auth
+      - name: srv-api
+      - name: NamirialToAriba-html5-repo-host
+        parameters:
+          content-target: true
+          config:
+            HTML5Runtime_enabled: true
+    build-parameters:
+      build-result: app/
+      requires:
+
+
+  - name: NamirialToAriba-portal-deployer
+    type: com.sap.application.content
+    path: app/portal
+    requires:
+      - name: NamirialToAriba-portal
+        parameters:
+          content-target: true
+          service-key:
+            name: NamirialToAriba-portal-key
+            config:
+              content-endpoint: developer
+      - name: NamirialToAriba-auth
+      - name: NamirialToAriba-html5-repo-host
+      - name: NamirialToAriba-app-deployer
+    deployed-after:
+      - NamirialToAriba-app-deployer
+    parameters:
+      config:
+        TENANT_HOST_PATTERN: "^(.*)-${default-uri}"
+
+  - name: NamirialToAriba-mtx
+    type: nodejs
+    path: gen/mtx/sidecar
+    build-parameters:
+      builder: npm-ci
+    parameters:
+      instances: 1
+      memory: 256M
+      disk-quota: 512M
+    hooks:
+      - name: upgrade-all
+        type: task
+        phases:
+          - blue-green.application.before-start.idle
+          - deploy.application.before-start
+        parameters:
+          name: upgrade
+          memory: 512M # increase as required
+          disk-quota: 768M # increase as required
+          command: cds-mtx upgrade '*'
+    provides:
+      - name: mtx-api
+        properties:
+          mtx-url: ${default-url}
+    requires:
+      - name: NamirialToAriba-registry
+      - name: NamirialToAriba-auth
+      - name: NamirialToAriba-db
+      - name: app-api
+        properties:
+          SUBSCRIPTION_URL: ~{app-protocol}://\${tenant_subdomain}-~{app-uri}
+      - name: NamirialToAriba-html5-runtime
+      - name: NamirialToAriba-portal
 resources:
   - name: NamirialToAriba-auth
     type: org.cloudfoundry.managed-service
@@ -65,14 +136,50 @@ resources:
       path: ./xs-security.json
       config:
         xsappname: NamirialToAriba-${org}-${space}
-        tenant-mode: dedicated
+        tenant-mode: shared
         oauth2-configuration:
           redirect-uris:
             - https://*~{app-api/app-uri}/**
     requires:
       - name: app-api
-  - name: NamirialToAriba-db
-    type: com.sap.xs.hdi-container
+
+  - name: NamirialToAriba-html5-repo-host
+    type: org.cloudfoundry.managed-service
     parameters:
-      service: hana
-      service-plan: hdi-shared
+      service: html5-apps-repo
+      service-plan: app-host
+  - name: NamirialToAriba-html5-runtime
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-runtime
+  - name: NamirialToAriba-portal
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: portal
+      service-plan: standard
+  - name: NamirialToAriba-registry
+    type: org.cloudfoundry.managed-service
+    requires:
+      - name: mtx-api
+    parameters:
+      service: saas-registry
+      service-plan: application
+      config:
+        xsappname: NamirialToAriba-${org}-${space}
+        appName: NamirialToAriba-${org}-${space}
+        displayName: NamirialToAriba
+        description: A simple CAP project.
+        category: 'Category'
+        appUrls:
+          getDependencies: ~{mtx-api/mtx-url}/-/cds/saas-provisioning/dependencies
+          onSubscription: ~{mtx-api/mtx-url}/-/cds/saas-provisioning/tenant/{tenantId}
+          onSubscriptionAsync: true
+          onUnSubscriptionAsync: true
+          onUpdateDependenciesAsync: true
+          callbackTimeoutMillis: 300000 # Increase if your deployments are taking longer than that
+  - name: NamirialToAriba-db
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: service-manager
+      service-plan: container
