@@ -70,8 +70,12 @@ modules:
           config:
             HTML5Runtime_enabled: true
     build-parameters:
-      build-result: app/
-      requires:
+      build-result: dist
+      requires:  
+      - artifacts:
+        - NamirialToAriba-app.zip
+      name: NamirialToAriba-app
+      target-path: resources/
 
 
   - name: NamirialToAriba-portal-deployer
