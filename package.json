@@ -39,9 +39,9 @@
           "kind": "hana-cloud",
           "binding": {
             "type": "cf",
-            "apiEndpoint": "https://api.cf.eu10.hana.ondemand.com",
+            "apiEndpoint": "https://api.cf.eu10-004.hana.ondemand.com",
             "org": "Avvale_dev-zyotztxl",
-            "space": "dev",
+            "space": "NamirialToAriba",
             "instance": "NamirialToAriba-hdiNamirialT9Wm2PIVINeEXWypKyhLhLg",
             "key": "NamirialToAriba-hdiNamirialT9Wm2PIVINeEXWypKyhLhLg-key"
           },

@@ -8,6 +8,9 @@ default-*.json
 gen/
 node_modules/
 target/
+*.sql
+*.sqlite-shm
+*.sqlite-wal
 
 # Web IDE, App Studio
 .che/
