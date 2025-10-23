@@ -60,7 +60,7 @@ modules:
 
   - name: NamirialToAriba-app-deployer
     type: com.sap.application.content
-    path: gen
+    path: app-deployer
     requires:
       - name: NamirialToAriba-auth
       - name: srv-api
@@ -71,11 +71,7 @@ modules:
             HTML5Runtime_enabled: true
     build-parameters:
       build-result: dist
-      requires:  
-      - artifacts:
-        - NamirialToAriba-app.zip
-      name: NamirialToAriba-app
-      target-path: resources/
+      requires:
 
 
   - name: NamirialToAriba-portal-deployer
