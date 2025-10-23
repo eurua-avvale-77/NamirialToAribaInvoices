@@ -58,41 +58,8 @@ modules:
     properties:
       TENANT_HOST_PATTERN: "^(.*)-${default-uri}"
 
-  - name: NamirialToAriba-app-deployer
-    type: com.sap.application.content
-    path: app-deployer
-    requires:
-      - name: NamirialToAriba-auth
-      - name: srv-api
-      - name: NamirialToAriba-html5-repo-host
-        parameters:
-          content-target: true
-          config:
-            HTML5Runtime_enabled: true
-    build-parameters:
-      build-result: dist
-      requires:
 
 
-  - name: NamirialToAriba-portal-deployer
-    type: com.sap.application.content
-    path: app/portal
-    requires:
-      - name: NamirialToAriba-portal
-        parameters:
-          content-target: true
-          service-key:
-            name: NamirialToAriba-portal-key
-            config:
-              content-endpoint: developer
-      - name: NamirialToAriba-auth
-      - name: NamirialToAriba-html5-repo-host
-      - name: NamirialToAriba-app-deployer
-    deployed-after:
-      - NamirialToAriba-app-deployer
-    parameters:
-      config:
-        TENANT_HOST_PATTERN: "^(.*)-${default-uri}"
 
   - name: NamirialToAriba-mtx
     type: nodejs
