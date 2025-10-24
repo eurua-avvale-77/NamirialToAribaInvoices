@@ -1,4 +1,4 @@
-using { sap.capire.invoices as my } from '../db/schema';
+using { sap.ania.invoices as my } from '../db/schema';
 
 /**
  * Service used by support personell, i.e. the InvoiceService' 'processors'.

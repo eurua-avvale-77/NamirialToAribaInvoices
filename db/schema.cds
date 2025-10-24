@@ -1,5 +1,5 @@
 using { cuid } from '@sap/cds/common'; //Rimosso 'Managed'
-namespace sap.capire.invoices;
+namespace sap.ania.invoices;
 
 entity Invoices {
   key ID        : String;
