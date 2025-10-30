@@ -8,7 +8,7 @@
     "@sap-cloud-sdk/http-client": "^4.1.2",
     "@sap/cds": "^9",
     "@sap/cds-common-content": "^3.0.1",
-    "@sap/cds-mtxs": "^3",
+    "@sap/cds-mtxs": "^3.4.3",
     "@sap/xssec": "^4",
     "express": "^4",
     "soap": "^1.5.0",
@@ -78,7 +78,6 @@
       "[with-mtx]": {
         "multitenancy": true
       }
-    },
-    "profile": "with-mtx-sidecar"
+    }
   }
 }

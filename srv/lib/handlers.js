@@ -15,7 +15,7 @@ async function getInvoices(req) {
         getFattureService.setEndpoint(getFattureServiceEndpoint.url);
         const { Invoices } = this.entities;
         const { InvoicesStatus } = this.entities;
-        // Set the parameters for the GetFatture method of the sevice 
+        // Set the parameters for the GetElectronic Invoices method of the sevice 
         const param =  {
           auth : {
                 CustomerCode: "0000001Test0024762",
@@ -35,16 +35,36 @@ async function getInvoices(req) {
        
         //if (resp && resp[0] && resp[0].GetElectronicInvoicesResult.DatiFattura) {
           if (resp[0].GetElectronicInvoicesResult) {                                  //V1.4 Corretto Fitro
-            resp[0].GetElectronicInvoicesResult.DatiFattura.forEach(DatiFattura => {
+          //resp[0].GetElectronicInvoicesResult.DatiFattura.forEach(DatiFattura => {
+         for (DatiFattura of resp[0].GetElectronicInvoicesResult.DatiFattura){
+        //leggo da ogni singola fattura il servizio GetFattura per recuperare XML in base64
+
+        // Set the parameters for the GetFattura method of the sevice 
+                   const paramFattura =  {
+                codiceCliente: "0000001Test0024762",
+                passwordServizi: "RTYxOTY5MUY0RUY4NjFFODM1MENDOUNCM0ZGOTU3OTM=",
+                codiceUfficio: DatiFattura.CodiceUfficio,
+                idSdi: DatiFattura.IdSdi
+        };
+        
+        // Invoke QueryGetFattura synchro and wait for the response, 
+        // NB 'GetElectronicInvoicesAsync' viene creato dal nostro Handler Soap, non esiste nel wsdl originale
+        const respFattura = await getFattureService.GetFatturaAsync(paramFattura);
+        
+        const xmlFile = respFattura[0].GetFatturaResult.FileFattura
+
                 LtInvoices.push({
                     ID            : DatiFattura.IdSdi,
                     title         : DatiFattura.NomeFile,
-                    content       : JSON.stringify(DatiFattura),          
-                    contentType   : 'application/xml',
+                    content       : xmlFile,          
+                    contentType   : 'Base64',
                     createdAt     : new Date()
                 });
-            });
+          };
         //V1.4 spostato chiusura IF in fondo
+
+
+
         
         // Salvo in DB Fatture Estratte, ID NomeFile e data
         await UPSERT.into(Invoices).entries(LtInvoices);
