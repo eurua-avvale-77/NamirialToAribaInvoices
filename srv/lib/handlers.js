@@ -5,6 +5,7 @@ const { parseStringPromise } = require('xml2js');
 const cds = require('@sap/cds');
 const axios = require('axios');
 
+
 let getFattureServicePromise = null;
 let getFattureServiceEndpoint = { url: null };
 
@@ -49,9 +50,9 @@ async function getInvoices(req) {
         
         // Invoke QueryGetFattura synchro and wait for the response, 
         // NB 'GetElectronicInvoicesAsync' viene creato dal nostro Handler Soap, non esiste nel wsdl originale
-        const respFattura = await getFattureService.GetFatturaAsync(paramFattura);
+        const respFattura = await getFattureService.GetFatturaDisinbustataAsync(paramFattura);
         
-        const xmlFile = respFattura[0].GetFatturaResult.FileFattura
+        const xmlFile = respFattura[0].GetFatturaDisinbustataResult.FileFattura
 
                 LtInvoices.push({
                     ID            : DatiFattura.IdSdi,
@@ -124,6 +125,9 @@ async function sendInvoices(req) {
     const esito  = [];
     const LtIds = [];
     const LtIdsOks = [];
+    const xml2js = require('xml2js');
+    const fs = require('fs');
+
 
     const LtInvoicesStatus = await SELECT.from(InvoicesStatus).where('status =', 'Readed');
 
@@ -134,6 +138,15 @@ async function sendInvoices(req) {
         const Invoice = await SELECT.from(Invoices).where('ID =', InvoiceStatus.ID)
 
         //Dal campo dati fattura dovrei mappare i dati per il servizio Ariba
+        //Conversione Dal Base64 Scaricato da Namirial
+        const base64 = Buffer.from(Invoice[0].content, "base64").toString("utf8");
+
+        //let xml = base64.replace(/[\r\n\t]+/g, '')
+        //xml = xml.replace(/> <+/g, '><')
+
+        let convert = await parseStringPromise(base64);
+        convert = (JSON.parse(JSON.stringify(convert)))
+        
         /* 
         Logica Mapping verso Ariba       
         */
@@ -179,11 +192,11 @@ async function sendInvoices(req) {
       // Map to an array of numbers
       const sdiIds = LtIdsOks.map(inv => inv.ID);
 
-      await UPSERT.into(InvoicesStatus).entries(LtIds);
+      //await UPSERT.into(InvoicesStatus).entries(LtIds);
 
       //Aggiunta cancellazione righe tabella invoices dopo che l'esito è andato a buon fine
 
-      await DELETE.from(Invoices).where({ ID: { in: sdiIds } });
+      //await DELETE.from(Invoices).where({ ID: { in: sdiIds } });
 
   return LtIds; //V1.4 Cambiata Tabella Output
     } catch (err) {

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:FatturaElettronicaSemplificata xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.0" versione="FSM10">
+	<FatturaElettronicaHeader>
+		<DatiTrasmissione>
+			<IdTrasmittente>
+				<IdPaese>IT</IdPaese>
+				<IdCodice>01234567890</IdCodice>
+			</IdTrasmittente>
+			<ProgressivoInvio>AAA111</ProgressivoInvio>
+			<FormatoTrasmissione>FSM10</FormatoTrasmissione>
+			<CodiceDestinatario>PR2T3ST</CodiceDestinatario>
+			<ContattiTrasmittente/>
+		</DatiTrasmissione>
+		<CedentePrestatore>
+			<IdFiscaleIVA>
+				<IdPaese>IT</IdPaese>
+				<IdCodice>01234567890</IdCodice>
+			</IdFiscaleIVA>
+			<Denominazione>Impresa Pulizie</Denominazione>
+			<Sede>
+				<Indirizzo>Indirizzo Mittente</Indirizzo>
+				<CAP>01234</CAP>
+				<Comune>Comune mittente</Comune>
+				<Provincia>PR</Provincia>
+				<Nazione>IT</Nazione>
+			 </Sede>
+			<RegimeFiscale>RF01</RegimeFiscale>
+		</CedentePrestatore>
+		<CessionarioCommittente>
+			<IdentificativiFiscali>
+				<CodiceFiscale>ITCFINPSVEN</CodiceFiscale>
+			</IdentificativiFiscali>
+			<AltriDatiIdentificativi>
+				<Denominazione>INPS</Denominazione>
+				<Sede>
+					<Indirizzo>Indirizzo destinatario</Indirizzo>
+					<CAP>56789</CAP>
+					<Comune>Comune destinatario</Comune>
+					<Provincia>PR</Provincia>
+					<Nazione>IT</Nazione>
+			  </Sede>
+			</AltriDatiIdentificativi>
+		</CessionarioCommittente>
+	</FatturaElettronicaHeader>
+	<FatturaElettronicaBody>
+		<DatiGenerali>
+			<DatiGeneraliDocumento>
+				<TipoDocumento>TD07</TipoDocumento>
+				<Divisa>EUR</Divisa>
+				<Data></Data>
+				<Numero>FAT861461_01</Numero>
+			</DatiGeneraliDocumento>
+		</DatiGenerali>
+		<DatiBeniServizi>
+			<Descrizione>Corrispettivo per la gestione e la rendicontazione delle somme dovute per la fornitura</Descrizione>
+			<Importo>99.68</Importo>
+			<DatiIVA>
+			  <Imposta>17.98</Imposta>
+			  <Aliquota>22.00</Aliquota>
+			</DatiIVA>
+		</DatiBeniServizi>
+	</FatturaElettronicaBody>
+</p:FatturaElettronicaSemplificata>
