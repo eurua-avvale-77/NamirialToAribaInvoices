@@ -1,13 +1,27 @@
+const { create } = require('xmlbuilder2');
 const { DateTime } = require('@sap/cds/lib/core/classes');
 const { getSoapService } = require('./soap-service');
+const { getRestService } = require('./rest-service');
 const { trim } = require('soap/lib/wsdl');
 const { parseStringPromise } = require('xml2js');
 const cds = require('@sap/cds');
 const axios = require('axios');
+const { 
+  v1: uuidv1,
+  v4: uuidv4,
+} = require('uuid');
+const { getCxmlTransformation } = require('./NamirialToAriba-mapping');
+const client = require('@sap-cloud-sdk/http-client');
+const path = require("path");
+const fs = require('fs');
+const { XMLParser } = require('fast-xml-parser')
 
 
 let getFattureServicePromise = null;
 let getFattureServiceEndpoint = { url: null };
+
+let getAribaServicePromise = null;
+let getAribaServiceEndpoint = { url: null };
 
 async function getInvoices(req) {
     try {
@@ -147,33 +161,158 @@ async function sendInvoices(req) {
         let convert = await parseStringPromise(base64);
         convert = (JSON.parse(JSON.stringify(convert)))
         
-        /* 
-        Logica Mapping verso Ariba       
-        */
+        console.log(convert.FatturaElettronicaSemplificata);
+
+        const fattura = [];
         
+        
+        //Logica Mapping verso Ariba      
+
+/*const doc = create({ version: '1.0', encoding: 'UTF-8' })
+  .dtd({ sysID: "http://xml.cxml.org/schemas/cXML/1.2.035/InvoiceDetail.dtd" })
+  .ele('cXML', {
+    payloadID: uuidv1(),
+    timestamp: new Date(),
+    version: '1.2.035'
+  })
+  .ele('Header')
+    .ele('From')
+      .ele('Credential', { domain: 'buyersystemid' })
+        .ele('Identity').txt('ACM_57473133').up() //Va gestita Conversione P.IVA Namirial
+      .up()
+    .up()
+    .ele('To')
+      .ele('Credential', { domain: 'systemID' })
+        .ele('Identity').txt('CHILD1').up()
+      .up()
+      .ele('Credential', { domain: 'NetworkID' })
+        .ele('Identity').txt('AN11182646989-T').up() //Togliere -t per prod
+      .up()
+    .up()
+    .ele('Sender')
+      .ele('Credential', { domain: 'NetworkID' })
+        .ele('Identity').txt('CHILD1-AN11182646989-T').up() //Togliere -t per prod
+        .ele('SharedSecret').txt('ARIBA123').up()
+      .up()
+      .ele('UserAgent').txt('Buyer').up()
+    .up()
+  .up()
+  .ele('Request', { deploymentMode: 'test' })
+    .ele('InvoiceDetailRequest')
+      .ele('InvoiceDetailRequestHeader', { 
+        invoiceDate: '2017-10-09T16:48:05+05:30',//convert[0].FatturaElettronicaBody[0].DatiGenerali[0].Data[0].value(),
+        invoiceID: 'INV32', //convert[0].FatturaElettronicaBody[0].DatiGenerali[0].Data[0].value(),
+        invoiceOrigin: 'supplier',
+        operation: 'new',
+        purpose: 'standard'
+      })
+        .ele('InvoiceDetailHeaderIndicator').up()
+        .ele('InvoiceDetailLineIndicator', {
+          isAccountingInLine: 'yes',
+          isShippingInLine: 'yes',
+          isSpecialHandlingInLine: 'yes'
+        }).up()
+        .ele('Extrinsic', { name: 'invoiceSourceDocument' }).txt('PurchaseOrder').up()
+        .ele('Extrinsic', { name: 'invoiceSubmissionMethod' }).txt('cXML').up()
+      .up()
+      .ele('InvoiceDetailOrder')
+        .ele('InvoiceDetailOrderInfo')
+          .ele('OrderReference', { orderID: 'PO108' })
+            .ele('DocumentReference', { payloadID: '1507547809043_711429418@10.59.35.140' }).up()
+          .up()
+        .up()
+        .ele('InvoiceDetailItem', { invoiceLineNumber: '1', quantity: '1' })
+          .ele('UnitOfMeasure').txt('EA').up()
+          .ele('UnitPrice').ele('Money', { currency: 'EUR' }).txt('27.00').up().up()
+          .ele('PriceBasisQuantity', { conversionFactor: '1', quantity: '1' })
+            .ele('UnitOfMeasure').txt('EA').up()
+            .ele('Description', { 'xml:lang': 'en-US' }).up()
+          .up()
+          .ele('InvoiceDetailItemReference', { lineNumber: '1' })
+            .ele('ItemID')
+              .ele('SupplierPartID').txt('Non Catalog Item').up()
+            .up()
+            .ele('Description', { 'xml:lang': 'en' }).txt('Riga unica Fattura').up()
+          .up()
+          .ele('SubtotalAmount').ele('Money', { currency: 'EUR' }).txt('27.00').up().up()
+          .ele('InvoiceDetailLineSpecialHandling')
+            .ele('Description', { 'xml:lang': 'en-US' }).up()
+            .ele('Money', { currency: 'EUR' }).txt('0.00').up()
+          .up()
+          .ele('GrossAmount').ele('Money', { currency: 'EUR' }).txt('27.00').up().up()
+          .ele('NetAmount').ele('Money', { currency: 'EUR' }).txt('27.00').up().up()
+        .up()
+      .up()
+      .ele('InvoiceDetailSummary')
+        .ele('SubtotalAmount').ele('Money', { currency: 'EUR' }).txt('27.00').up().up()
+        .ele('Tax')
+          .ele('Money', { currency: 'EUR' }).txt('5.95').up()
+          .ele('Description', { 'xml:lang': 'en-US' }).up()
+        .up()
+        .ele('SpecialHandlingAmount').ele('Money', { currency: 'EUR' }).txt('0.00').up().up()
+        .ele('ShippingAmount').ele('Money', { currency: 'EUR' }).txt('0.00').up().up()
+        .ele('GrossAmount').ele('Money', { currency: 'EUR' }).txt('27.00').up().up()
+        .ele('NetAmount').ele('Money', { currency: 'EUR' }).txt('27.00').up().up()
+        .ele('DueAmount').ele('Money', { currency: 'EUR' }).txt('32.95').up().up()
+      .up()
+    .up()
+  .up(); */
+        
+              // 📂 Percorso del file XML nel progetto CAP
+      const xmlPath = path.join(cds.root, "srv", "data", "AribaRequestExample.xml");
+
+      // 📖 Lettura file XML
+      const xmlFile = fs.readFileSync(xmlPath, "utf-8");
+
+      // 💾 Assegnazione a costante
+      const doc = xmlFile; // il contenuto XML originale (stringa)
         //Simulo chiamata ad Ariba con Funzione Pari o dispari e aggiorno tabella esiti
 
+         //const getAribaService = await getRestService('GetFatture', doc, getAribaServiceEndpoint);;
+         //getAribaService.setEndpoint(getAribaServiceEndpoint.url)
 
-        const numero = Invoice[0].ID;
+      const aribaService = await client.executeHttpRequest(
+                {
+                    destinationName: 'AribaPostXcml'
+                }, {
+                    method: 'POST', 
+                    headers: {
+        'Content-Type': 'application/xml'
+      },
+                    data: doc
+                } 
+            );
+
+
+      // 🔹 Parsing risposta XML → JSON
+      const xmlResponse = aribaService.data;
+      const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "" });
+      const parsed = parser.parse(xmlResponse);
+
+      // 🔹 Estraggo lo stato cXML
+      const status = parsed?.cXML?.Response?.Status || {};
+      const code = status.code || "N/A";
+      const text = status.text || "No text";
+      const message = typeof status === "object" ? Object.values(status).join(" ") : status;
+      
         const esito  = []
 
-                        if (Invoice[0].ID % 2 === 0) {
+                        if (code === '200') {
                           esito.push({
                         status    : 'AribaStored',
                         sendedAt  : new Date(),
-                        message : '',
+                        message : text,
                          });
 
                           LtIdsOks.push({
                             ID            : Invoice[0].ID
                           }); 
 
-
                         } else {
                           esito.push({
                         status    : 'AribaError',
                         sendedAt  : '',
-                        message : 'NumeroDispari',
+                        message : text,
                          });
                         };
 

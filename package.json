@@ -11,9 +11,12 @@
     "@sap/cds-mtxs": "^3.4.3",
     "@sap/xssec": "^4",
     "express": "^4",
+    "fast-xml-parser": "^5.3.1",
     "soap": "^1.5.0",
     "strong-soap": "^5.0.2",
-    "xml2js": "^0.6.2"
+    "uuid": "^13.0.0",
+    "xml2js": "^0.6.2",
+    "xmlbuilder2": "^4.0.0"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^2",
@@ -32,6 +35,13 @@
         "kind": "SOAP",
         "credentials": {
           "destination": "NAMI",
+          "path": ""
+        }
+      },
+      "AribaPostXcml": {
+        "kind": "rest",
+        "credentials": {
+          "destination": "AribaPostXcml",
           "path": ""
         }
       },

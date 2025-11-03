@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE cXML SYSTEM "http://xml.cxml.org/schemas/cXML/1.2.035/InvoiceDetail.dtd">
+<cXML payloadID="15077886091-903867768609504416.109.111.112" timestamp="2017-10-09T04:18:06-07:00" version="1.2.035">
+<Header>
+    <From>
+        <Credential domain="privateid">
+            <Identity>AN01051601427-T</Identity>
+        </Credential>
+    </From>
+    <To>
+        <Credential domain="systemID">
+            <Identity>CHILD1</Identity>
+        </Credential>   
+        <Credential domain="NetworkID">
+            <Identity>AN11182646989-T</Identity>
+        </Credential>               
+    </To>
+    <Sender>
+        <Credential domain="NetworkID">
+            <Identity>CHILD1-AN11182646989-T</Identity>
+            <SharedSecret>ARIBA123</SharedSecret>
+        </Credential>
+        <UserAgent>Buyer</UserAgent>
+    </Sender>
+</Header>
+<Request deploymentMode="test">
+<InvoiceDetailRequest>
+<InvoiceDetailRequestHeader invoiceDate="2017-10-09T16:48:05+05:30" invoiceID="INV32" invoiceOrigin="supplier" operation="new" purpose="standard">
+    <InvoiceDetailHeaderIndicator/> 
+    <InvoiceDetailLineIndicator isAccountingInLine="yes" isShippingInLine="yes" isSpecialHandlingInLine="yes"/>
+    <PaymentTerm payInNumberOfDays="1"/>
+    <Extrinsic name="invoiceSourceDocument">PurchaseOrder</Extrinsic>
+    <Extrinsic name="invoiceSubmissionMethod">cXML</Extrinsic>
+    <Extrinsic name="invoicePDF"><Attachment><URL>cid:1361870635.1507547895432@cxml.org</URL></Attachment></Extrinsic>
+</InvoiceDetailRequestHeader>
+<InvoiceDetailOrder>
+    <InvoiceDetailOrderInfo>
+	    <OrderReference orderID="4501731">
+			    <DocumentReference payloadID="1507547809043_711429418@10.59.35.140"></DocumentReference>
+        </OrderReference>
+    </InvoiceDetailOrderInfo>
+    <InvoiceDetailItem invoiceLineNumber="1" quantity="10">
+        <UnitOfMeasure>EA</UnitOfMeasure>
+        <UnitPrice><Money currency="USD">10.00</Money></UnitPrice>
+        <PriceBasisQuantity conversionFactor="1" quantity="1">
+            <UnitOfMeasure>EA</UnitOfMeasure>
+            <Description xml:lang="en-US"></Description>
+        </PriceBasisQuantity>
+        <InvoiceDetailItemReference lineNumber="1">
+            <ItemID>
+                <SupplierPartID>Non Catalog Item</SupplierPartID>
+            </ItemID>
+            <Description xml:lang="en">Green thing</Description>
+        </InvoiceDetailItemReference>
+        <SubtotalAmount><Money currency="USD">100.00</Money></SubtotalAmount>
+        <InvoiceDetailLineSpecialHandling>
+            <Description xml:lang="en-US"></Description><Money currency="USD">40.00</Money>
+        </InvoiceDetailLineSpecialHandling>
+        <InvoiceDetailLineShipping>
+            <InvoiceDetailShipping>
+                <Contact role="shipFrom">
+                    <Name xml:lang="en-US">Any Name Inc</Name>
+                    <PostalAddress>
+                        <Street>300 West Avenue Street</Street><Street></Street><Street></Street><Street></Street>
+                        <City>Syracuse</City>
+                        <State>NY</State>
+                        <PostalCode>13202</PostalCode>
+                        <Country isoCountryCode="US">United States</Country>
+                    </PostalAddress>
+                </Contact>
+                <Contact addressID="21AH" role="shipTo">
+                    <Name xml:lang="EN">MFG MX</Name>
+                    <PostalAddress><DeliverTo></DeliverTo><DeliverTo></DeliverTo>
+                        <Street>PASEO DE TAMARINDOS, BOSQUES 642-H</Street>
+                        <City>MEXICO CITY</City>
+                        <PostalCode>05110</PostalCode>
+                        <Country isoCountryCode="MX"></Country>
+                    </PostalAddress>
+                </Contact>
+            </InvoiceDetailShipping>
+            <Money currency="USD">50.00</Money>
+        </InvoiceDetailLineShipping>
+        <GrossAmount><Money currency="USD">190.00</Money></GrossAmount>
+        <NetAmount><Money currency="USD">190.00</Money></NetAmount>
+        <Distribution>
+            <Accounting name="DistributionCharge">
+                <AccountingSegment id="6171720002">
+                    <Name xml:lang="EN">GeneralLedger</Name>
+                    <Description xml:lang="EN"></Description>
+                </AccountingSegment>
+                <AccountingSegment id="50F000">
+                    <Name xml:lang="EN">CostCenter</Name>
+                    <Description xml:lang="EN"></Description>
+                </AccountingSegment>
+                <AccountingSegment id="100.00">
+                    <Name xml:lang="EN">Percentage</Name>
+                    <Description xml:lang="EN"></Description>
+                </AccountingSegment>
+            </Accounting>
+            <Charge><Money currency="USD">100.00</Money></Charge>
+        </Distribution>
+        <Extrinsic name="punchinItemFromCatalog">no</Extrinsic>
+    </InvoiceDetailItem>
+</InvoiceDetailOrder>
+    <InvoiceDetailSummary>
+        <SubtotalAmount><Money currency="USD">100.00</Money></SubtotalAmount>
+        <Tax>
+            <Money currency="USD">0</Money>
+            <Description xml:lang="en-US"></Description>
+        </Tax>
+        <SpecialHandlingAmount><Money currency="USD">40.00</Money></SpecialHandlingAmount>
+        <ShippingAmount><Money currency="USD">50.00</Money></ShippingAmount>
+        <GrossAmount><Money currency="USD">190.00</Money></GrossAmount>
+        <NetAmount><Money currency="USD">190.00</Money></NetAmount>
+        <DueAmount><Money currency="USD">190.00</Money></DueAmount>
+    </InvoiceDetailSummary>
+</InvoiceDetailRequest>
+</Request>
+</cXML>
