@@ -12,6 +12,7 @@
     "@sap/xssec": "^4",
     "express": "^4",
     "fast-xml-parser": "^5.3.1",
+    "saxon-js": "^2.7.0",
     "soap": "^1.5.0",
     "strong-soap": "^5.0.2",
     "uuid": "^13.0.0",
