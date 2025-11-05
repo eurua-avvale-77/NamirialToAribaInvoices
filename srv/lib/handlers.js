@@ -3,7 +3,7 @@ const { transformGet, transformPost } = require('../lib/xsltMapping.js');
 const { create } = require('xmlbuilder2');
 const { DateTime } = require('@sap/cds/lib/core/classes');
 const { getSoapService } = require('./soap-service');
-const { getRestService } = require('./rest-service');
+const { sendToAriba } = require('./rest-service');
 const { trim } = require('soap/lib/wsdl');
 const { parseStringPromise } = require('xml2js');
 const cds = require('@sap/cds');
@@ -139,7 +139,6 @@ async function sendInvoices(req) {
     const { Invoices } = this.entities;
     const { InvoicesStatus } = this.entities;
     const LtInvoices = [];
-    const esito  = [];
     const LtIds = [];
     const LtIdsOks = [];
     const xml2js = require('xml2js');
@@ -153,86 +152,8 @@ async function sendInvoices(req) {
        {
         //Estraggo Una Fattura Per volta
         const Invoice = await SELECT.from(Invoices).where('ID =', InvoiceStatus.ID)
-
-        //Dal campo dati fattura dovrei mappare i dati per il servizio Ariba
-        //Conversione Dal Base64 Scaricato da Namirial
-        const base64 = Buffer.from(Invoice[0].content, "base64").toString("utf8");
-
-        //let xml = base64.replace(/[\r\n\t]+/g, '')
-        //xml = xml.replace(/> <+/g, '><')
-
-        //let convert = await parseStringPromise(base64);
-        //convert = (JSON.parse(JSON.stringify(convert)))
-
-        
-      /*// 📂 Percorso del file XML nel progetto CAP
-      const xmlPath = path.join(cds.root, "srv", "data", "FatturaNamirialxmlfattelettronicaesempio2.xml");
-
-      // 📖 Lettura file XML
-      const xmlFile = fs.readFileSync(xmlPath, "utf-8");*/
-      const esito  = []
-      const res = [];
-      //Chiamo Conversione xslt
-      const cxmlFiles = await transformPost(base64, res);
-      
-      for ( const [filename, xmlContent] of Object.entries(res) ) {
-      // 💾 Assegnazione a costante
-      const doc = xmlContent; // il contenuto XML originale (stringa)
-        //Simulo chiamata ad Ariba con Funzione Pari o dispari e aggiorno tabella esiti
-      // 📂 Percorso del file XML nel progetto CAP
-      /*const xmlPath = path.join(cds.root, "srv", "data", Invoice[0].title );
-      
-      // 📖 Lettura file XML
-      const xmlFile = fs.writeFileSync(xmlPath, doc);*/
-         //const getAribaService = await getRestService('GetFatture', doc, getAribaServiceEndpoint);;
-         //getAribaService.setEndpoint(getAribaServiceEndpoint.url)
-
-      const aribaService = await client.executeHttpRequest(
-                {
-                    destinationName: 'AribaPostXcml'
-                }, {
-                    method: 'POST', 
-                    headers: {
-        'Content-Type': 'application/xml'
-      },
-                    data: doc
-                } 
-            );
-
-
-      // 🔹 Parsing risposta XML → JSON
-      const xmlResponse = aribaService.data;
-      const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "" });
-      const parsed = parser.parse(xmlResponse);
-
-      // 🔹 Estraggo lo stato cXML
-      const status = parsed?.cXML?.Response?.Status || {};
-      const code = status.code || "N/A";
-      const text = status.text || "No text";
-      const message = typeof status === "object" ? Object.values(status).join(" ") : status;
-      
-
-                        if (code === '200') {
-                          esito.push({
-                        status    : 'AribaStored',
-                        sendedAt  : new Date(),
-                        message : text + '' + message,
-                         });
-
-                         /* LtIdsOks.push({
-                            ID            : Invoice[0].ID
-                          }); */
-
-                        } else {
-                          esito.push({
-                        status    : 'AribaError',
-                        sendedAt  : '',
-                        message : text + '' + message,
-                         });
-                        };
-
-
-       };
+        //Chiamata alla funzione di converisone e invio ad Ariba
+        const { esito } = await sendToAriba(Invoice);
 
                  if (esito[0].status === 'AribaStored'){ LtIdsOks.push({
                     ID : Invoice[0].ID
@@ -245,20 +166,17 @@ async function sendInvoices(req) {
             sendedAt      : esito[0].sendedAt,
             message       : esito[0].message
                 }); 
-        
-
-
       }
     //)
     
       // Map to an array of numbers
       const sdiIds = LtIdsOks.map(inv => inv.ID);
 
-      //await UPSERT.into(InvoicesStatus).entries(LtIds);
+      await UPSERT.into(InvoicesStatus).entries(LtIds);
 
       //Aggiunta cancellazione righe tabella invoices dopo che l'esito è andato a buon fine
 
-      //await DELETE.from(Invoices).where({ ID: { in: sdiIds } });
+      await DELETE.from(Invoices).where({ ID: { in: sdiIds } });
 
   return LtIds; //V1.4 Cambiata Tabella Output
     } catch (err) {
@@ -268,10 +186,8 @@ async function sendInvoices(req) {
 
 async function retryInvoices(req) {
   try{
-        const { Invoices } = this.entities;
+    const { Invoices } = this.entities;
     const { InvoicesStatus } = this.entities;
-    const LtInvoices = [];
-    const esito  = [];
     const LtIds = [];
     const LtIdsOks = [];
 
@@ -283,41 +199,23 @@ async function retryInvoices(req) {
         //Estraggo Una Fattura Per volta
         const Invoice = await SELECT.from(Invoices).where('ID =', InvoiceStatus.ID)
 
-        //Dal campo dati fattura dovrei mappare i dati per il servizio Ariba
-        /* 
-        Logica Mapping verso Ariba       
-        */
-        
-        //Simulo chiamata ad Ariba con Funzione Pari o dispari e aggiorno tabella esiti
+         const { esito } = await sendToAriba(Invoice);
 
+                 if (esito[0].status === 'AribaStored'){ LtIdsOks.push({
+                    ID : Invoice[0].ID
+                    });
+                    } 
 
-        //const numero = Invoice[0].ID;
-        const esito  = []
-
-                        if (Invoice[0].ID % 2 === 0) {
-                          continue
-                        } else {
-                          esito.push({
-                        status    : 'AribaStored',
-                        sendedAt  : new Date(),
-                        message : '',
-                         });
-
-                           LtIdsOks.push({
-                            ID  : Invoice[0].ID
-                          }); 
-
-                        };
-
-
-          LtIds.push({
+                 LtIds.push({
             ID            : Invoice[0].ID,
             status        : esito[0].status,
             sendedAt      : esito[0].sendedAt,
-            message     : esito[0].message
+            message       : esito[0].message
                 }); 
+
+      };
         
-       }
+       
     //)
     
       // Map to an array of numbers
