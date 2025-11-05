@@ -18,12 +18,12 @@
       <xsl:for-each select="//FatturaElettronicaBody">
             <!-- Ogni corpo di fattura genera un cXML -->
           <!-- Generate a unique filename for each -->
-    <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE cXML SYSTEM "http://xml.cxml.org/schemas/cXML/1.2.035/InvoiceDetail.dtd"&gt;</xsl:text>
 
       <xsl:variable name="num" select="position()"/>
       <xsl:variable name="file" select="DatiGenerali/DatiGeneraliDocumento/Numero || '.xml'"/>
 
     <xsl:result-document href="{$file}">
+    <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE cXML SYSTEM "http://xml.cxml.org/schemas/cXML/1.2.035/InvoiceDetail.dtd"&gt;</xsl:text>
     <cXML>
       <!-- Payload ID e Timestamp -->
       <!-- cXML: /cXML/@payloadID ← generato univocamente -->
@@ -81,7 +81,7 @@
               <Extrinsic name="invoiceSourceDocument">PurchaseOrder</Extrinsic>
               <Extrinsic name="invoiceSubmissionMethod">cXML</Extrinsic>
             </InvoiceDetailRequestHeader>
-
+            <xsl:variable name="Divisa" select="DatiGenerali/DatiGeneraliDocumento/Divisa"/>
             <!-- Ordine di riferimento -->
             <InvoiceDetailOrder>
               <InvoiceDetailOrderInfo>
@@ -95,7 +95,7 @@
                 <InvoiceDetailItem invoiceLineNumber="{NumeroLinea}" quantity="{Quantita}">
                   <UnitOfMeasure>EA</UnitOfMeasure>
                   <UnitPrice>
-                    <Money currency="{Divisa}">
+                    <Money currency="{$Divisa}">
                       <xsl:value-of select="PrezzoUnitario"/>
                     </Money>
                   </UnitPrice>
@@ -117,24 +117,24 @@
 
                   <!-- Totali -->
                   <SubtotalAmount>
-                    <Money currency="{Divisa}">
+                    <Money currency="{$Divisa}">
                       <xsl:value-of select="PrezzoTotale"/>
                     </Money>
                   </SubtotalAmount>
 
                   <InvoiceDetailLineSpecialHandling>
                     <Description xml:lang="en-US"/>
-                    <Money currency="{Divisa}">0.00</Money>
+                    <Money currency="{$Divisa}">0.00</Money>
                   </InvoiceDetailLineSpecialHandling>
 
                   <GrossAmount>
-                    <Money currency="{Divisa}">
+                    <Money currency="{$Divisa}">
                       <xsl:value-of select="PrezzoTotale"/>
                     </Money>
                   </GrossAmount>
 
                   <NetAmount>
-                    <Money currency="{Divisa}">
+                    <Money currency="{$Divisa}">
                       <xsl:value-of select="PrezzoTotale"/>
                     </Money>
                   </NetAmount>
@@ -146,40 +146,40 @@
             <InvoiceDetailSummary>
               <!-- Mapping: Subtotal, Tax, Total -->
               <SubtotalAmount>
-                <Money currency="{Divisa}">
+                <Money currency="{$Divisa}">
                   <xsl:value-of select="DatiBeniServizi/DatiRiepilogo/ImponibileImporto"/>
                 </Money>
               </SubtotalAmount>
 
               <Tax>
-                <Money currency="{Divisa}">
+                <Money currency="{$Divisa}">
                   <xsl:value-of select="DatiBeniServizi/DatiRiepilogo/Imposta"/>
                 </Money>
                 <Description xml:lang="en-US"></Description>
               </Tax>
 
               <SpecialHandlingAmount>
-                <Money currency="{Divisa}">0.00</Money>
+                <Money currency="{$Divisa}">0.00</Money>
               </SpecialHandlingAmount>
 
               <ShippingAmount>
-                <Money currency="{Divisa}">0.00</Money>
+                <Money currency="{$Divisa}">0.00</Money>
               </ShippingAmount>
 
               <GrossAmount>
-                <Money currency="{Divisa}">
+                <Money currency="{$Divisa}">
                   <xsl:value-of select="DatiBeniServizi/DatiRiepilogo/ImponibileImporto"/>
                 </Money>
               </GrossAmount>
 
               <NetAmount>
-                <Money currency="{Divisa}">
+                <Money currency="{$Divisa}">
                   <xsl:value-of select="DatiBeniServizi/DatiRiepilogo/ImponibileImporto"/>
                 </Money>
               </NetAmount>
 
               <DueAmount>
-                <Money currency="{Divisa}">
+                <Money currency="{$Divisa}">
                   <xsl:value-of select="DatiPagamento/DettaglioPagamento/ImportoPagamento"/>
                 </Money>
               </DueAmount>

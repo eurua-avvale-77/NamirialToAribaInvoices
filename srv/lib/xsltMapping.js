@@ -17,8 +17,8 @@ export const transformPost = (req, res) => {
 	const stylesheetFilePath = ('/home/user/projects/NamirialToAribaInvoices/srv/external/NamirialToAribaxsltmapping.json');
 	const source = req;
 	const params = [];
-  /*
-    const xcml = SaxonJS.transform({
+  
+    /*const xcml = SaxonJS.transform({
 			stylesheetFileName: stylesheetFilePath,
 			sourceText: source,
 			stylesheetParams: params,
@@ -29,15 +29,14 @@ export const transformPost = (req, res) => {
 			}
 		}, 
 		"sync"
-	)
+	)*/
 
-res = xcml.principalResult	
-return res*/
 
-SaxonJS.transform({
+
+ SaxonJS.transform({
     stylesheetFileName: stylesheetFilePath,
 			sourceText: source,
-   "deliverResultDocument": function(uri) {
+   deliverResultDocument: function(uri) {
       return {
          "destination": "serialized",
          "save": function(resultUri, result, encoding) {
@@ -47,6 +46,8 @@ SaxonJS.transform({
    }
 }, "sync");
 
+/*res = xcml.principalResult	
+return res*/
 
 }
 

@@ -170,17 +170,18 @@ async function sendInvoices(req) {
 
       // 📖 Lettura file XML
       const xmlFile = fs.readFileSync(xmlPath, "utf-8");*/
+      const esito  = []
       const res = [];
       //Chiamo Conversione xslt
       const cxmlFiles = await transformPost(base64, res);
-
-      for ( cxmlFile of res ) {
+      
+      for ( const [filename, xmlContent] of Object.entries(res) ) {
       // 💾 Assegnazione a costante
-      const doc = cxmlFile; // il contenuto XML originale (stringa)
+      const doc = xmlContent; // il contenuto XML originale (stringa)
         //Simulo chiamata ad Ariba con Funzione Pari o dispari e aggiorno tabella esiti
       // 📂 Percorso del file XML nel progetto CAP
       /*const xmlPath = path.join(cds.root, "srv", "data", Invoice[0].title );
-
+      
       // 📖 Lettura file XML
       const xmlFile = fs.writeFileSync(xmlPath, doc);*/
          //const getAribaService = await getRestService('GetFatture', doc, getAribaServiceEndpoint);;
@@ -210,29 +211,35 @@ async function sendInvoices(req) {
       const text = status.text || "No text";
       const message = typeof status === "object" ? Object.values(status).join(" ") : status;
       
-        const esito  = []
 
                         if (code === '200') {
                           esito.push({
                         status    : 'AribaStored',
                         sendedAt  : new Date(),
-                        message : text,
+                        message : text + '' + message,
                          });
 
-                          LtIdsOks.push({
+                         /* LtIdsOks.push({
                             ID            : Invoice[0].ID
-                          }); 
+                          }); */
 
                         } else {
                           esito.push({
                         status    : 'AribaError',
                         sendedAt  : '',
-                        message : text,
+                        message : text + '' + message,
                          });
                         };
 
 
-          LtIds.push({
+       };
+
+                 if (esito[0].status === 'AribaStored'){ LtIdsOks.push({
+                    ID : Invoice[0].ID
+                    });
+                    } 
+
+                 LtIds.push({
             ID            : Invoice[0].ID,
             status        : esito[0].status,
             sendedAt      : esito[0].sendedAt,
@@ -240,7 +247,7 @@ async function sendInvoices(req) {
                 }); 
         
 
-       };
+
       }
     //)
     
