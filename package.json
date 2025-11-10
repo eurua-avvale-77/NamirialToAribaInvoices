@@ -10,6 +10,8 @@
     "@sap/cds-common-content": "^3.0.1",
     "@sap/cds-mtxs": "^3.4.3",
     "@sap/xssec": "^4",
+    "axios": "^1.13.2",
+    "dotenv": "^17.2.3",
     "express": "^4",
     "fast-xml-parser": "^5.3.1",
     "saxon-js": "^2.7.0",
@@ -28,6 +30,7 @@
   },
   "private": true,
   "cds": {
+    "profile": "with-mtx-sidecar",
     "requires": {
       "db": {
         "kind": "hana-cloud"
@@ -48,7 +51,7 @@
       },
       "[hybrid]": {
         "db": {
-          "kind": "hana-cloud",
+          "kind": "hana",
           "binding": {
             "type": "cf",
             "apiEndpoint": "https://api.cf.eu10-004.hana.ondemand.com",

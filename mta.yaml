@@ -27,6 +27,7 @@ modules:
     requires:
       - name: NamirialToAriba-auth
       - name: NamirialToAriba-db
+      - name: NamirialToAriba-destination
 
   - name: NamirialToAriba
     type: approuter.nodejs
@@ -50,6 +51,7 @@ modules:
         properties:
           name: mtx-api # must be used in xs-app.json as well
           url: ~{mtx-url}
+      - name: NamirialToAriba-destination
     provides:
       - name: app-api
         properties:
@@ -57,9 +59,6 @@ modules:
           app-uri: ${default-uri}
     properties:
       TENANT_HOST_PATTERN: "^(.*)-${default-uri}"
-
-
-
 
   - name: NamirialToAriba-mtx
     type: nodejs
@@ -94,6 +93,56 @@ modules:
           SUBSCRIPTION_URL: ~{app-protocol}://\${tenant_subdomain}-~{app-uri}
       - name: NamirialToAriba-html5-runtime
       - name: NamirialToAriba-portal
+      - name: NamirialToAriba-destination
+
+  - name: NamirialToAriba-app-deployer
+    type: com.sap.application.content
+    path: gen
+    requires:
+      - name: NamirialToAriba-auth
+      - name: srv-api
+      - name: NamirialToAriba-html5-repo-host
+        parameters:
+          content-target: true
+          config:
+            HTML5Runtime_enabled: true
+    build-parameters:
+      build-result: app/
+      requires:
+
+
+
+  - name: NamirialToAriba-portal-deployer
+    type: com.sap.application.content
+    path: app/portal
+    parameters:
+      config:
+        TENANT_HOST_PATTERN: "^(.*)-${default-uri}"
+    requires:
+      - name: NamirialToAriba-portal
+        parameters:
+          content-target: true
+          service-key:
+            name: NamirialToAriba-portal-key
+            config:
+              content-endpoint: developer
+      - name: NamirialToAriba-auth
+      - name: NamirialToAriba-html5-repo-host
+      - name: NamirialToAriba-app-deployer
+    deployed-after:
+      - NamirialToAriba-app-deployer
+      # --------------------- SIDECAR MODULE ------------------------
+  - name: NamirialToAriba-db-deployer
+    # ------------------------------------------------------------
+    type: hdb
+    path: gen/db
+    parameters:
+      buildpack: nodejs_buildpack
+    requires:
+      - name: NamirialToAriba-db
+    build-parameters:
+      builder: custom
+      commands: []
 resources:
   - name: NamirialToAriba-auth
     type: org.cloudfoundry.managed-service
@@ -150,3 +199,8 @@ resources:
     parameters:
       service: service-manager
       service-plan: container
+  - name: NamirialToAriba-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite

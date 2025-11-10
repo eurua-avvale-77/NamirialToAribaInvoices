@@ -20,7 +20,8 @@
     "profile": "mtx-sidecar",
     "requires": {
       "html5-repo": true,
-      "portal": true
+      "portal": true,
+      "destinations": true
     }
   }
 }
