@@ -21,13 +21,20 @@ async function sendToAriba(Invoice, Customers) {
       let Ids = [];
       let IdsOks = [];
 
-      //Chiamo Conversione xslt
-      const cxmlFiles = await transformPost(base64, res);
-      
       const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "" });
       const base64parse = parser.parse(base64)
       const Piva = base64parse["p:FatturaElettronicaSemplificata"].FatturaElettronicaHeader.CedentePrestatore.IdFiscaleIVA.IdCodice
-      const TipoDoc   = base64parse["p:FatturaElettronicaSemplificata"].FatturaElettronicaBody.DatiGenerali.DatiGeneraliDocumento.TipoDocumento
+      
+      //Leggo Tabella Customers
+
+      //Valorizzo AribaId e DomainID Da Tabella
+      const AribaId = 'ProvaAribaId';
+      const DomainId = 'ProvaDomain'
+
+      //Chiamo Conversione xslt
+      const cxmlFiles = await transformPost(base64, res, AribaId, DomainId);
+      
+      
       //Lettura Tabella Customers
       
       for ( const [filename, xmlContent] of Object.entries(res) ) {

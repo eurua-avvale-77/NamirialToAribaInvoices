@@ -1,6 +1,7 @@
 import { join } from 'path';
 import SaxonJS from 'saxon-js';
 import  fs from 'fs' ;
+import { domainToUnicode } from 'url';
 
 
 /* GET request */
@@ -10,13 +11,15 @@ export const transformGet = (req, res) => {
 };
 
 /* POST request */
-export const transformPost = (req, res) => {
+export const transformPost = (req, res, p1, p2) => {
 	
 	//const { "stylesheet": stylesheetFileName } = req.query;
 	
 	const stylesheetFilePath = ('/home/user/projects/NamirialToAribaInvoices/srv/external/NamirialToAribaxsltmapping.json');
 	const source = req;
-	const params = [];
+	const params = {'aribaId' : p1,
+    'domainId' : p2 
+   };
   
     /*const xcml = SaxonJS.transform({
 			stylesheetFileName: stylesheetFilePath,
@@ -36,6 +39,7 @@ export const transformPost = (req, res) => {
  SaxonJS.transform({
     stylesheetFileName: stylesheetFilePath,
 			sourceText: source,
+      stylesheetParams: params,
    deliverResultDocument: function(uri) {
       return {
          "destination": "serialized",
