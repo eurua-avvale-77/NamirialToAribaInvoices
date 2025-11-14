@@ -1,3 +1,4 @@
+const { apiRequest } = require("./apiClient.js")
 const express = require('express');
 const { transformGet, transformPost } = require('../lib/xsltMapping.js');
 const { create } = require('xmlbuilder2');
@@ -133,9 +134,47 @@ async function getInvoices(req) {
     }
 }
 
+async function getCustomers(req) {
+    try {
+        // Get the SOAP client for the GetFatture service
+        const { AribaCustomers } = this.entities;
+        const Customerparams = []//'realm=ania-1-t';
+        const destination = 'AribaRequisitionCustomViewDora';
+        //const uniqueAttachmentId = '123456789'
+        const CustomerEndpoint = "procurement-reporting-details/v2/prod/views/SupplierCustomView?realm=ania-1-t"
+        const body = [];
+        const method = 'GET';
+        const apikey = 'u1V2UNOXqCQJQYWdlXlMut0uavLOE2A8';
+        //const responseData = await AttachmentDownOperationalProcurementSynchronousApi.fileDownloadWithUniqueId(uniqueAttachmentId, { realm: myRealm }).execute({ destinationName: myDestinationName });
+        const Customers = await apiRequest(destination, method, CustomerEndpoint , body, Customerparams, apikey );
+    
+        const LtCustomers = [];
+        
+        if (Customers.Records) {                               
+            Customers.Records.forEach(Customer => {
+              if (Customer.SupplierIDValue){
+                LtCustomers.push({
+                 AribaId    : Customer.UniqueName,
+                 Name       : Customer.Name,
+                 FiscalCode : Customer.SupplierIDDomain,//FiscalCode quando avremo il campo custom,
+                 VAT        : Customer.SupplierIDValue,//PIVA quando avremo il campo custom,
+                 SupplierIDDomain : Customer.SupplierIDDomain,
+                });
+                }
+            });
+          };
+
+        await UPSERT.into(AribaCustomers).entries(LtCustomers);
+
+        return LtCustomers;
+    } catch (err) {
+        req.error(err.code, err.message);
+    }
+}
+
 async function sendInvoices(req) {
   try{
-
+    const { AribaCustomers } = this.entities;
     const { Invoices } = this.entities;
     const { InvoicesStatus } = this.entities;
     const LtInvoices = [];
@@ -146,14 +185,14 @@ async function sendInvoices(req) {
 
 
     const LtInvoicesStatus = await SELECT.from(InvoicesStatus).where('status =', 'Readed');
-
+    const Customers = await SELECT.from(AribaCustomers)
     //LtInvoicesStatus.forEach(InvoiceStatus => 
       for (const InvoiceStatus of LtInvoicesStatus)
        {
         //Estraggo Una Fattura Per volta
         const Invoice = await SELECT.from(Invoices).where('ID =', InvoiceStatus.ID)
         //Chiamata alla funzione di converisone e invio ad Ariba
-        const { esito } = await sendToAriba(Invoice);
+        const { esito } = await sendToAriba(Invoice, Customers);
 
                  if (esito[0].status === 'AribaStored'){ LtIdsOks.push({
                     ID : Invoice[0].ID
@@ -186,12 +225,14 @@ async function sendInvoices(req) {
 
 async function retryInvoices(req) {
   try{
+    const { AribaCustomers } = this.entities;
     const { Invoices } = this.entities;
     const { InvoicesStatus } = this.entities;
     const LtIds = [];
     const LtIdsOks = [];
 
     const LtInvoicesStatus = await SELECT.from(InvoicesStatus).where('status =', 'AribaError');
+    const Customers = await SELECT.from(AribaCustomers)
 
     //LtInvoicesStatus.forEach(InvoiceStatus => 
       for (const InvoiceStatus of LtInvoicesStatus)
@@ -199,7 +240,7 @@ async function retryInvoices(req) {
         //Estraggo Una Fattura Per volta
         const Invoice = await SELECT.from(Invoices).where('ID =', InvoiceStatus.ID)
 
-         const { esito } = await sendToAriba(Invoice);
+         const { esito } = await sendToAriba(Invoice, Customers);
 
                  if (esito[0].status === 'AribaStored'){ LtIdsOks.push({
                     ID : Invoice[0].ID
@@ -236,6 +277,7 @@ async function retryInvoices(req) {
 
 module.exports = {
     getInvoices,
+    getCustomers,
     sendInvoices,
     retryInvoices
 }

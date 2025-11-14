@@ -16,3 +16,11 @@ entity InvoicesStatus : cuid {
     sendedAt      : Timestamp;
     message       : String;
   };
+
+  entity AribaCustomers {
+    key AribaId : String;
+    Name : String;
+    FiscalCode : String;
+    VAT : String;
+    SupplierIDDomain : String;
+  }

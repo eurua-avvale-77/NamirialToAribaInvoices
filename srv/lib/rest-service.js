@@ -8,43 +8,30 @@ const {
 } = require('uuid');
 const client = require('@sap-cloud-sdk/http-client');
 const { XMLParser } = require('fast-xml-parser');
+const cds = require('@sap/cds');
 
-async function sendToAriba(Invoice) {
 
+async function sendToAriba(Invoice, Customers) {
+   try {
         //Dal campo dati fattura dovrei mappare i dati per il servizio Ariba
         //Conversione Dal Base64 Scaricato da Namirial
-        const base64 = Buffer.from(Invoice[0].content, "base64").toString("utf8");
-
-        //let xml = base64.replace(/[\r\n\t]+/g, '')
-        //xml = xml.replace(/> <+/g, '><')
-
-        //let convert = await parseStringPromise(base64);
-        //convert = (JSON.parse(JSON.stringify(convert)))
-
-        
-      /*// 📂 Percorso del file XML nel progetto CAP
-      const xmlPath = path.join(cds.root, "srv", "data", "FatturaNamirialxmlfattelettronicaesempio2.xml");
-
-      // 📖 Lettura file XML
-      const xmlFile = fs.readFileSync(xmlPath, "utf-8");*/
+      const base64 = Buffer.from(Invoice[0].content, "base64").toString("utf8");
       const esito  = []
       const res = [];
       let Ids = [];
       let IdsOks = [];
+
       //Chiamo Conversione xslt
       const cxmlFiles = await transformPost(base64, res);
       
-      for ( const [filename, xmlContent] of Object.entries(res) ) {
-      // 💾 Assegnazione a costante
-      const doc = xmlContent; // il contenuto XML originale (stringa)
-        //Simulo chiamata ad Ariba con Funzione Pari o dispari e aggiorno tabella esiti
-      // 📂 Percorso del file XML nel progetto CAP
-      /*const xmlPath = path.join(cds.root, "srv", "data", Invoice[0].title );
+      const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "" });
+      const base64parse = parser.parse(base64)
+      const Piva = base64parse["p:FatturaElettronicaSemplificata"].FatturaElettronicaHeader.CedentePrestatore.IdFiscaleIVA.IdCodice
+      const TipoDoc   = base64parse["p:FatturaElettronicaSemplificata"].FatturaElettronicaBody.DatiGenerali.DatiGeneraliDocumento.TipoDocumento
+      //Lettura Tabella Customers
       
-      // 📖 Lettura file XML
-      const xmlFile = fs.writeFileSync(xmlPath, doc);*/
-         //const getAribaService = await getRestService('GetFatture', doc, getAribaServiceEndpoint);;
-         //getAribaService.setEndpoint(getAribaServiceEndpoint.url)
+      for ( const [filename, xmlContent] of Object.entries(res) ) {
+      const doc = xmlContent; 
 
       const aribaService = await client.executeHttpRequest(
                 {
@@ -61,7 +48,7 @@ async function sendToAriba(Invoice) {
 
       // 🔹 Parsing risposta XML → JSON
       const xmlResponse = aribaService.data;
-      const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "" });
+      //const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "" });
       const parsed = parser.parse(xmlResponse);
 
       // 🔹 Estraggo lo stato cXML
@@ -107,6 +94,9 @@ async function sendToAriba(Invoice) {
         
         // Return the output parameters
        return { esito };
+       } catch (err) {
+        req.error(err.code, err.message);
+    }
 
       };
 

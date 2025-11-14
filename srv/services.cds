@@ -10,11 +10,13 @@ service ProcessorService {
             Deletable : false
      }*/
     entity Invoices as projection on my.Invoices;
-    entity InvoicesStatus as projection on my.InvoicesStatus; 
+    entity InvoicesStatus as projection on my.InvoicesStatus;
+    entity AribaCustomers as projection on my.AribaCustomers;
     
     action getInvoices() returns Invoices;
-    action sendInvoices() returns Invoices;
-    action retryInvoices() returns Invoices;
+    action getCustomers() returns AribaCustomers;
+    action sendInvoices() returns InvoicesStatus;
+    action retryInvoices() returns InvoicesStatus;
 }
 
 /**
@@ -22,11 +24,13 @@ service ProcessorService {
  */
 service AdminService {
     entity Invoices as projection on my.Invoices;
-    entity InvoicesStatus as projection on my.InvoicesStatus; 
-
-    action getInvoices() returns Invoices; //commented for verison
-    action sendInvoices() returns Invoices; //comment for version
-    action retryInvoices() returns Invoices;
+    entity InvoicesStatus as projection on my.InvoicesStatus;
+    entity AribaCustomers as projection on my.AribaCustomers;
+    
+    action getInvoices() returns Invoices;
+    action getCustomers() returns AribaCustomers;
+    action sendInvoices() returns InvoicesStatus;
+    action retryInvoices() returns InvoicesStatus;
     }
 
     
