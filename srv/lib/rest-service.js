@@ -27,9 +27,11 @@ async function sendToAriba(Invoice, Customers) {
       
       //Leggo Tabella Customers
 
+      const Customer = Customers.find(item => item.VAT = Piva)
+
       //Valorizzo AribaId e DomainID Da Tabella
-      const AribaId = 'ProvaAribaId';
-      const DomainId = 'ProvaDomain'
+      const AribaId = Customer.AribaId;
+      const DomainId = Customer.SupplierIDDomain;
 
       //Chiamo Conversione xslt
       const cxmlFiles = await transformPost(base64, res, AribaId, DomainId);
