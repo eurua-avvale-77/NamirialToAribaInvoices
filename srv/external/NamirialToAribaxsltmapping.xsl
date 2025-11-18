@@ -16,15 +16,15 @@
   <!-- Template principale -->
   <xsl:param name="aribaId"/>
   <xsl:param name="domainId"/>
+  <xsl:param name="SupplierVAT"/>
+  <xsl:param name="CustomerVAT"/>
+
 
 
 
   <!-- Template principale -->
   <xsl:template match="/">
-  <xsl:variable name="buyerCountry" select="FatturaElettronicaHeader/CessionarioCommittente/DatiAnagrafici/IdFiscaleIVA/IdCodice"/>
-  <xsl:variable name="buyerVat" select="FatturaElettronicaHeader/CessionarioCommittente/DatiAnagrafici/IdFiscaleIVA/IdPaese"/>
-  <xsl:variable name="supplierCountry " select="FatturaElettronicaHeader/CedentePrestatore/DatiAnagrafici/IdFiscaleIVA/IdPaese"/>
-  <xsl:variable name="supplierVat" select="FatturaElettronicaHeader/CedentePrestatore/DatiAnagrafici/IdFiscaleIVA/IdCodice"/>
+
       <xsl:for-each select="//FatturaElettronicaBody">
             <!-- Ogni corpo di fattura genera un cXML -->
           <!-- Generate a unique filename for each -->
@@ -92,11 +92,13 @@
         </xsl:attribute>
 
               <InvoiceDetailHeaderIndicator/>
-              <InvoiceDetailLineIndicator
+              <!--<InvoiceDetailLineIndicator
                 isAccountingInLine="yes"
                 isShippingInLine="yes"
                 isSpecialHandlingInLine="yes"
-                isTaxLine="yes"/>    
+                isTaxLine="yes"/>    -->
+              <InvoiceDetailLineIndicator
+                isTaxLine="yes"/> 
               <xsl:choose>
               <xsl:when test="DatiGenerali/DatiGeneraliDocumento/TipoDocumento = 'TD07'
                             or DatiGenerali/DatiGeneraliDocumento/TipoDocumento = 'TD08'
@@ -107,8 +109,8 @@
               <!-- Mapping: invoiceSourceDocument e invoiceSubmissionMethod -->
               <Extrinsic name="invoiceSourceDocument">PurchaseOrder</Extrinsic>
               <Extrinsic name="invoiceSubmissionMethod">cXML</Extrinsic>
-              <Extrinsic name="buyerVatID"><xsl:value-of select="concat($buyerCountry, $buyerVat)"/></Extrinsic>
-              <Extrinsic name="supplierVatID"><xsl:value-of select="concat($supplierCountry, $supplierVat)"/></Extrinsic>
+              <Extrinsic name="buyerVatID"><xsl:value-of select="$CustomerVAT"/></Extrinsic>
+              <Extrinsic name="supplierVatID"><xsl:value-of select="$SupplierVAT"/></Extrinsic>
             </InvoiceDetailRequestHeader>
             <xsl:variable name="currency" select="DatiGenerali/DatiGeneraliDocumento/Divisa"/>
             <xsl:variable name="docTot" select="DatiGenerali/DatiGeneraliDocumento/ImportoTotaleDocumento"/>
@@ -154,8 +156,8 @@
                     <Description xml:lang="en">
                       <xsl:value-of select="normalize-space(Descrizione)"/>
                     </Description>
-                  <UnitOfMeasure>EA</UnitOfMeasure>
-                  <Description xml:lang="en-US"></Description>
+                  <!--<UnitOfMeasure>EA</UnitOfMeasure>
+                  <Description xml:lang="en-US"></Description>-->
                   </InvoiceDetailItemReference>
 
                   
@@ -204,8 +206,8 @@
                     <Description xml:lang="en">
                       <xsl:value-of select="normalize-space(Descrizione)"/>
                     </Description>
-                  <UnitOfMeasure>EA</UnitOfMeasure>
-                  <Description xml:lang="en-US"></Description>
+                  <!--<UnitOfMeasure>EA</UnitOfMeasure>
+                  <Description xml:lang="en-US"></Description>-->
                 </InvoiceDetailItemReference>
 
                   
