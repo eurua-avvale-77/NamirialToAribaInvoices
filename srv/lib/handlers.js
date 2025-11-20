@@ -138,10 +138,10 @@ async function getCustomers(req) {
     try {
         // Get the SOAP client for the GetFatture service
         const { AribaCustomers } = this.entities;
-        const Customerparams = []//'realm=ania-1-t';
+        const Customerparams = { realm :'ania-1-t'};
         const destination = 'AribaRequisitionCustomViewDora';
         //const uniqueAttachmentId = '123456789'
-        const CustomerEndpoint = "procurement-reporting-details/v2/prod/views/SupplierCustomView?realm=ania-1-t"
+        const CustomerEndpoint = "procurement-reporting-details/v2/prod/views/SupplierCustomView"
         const body = [];
         const method = 'GET';
         const apikey = 'u1V2UNOXqCQJQYWdlXlMut0uavLOE2A8';

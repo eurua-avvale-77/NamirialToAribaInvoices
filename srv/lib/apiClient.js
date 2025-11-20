@@ -28,6 +28,8 @@ let accessToken = null;
 let tokenExpiry = null;
 let dest = null;
 
+let results = [];
+
 /**
  * Get or refresh access token
  */
@@ -80,12 +82,51 @@ export async function apiRequest(destination, method, endpoint, data = null, par
     data,
     params,
   };
-
-  try {
+   
+  const response = await fetchAllPages(config)
+  /*try {
     const response = await axios(config);
-    return response.data;
+    results = response.data
+    return results;
   } catch (error) {
     console.error("❌ API request failed:", error.response?.data || error.message);
     throw error;
-  }
+  }*/
+}
+
+async function fetchAllPages(config, tokenField = "PageToken") {
+  let allResults = [];
+  let nextToken = null;
+
+  do {
+    // Apply the page token to config
+    if (nextToken) {
+      config.params = config.params || {};
+      config.params.PageToken = nextToken;
+    }
+
+    try {
+      const response = await axios(config);
+
+      if (!response || !response.data) {
+        throw new Error("Invalid API response.");
+      }
+
+      const data = response.data;
+
+      // append results from this page
+      const items = data.Records || data.value || [];
+      allResults = allResults.concat(items);
+
+      // read next page token
+      nextToken = data[tokenField] || null;
+
+    } catch (error) {
+      console.error("❌ API request failed:", error.response?.data || error.message);
+      throw error;
+    }
+
+  } while (nextToken);
+
+  return allResults;
 }
