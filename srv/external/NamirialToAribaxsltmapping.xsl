@@ -18,6 +18,7 @@
   <xsl:param name="domainId"/>
   <xsl:param name="SupplierVAT"/>
   <xsl:param name="CustomerVAT"/>
+  <xsl:param name="timestamp"/>
 
 
 
@@ -41,7 +42,7 @@
         <xsl:value-of select="concat('PAYLOAD-', generate-id())"/>
       </xsl:attribute>
       <xsl:attribute name="timestamp">
-        <xsl:value-of select="concat(substring-before(current-dateTime(), '+'), 'Z')"/>
+        <xsl:value-of select="$timestamp"/>
       </xsl:attribute>
       <xsl:attribute name="version">1.2.035</xsl:attribute>
 
@@ -74,9 +75,9 @@
       <Request deploymentMode="test">
         <InvoiceDetailRequest>
 
-              <InvoiceDetailRequestHeaderReference>
+             <!--  <InvoiceDetailRequestHeaderReference>
                 <DocumentReference payloadID="{DatiGenerali/DatiGeneraliDocumento/IdDocumento}"/>
-              </InvoiceDetailRequestHeaderReference>
+              </InvoiceDetailRequestHeaderReference> -->
             <InvoiceDetailRequestHeader
               invoiceDate="{DatiGenerali/DatiGeneraliDocumento/Data || 'T00:00:00+00:00'}"
               invoiceID="{DatiGenerali/DatiGeneraliDocumento/Numero}"

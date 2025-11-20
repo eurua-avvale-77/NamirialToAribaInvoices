@@ -14,13 +14,14 @@ export const transformGet = (req, res) => {
 export const transformPost = (req, res, p1, p2, p3, p4) => {
 	
 	//const { "stylesheet": stylesheetFileName } = req.query;
-	
+	const timestamp = new Date().toISOString();
 	const stylesheetFilePath = ('/home/user/projects/NamirialToAribaInvoices/srv/external/NamirialToAribaxsltmapping.json');
 	const source = req;
 	const params = {'aribaId' : p1,
     'domainId' : p2,
     'SupplierVAT' : p3,
-    'CustomerVAT' : p4
+    'CustomerVAT' : p4,
+    'timestamp'   : timestamp,
    };
   
     /*const xcml = SaxonJS.transform({
