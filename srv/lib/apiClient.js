@@ -92,6 +92,7 @@ export async function apiRequest(destination, method, endpoint, data = null, par
     console.error("❌ API request failed:", error.response?.data || error.message);
     throw error;
   }*/
+ return response
 }
 
 async function fetchAllPages(config, tokenField = "PageToken") {

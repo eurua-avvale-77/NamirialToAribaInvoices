@@ -138,7 +138,11 @@ async function getCustomers(req) {
     try {
         // Get the SOAP client for the GetFatture service
         const { AribaCustomers } = this.entities;
-        const Customerparams = { realm :'ania-1-t'};
+        const DateInterval = {"createdDateFrom" : req.data.DateFrom,
+                              "createdDateTo" : req.data.DateTo}
+        const Customerparams = { realm :'ania-1-t',
+                                 filters : JSON.stringify(DateInterval)
+        };
         const destination = 'AribaRequisitionCustomViewDora';
         //const uniqueAttachmentId = '123456789'
         const CustomerEndpoint = "procurement-reporting-details/v2/prod/views/SupplierCustomView"
@@ -150,14 +154,14 @@ async function getCustomers(req) {
     
         const LtCustomers = [];
         
-        if (Customers.Records) {                               
-            Customers.Records.forEach(Customer => {
+        if (Customers) {                               
+            Customers.forEach(Customer => {
               if (Customer.SupplierIDValue){
                 LtCustomers.push({
                  AribaId    : Customer.UniqueName,
                  Name       : Customer.Name,
-                 FiscalCode : Customer.SupplierIDDomain,//FiscalCode quando avremo il campo custom,
-                 VAT        : Customer.SupplierIDValue,//PIVA quando avremo il campo custom,
+                 FiscalCode : Customer.cus_cf,//FiscalCode quando avremo il campo custom,
+                 VAT        : Customer.cus_piva,//PIVA quando avremo il campo custom,
                  SupplierIDDomain : Customer.SupplierIDDomain,
                 });
                 }

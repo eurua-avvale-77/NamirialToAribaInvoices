@@ -14,7 +14,9 @@ service ProcessorService {
     entity AribaCustomers as projection on my.AribaCustomers;
     
     action getInvoices() returns Invoices;
-    action getCustomers() returns AribaCustomers;
+    action getCustomers(
+        DateFrom : DateTime,
+        DateTo   : DateTime) returns AribaCustomers;
     action sendInvoices() returns InvoicesStatus;
     action retryInvoices() returns InvoicesStatus;
 }
@@ -28,7 +30,9 @@ service AdminService {
     entity AribaCustomers as projection on my.AribaCustomers;
     
     action getInvoices() returns Invoices;
-    action getCustomers() returns AribaCustomers;
+    action getCustomers( 
+        DateFrom : DateTime,
+        DateTo   : DateTime) returns AribaCustomers;
     action sendInvoices() returns InvoicesStatus;
     action retryInvoices() returns InvoicesStatus;
     }
