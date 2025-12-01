@@ -1,7 +1,7 @@
-using { cuid } from '@sap/cds/common'; //Rimosso 'Managed'
+using { cuid, managed } from '@sap/cds/common'; //Rimosso 'Managed'
 namespace sap.ania.invoices;
 
-entity Invoices {
+entity Invoices  {
   key ID        : String;
   title         : String(200);
   content       : LargeString;          
@@ -17,7 +17,7 @@ entity InvoicesStatus : cuid {
     message       : String;
   };
 
-  entity AribaCustomers {
+  entity AribaCustomers  {
     key AribaId : String;
     Name : String;
     FiscalCode : String;

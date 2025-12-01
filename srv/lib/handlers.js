@@ -138,8 +138,8 @@ async function getCustomers(req) {
     try {
         // Get the SOAP client for the GetFatture service
         const { AribaCustomers } = this.entities;
-        const DateInterval = {"createdDateFrom" : req.data.DateFrom,
-                              "createdDateTo" : req.data.DateTo}
+        const DateInterval = {"updatedDateFrom" : req.data.DateFrom,
+                              "updatedDateTo" : req.data.DateTo}
         const Customerparams = { realm :'ania-1-t',
                                  filters : JSON.stringify(DateInterval)
         };

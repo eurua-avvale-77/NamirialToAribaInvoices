@@ -30,7 +30,6 @@
   },
   "private": true,
   "cds": {
-    "profile": "with-mtx-sidecar",
     "requires": {
       "db": {
         "kind": "hana-cloud"
