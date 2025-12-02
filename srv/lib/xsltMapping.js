@@ -15,6 +15,7 @@ export const transformPost = (req, res, p1, p2, p3, p4) => {
 	
 	//const { "stylesheet": stylesheetFileName } = req.query;
 	const timestamp = new Date().toISOString();
+  const payloadID = `${Date.now()}-${crypto.randomUUID()}@btpania.com`;
 	const stylesheetFilePath = ('/home/user/projects/NamirialToAribaInvoices/srv/external/NamirialToAribaxsltmapping.json');
 	const source = req;
 	const params = {'aribaId' : p1,
@@ -22,6 +23,7 @@ export const transformPost = (req, res, p1, p2, p3, p4) => {
     'SupplierVAT' : p3,
     'CustomerVAT' : p4,
     'timestamp'   : timestamp,
+    'payloadID'   : payloadID,
    };
   
     /*const xcml = SaxonJS.transform({

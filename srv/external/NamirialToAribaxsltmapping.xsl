@@ -19,7 +19,7 @@
   <xsl:param name="SupplierVAT"/>
   <xsl:param name="CustomerVAT"/>
   <xsl:param name="timestamp"/>
-
+  <xsl:param name="payloadID"/>
 
 
 
@@ -39,7 +39,7 @@
       <!-- Payload ID e Timestamp -->
       <!-- cXML: /cXML/@payloadID ← generato univocamente -->
       <xsl:attribute name="payloadID">
-        <xsl:value-of select="concat('PAYLOAD-', generate-id())"/>
+        <xsl:value-of select="$payloadID"/>
       </xsl:attribute>
       <xsl:attribute name="timestamp">
         <xsl:value-of select="$timestamp"/>
