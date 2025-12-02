@@ -83,13 +83,7 @@
         }
       },
       "[production]": {
-        "auth": "xsuaa",
-        "multitenancy": true
-      },
-      "html5-repo": true,
-      "portal": true,
-      "[with-mtx]": {
-        "multitenancy": true
+        "auth": "xsuaa"
       }
     }
   }
