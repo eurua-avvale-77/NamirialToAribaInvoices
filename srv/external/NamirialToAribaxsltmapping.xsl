@@ -92,14 +92,18 @@
         </xsl:choose>
         </xsl:attribute>
 
-              <InvoiceDetailHeaderIndicator/>
+            <xsl:choose>
+            <xsl:when test="DatiGenerali/DatiGeneraliDocumento/TipoDocumento = 'TD04'
+                            or DatiGenerali/DatiGeneraliDocumento/TipoDocumento = 'TD08'">
+              <InvoiceDetailHeaderIndicator isHeaderInvoice="yes"/></xsl:when>
+            <xsl:otherwise><InvoiceDetailHeaderIndicator/></xsl:otherwise>
+            </xsl:choose>
               <!--<InvoiceDetailLineIndicator
                 isAccountingInLine="yes"
                 isShippingInLine="yes"
                 isSpecialHandlingInLine="yes"
                 isTaxLine="yes"/>    -->
-              <InvoiceDetailLineIndicator
-                isTaxLine="yes"/> 
+              <InvoiceDetailLineIndicator/> 
               <xsl:choose>
               <xsl:when test="DatiGenerali/DatiGeneraliDocumento/TipoDocumento = 'TD07'
                             or DatiGenerali/DatiGeneraliDocumento/TipoDocumento = 'TD08'
@@ -120,7 +124,13 @@
             <xsl:choose>
               <xsl:when test="DatiGenerali/DatiGeneraliDocumento/TipoDocumento = 'TD07'
                             or DatiGenerali/DatiGeneraliDocumento/TipoDocumento = 'TD08'
-                            or DatiGenerali/DatiGeneraliDocumento/TipoDocumento = 'TD09'"></xsl:when>
+                            or DatiGenerali/DatiGeneraliDocumento/TipoDocumento = 'TD09'">
+              <InvoiceDetailOrderInfo>
+                <OrderReference orderID="">
+                  <DocumentReference payloadID=""/>
+                </OrderReference>
+              </InvoiceDetailOrderInfo>
+              </xsl:when>
               <xsl:otherwise>
               <InvoiceDetailOrderInfo>
                 <OrderReference orderID="{DatiGenerali/DatiOrdineAcquisto/IdDocumento}">

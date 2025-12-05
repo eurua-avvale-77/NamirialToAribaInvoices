@@ -7,7 +7,7 @@ Content-Type: application/json
 
 {
     "DateFrom" : "2025-11-28T00:00:00Z",
-    "DateTo"   : "2025-11-28T23:59:59Z"
+    "DateTo"   : "2025-12-03T23:59:59Z"
 }
 ### Lancia Invio delle fatture verso Ariba
 POST http://localhost:4004/odata/v4/processor/sendInvoices
@@ -15,3 +15,6 @@ Content-Type: application/json
 ### Lancia Il Retry Delle Fatture verso Ariba
 POST http://localhost:4004/odata/v4/processor/retryInvoices
 Content-Type: application/json
+
+### Lancia Il Retry Delle Fatture verso Ariba
+GET http://localhost:4004/odata/v4/processor/InvoicesStatus

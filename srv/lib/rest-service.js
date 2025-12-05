@@ -23,7 +23,9 @@ async function sendToAriba(Invoice, Customers) {
       let SupplierPiva = [];
       let SupplierIdPaese = []; 
       let CustomerPiva = [];
-      let CustomerIdPaese = []; 
+      let CustomerIdPaese = [];
+      let AribaId = [];
+      let DomainId = [];
 
       const parser = new XMLParser({ parseTagValue: false,
                                      parseAttributeValue: false,
@@ -34,23 +36,30 @@ async function sendToAriba(Invoice, Customers) {
       if (base64parse["p:FatturaElettronicaSemplificata"]){
        SupplierPiva = base64parse["p:FatturaElettronicaSemplificata"].FatturaElettronicaHeader.CedentePrestatore.IdFiscaleIVA.IdCodice
        SupplierIdPaese = base64parse["p:FatturaElettronicaSemplificata"].FatturaElettronicaHeader.CedentePrestatore.IdFiscaleIVA.IdPaese
+       if (base64parse["p:FatturaElettronicaSemplificata"].FatturaElettronicaHeader.CessionarioCommittente.IdentificativiFiscali.IdFiscaleIVA){
        CustomerPiva = base64parse["p:FatturaElettronicaSemplificata"].FatturaElettronicaHeader.CessionarioCommittente.IdentificativiFiscali.IdFiscaleIVA.IdCodice
        CustomerIdPaese = base64parse["p:FatturaElettronicaSemplificata"].FatturaElettronicaHeader.CessionarioCommittente.IdentificativiFiscali.IdFiscaleIVA.IdPaese
-      } else {
+       }}
+       else {
        SupplierPiva = base64parse["p:FatturaElettronica"].FatturaElettronicaHeader.CedentePrestatore.DatiAnagrafici.IdFiscaleIVA.IdCodice
        SupplierIdPaese = base64parse["p:FatturaElettronica"].FatturaElettronicaHeader.CedentePrestatore.DatiAnagrafici.IdFiscaleIVA.IdPaese
+       if (base64parse["p:FatturaElettronica"].FatturaElettronicaHeader.CessionarioCommittente.DatiAnagrafici.IdFiscaleIVA){
        CustomerPiva = base64parse["p:FatturaElettronica"].FatturaElettronicaHeader.CessionarioCommittente.DatiAnagrafici.IdFiscaleIVA.IdCodice
-       CustomerIdPaese = base64parse["p:FatturaElettronica"].FatturaElettronicaHeader.CessionarioCommittente.DatiAnagrafici.IdFiscaleIVA.IdPaese  
-      }
+       CustomerIdPaese = base64parse["p:FatturaElettronica"].FatturaElettronicaHeader.CessionarioCommittente.DatiAnagrafici.IdFiscaleIVA.IdPaese}
+       }   // solo per test
       //Leggo Tabella Customers
 
-      const Customer = Customers.find(item => item.VAT = SupplierPiva)
+      const Customer = Customers.find(item => item.VAT === SupplierPiva)
 
       //Valorizzo AribaId e DomainID Da Tabella
-      const AribaId = Customer.AribaId;
-      const DomainId = Customer.SupplierIDDomain;
-      const SupplierVAT = SupplierIdPaese + SupplierPiva;
-      const CustomerVAT = CustomerIdPaese + CustomerPiva;
+      if (Customer){
+       AribaId = Customer.AribaId;
+       DomainId = Customer.SupplierIDDomain;
+      } 
+      //const SupplierVAT = SupplierIdPaese + SupplierPiva;
+      const SupplierVAT = SupplierPiva;
+      //const CustomerVAT = CustomerIdPaese + CustomerPiva;
+      const CustomerVAT = CustomerPiva;
 
       //Chiamo Conversione xslt
       const cxmlFiles = await transformPost(base64, res, AribaId, DomainId, SupplierVAT, CustomerVAT); 
