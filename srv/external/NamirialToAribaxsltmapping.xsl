@@ -117,6 +117,17 @@
               <Extrinsic name="buyerVatID"><xsl:value-of select="$CustomerVAT"/></Extrinsic>
               <Extrinsic name="supplierVatID"><xsl:value-of select="$SupplierVAT"/></Extrinsic>
             </InvoiceDetailRequestHeader>
+            <xsl:variable name="multiplier">
+             <xsl:choose>
+               <xsl:when test="DatiGenerali/DatiGeneraliDocumento/TipoDocumento = 'TD04'
+                    or DatiGenerali/DatiGeneraliDocumento/TipoDocumento = 'TD08'">
+                <xsl:text>-1</xsl:text>
+               </xsl:when>
+              <xsl:otherwise>
+                <xsl:text>1</xsl:text>
+              </xsl:otherwise>
+             </xsl:choose>
+            </xsl:variable>
             <xsl:variable name="currency" select="DatiGenerali/DatiGeneraliDocumento/Divisa"/>
             <xsl:variable name="docTot" select="DatiGenerali/DatiGeneraliDocumento/ImportoTotaleDocumento"/>
             <!-- Ordine di riferimento -->
@@ -149,7 +160,7 @@
                   <UnitOfMeasure>EA</UnitOfMeasure>
                   <UnitPrice>
                     <Money currency="{$currency}">
-                      <xsl:value-of select="sum(DatiBeniServizi/Importo)"/>
+                      <xsl:value-of select="$multiplier * sum(DatiBeniServizi/Importo)"/>
                     </Money>
                   </UnitPrice>
 
@@ -175,19 +186,19 @@
                   <!-- Totali -->
                   <SubtotalAmount>
                     <Money currency="{$currency}">
-                      <xsl:value-of select="sum(DatiBeniServizi/Importo)"/>
+                      <xsl:value-of select="$multiplier * sum(DatiBeniServizi/Importo)"/>
                     </Money>
                   </SubtotalAmount>
 
                   <GrossAmount>
                     <Money currency="{$currency}">
-                      <xsl:value-of select="sum(DatiBeniServizi/Importo)"/>
+                      <xsl:value-of select="$multiplier * sum(DatiBeniServizi/Importo)"/>
                     </Money>
                   </GrossAmount>
 
                   <NetAmount>
                     <Money currency="{$currency}">
-                      <xsl:value-of select="sum(DatiBeniServizi/Importo)"/>
+                      <xsl:value-of select="$multiplier * sum(DatiBeniServizi/Importo)"/>
                     </Money>
                   </NetAmount>
                 </InvoiceDetailItem>
@@ -199,7 +210,7 @@
                   <UnitOfMeasure>EA</UnitOfMeasure>
                   <UnitPrice>
                     <Money currency="{$currency}">
-                      <xsl:value-of select="PrezzoUnitario"/>
+                      <xsl:value-of select="$multiplier * PrezzoUnitario"/>
                     </Money>
                   </UnitPrice>
 
@@ -225,19 +236,19 @@
                   <!-- Totali -->
                   <SubtotalAmount>
                     <Money currency="{$currency}">
-                      <xsl:value-of select="PrezzoTotale"/>
+                      <xsl:value-of select="$multiplier * PrezzoTotale"/>
                     </Money>
                   </SubtotalAmount>
 
                   <GrossAmount>
                     <Money currency="{$currency}">
-                      <xsl:value-of select="PrezzoTotale"/>
+                      <xsl:value-of select="$multiplier * PrezzoTotale"/>
                     </Money>
                   </GrossAmount>
 
                   <NetAmount>
                     <Money currency="{$currency}">
-                      <xsl:value-of select="PrezzoTotale"/>
+                      <xsl:value-of select="$multiplier * PrezzoTotale"/>
                     </Money>
                   </NetAmount>
                 </InvoiceDetailItem>
@@ -255,26 +266,26 @@
               <!-- Mapping: Subtotal, Tax, Total -->
               <SubtotalAmount>
                 <Money currency="{$currency}">
-                  <xsl:value-of select="sum(DatiBeniServizi/Importo)"/>
+                  <xsl:value-of select="$multiplier * sum(DatiBeniServizi/Importo)"/>
                 </Money>
               </SubtotalAmount>
 
               <Tax>
                 <Money currency="{$currency}">
-                  <xsl:value-of select="sum(DatiBeniServizi/DatiIVA/Imposta)"/>
+                  <xsl:value-of select="$multiplier * sum(DatiBeniServizi/DatiIVA/Imposta)"/>
                 </Money>
                 <Description xml:lang="en-US"></Description>
               </Tax>
 
               <GrossAmount>
                 <Money currency="{$currency}">
-                  <xsl:value-of select="sum(DatiBeniServizi/Importo) + sum(DatiBeniServizi/DatiIVA/Imposta)"/>
+                  <xsl:value-of select="$multiplier * (sum(DatiBeniServizi/Importo) + sum(DatiBeniServizi/DatiIVA/Imposta))"/>
                 </Money>
               </GrossAmount>
 
               <NetAmount>
                 <Money currency="{$currency}">
-                  <xsl:value-of select="sum(DatiBeniServizi/Importo) + sum(DatiBeniServizi/DatiIVA/Imposta)"/>
+                  <xsl:value-of select="$multiplier * (sum(DatiBeniServizi/Importo) + sum(DatiBeniServizi/DatiIVA/Imposta))"/>
                 </Money>
               </NetAmount>
 
@@ -286,32 +297,32 @@
               <!-- Mapping: Subtotal, Tax, Total -->
               <SubtotalAmount>
                 <Money currency="{$currency}">
-                  <xsl:value-of select="sum(DatiBeniServizi/DatiRiepilogo/ImponibileImporto)"/>
+                  <xsl:value-of select="$multiplier * sum(DatiBeniServizi/DatiRiepilogo/ImponibileImporto)"/>
                 </Money>
               </SubtotalAmount>
 
               <Tax>
                 <Money currency="{$currency}">
-                  <xsl:value-of select="sum(DatiBeniServizi/DatiRiepilogo/Imposta)"/>
+                  <xsl:value-of select="$multiplier * sum(DatiBeniServizi/DatiRiepilogo/Imposta)"/>
                 </Money>
                 <Description xml:lang="en-US"></Description>
               </Tax>
 
               <GrossAmount>
                 <Money currency="{$currency}">
-                  <xsl:value-of select="$docTot"/>
+                  <xsl:value-of select="$multiplier * $docTot"/>
                 </Money>
               </GrossAmount>
 
               <NetAmount>
                 <Money currency="{$currency}">
-                  <xsl:value-of select="$docTot"/>
+                  <xsl:value-of select="$multiplier * $docTot"/>
                 </Money>
               </NetAmount>
 
               <DueAmount>
                 <Money currency="{$currency}">
-                  <xsl:value-of select="DatiPagamento/DettaglioPagamento/ImportoPagamento"/>
+                  <xsl:value-of select="$multiplier * DatiPagamento/DettaglioPagamento/ImportoPagamento"/>
                 </Money>
               </DueAmount>
             </InvoiceDetailSummary>
