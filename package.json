@@ -30,6 +30,9 @@
   },
   "private": true,
   "cds": {
+  "server": {
+      "index": true
+    },
     "requires": {
       "db": {
         "kind": "hana-cloud"

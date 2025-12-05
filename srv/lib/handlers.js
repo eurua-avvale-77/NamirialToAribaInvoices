@@ -138,8 +138,27 @@ async function getCustomers(req) {
     try {
         // Get the SOAP client for the GetFatture service
         const { AribaCustomers } = this.entities;
-        const DateInterval = {"updatedDateFrom" : req.data.DateFrom,
-                              "updatedDateTo" : req.data.DateTo}
+        const now = new Date();
+
+// Oggi alle 00:00 (UTC)
+const updatedDateFrom = new Date(Date.UTC(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate(),
+    0, 0, 0
+)).toISOString();
+
+// Oggi alle 23:59 (UTC)
+const updatedDateTo = new Date(Date.UTC(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate(),
+    23, 59, 59
+)).toISOString();
+
+
+        const DateInterval = {"updatedDateFrom" : updatedDateFrom,
+                              "updatedDateTo" : updatedDateTo}
         const Customerparams = { realm :'ania-1-t',
                                  filters : JSON.stringify(DateInterval)
         };

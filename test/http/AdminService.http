@@ -1,0 +1,173 @@
+@server=http://localhost:4004
+@username=alice
+@password=
+
+
+### Invoices
+# @name Invoices_GET
+GET {{server}}/odata/v4/admin/Invoices
+Authorization: Basic {{username}}:{{password}}
+
+
+### Invoices
+# @name Invoices_POST
+POST {{server}}/odata/v4/admin/Invoices
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "ID": "Invoices-18417139",
+  "title": "title-18417139",
+  "content": "content-18417139",
+  "contentType": "contentType-18417139",
+  "createdAt": "2023-02-01T00:00:00.000Z"
+}
+
+
+### Invoices
+# @name Invoices_PATCH
+PATCH {{server}}/odata/v4/admin/Invoices/Invoices-18417139
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "ID": "Invoices-18417139",
+  "title": "title-18417139",
+  "content": "content-18417139",
+  "contentType": "contentType-18417139",
+  "createdAt": "2023-02-01T00:00:00.000Z"
+}
+
+
+### Invoices
+# @name Invoices_DELETE
+DELETE {{server}}/odata/v4/admin/Invoices/Invoices-18417139
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+
+### InvoicesStatus
+# @name InvoicesStatus_GET
+GET {{server}}/odata/v4/admin/InvoicesStatus
+Authorization: Basic {{username}}:{{password}}
+
+
+### InvoicesStatus
+# @name InvoicesStatus_POST
+POST {{server}}/odata/v4/admin/InvoicesStatus
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "ID": "InvoicesStatus-12204878",
+  "title": "title-12204878",
+  "createdAt": "2003-09-21T00:00:00.000Z",
+  "status": "status-12204878",
+  "sendedAt": "2001-11-25T00:00:00.000Z",
+  "message": "message-12204878"
+}
+
+
+### InvoicesStatus
+# @name InvoicesStatus_PATCH
+PATCH {{server}}/odata/v4/admin/InvoicesStatus/InvoicesStatus-12204878
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "ID": "InvoicesStatus-12204878",
+  "title": "title-12204878",
+  "createdAt": "2003-09-21T00:00:00.000Z",
+  "status": "status-12204878",
+  "sendedAt": "2001-11-25T00:00:00.000Z",
+  "message": "message-12204878"
+}
+
+
+### InvoicesStatus
+# @name InvoicesStatus_DELETE
+DELETE {{server}}/odata/v4/admin/InvoicesStatus/InvoicesStatus-12204878
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+
+### AribaCustomers
+# @name AribaCustomers_GET
+GET {{server}}/odata/v4/admin/AribaCustomers
+Authorization: Basic {{username}}:{{password}}
+
+
+### AribaCustomers
+# @name AribaCustomers_POST
+POST {{server}}/odata/v4/admin/AribaCustomers
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "AribaId": "AribaCustomers-9358238",
+  "Name": "Name-9358238",
+  "FiscalCode": "FiscalCode-9358238",
+  "VAT": "VAT-9358238",
+  "SupplierIDDomain": "SupplierIDDomain-9358238"
+}
+
+
+### AribaCustomers
+# @name AribaCustomers_PATCH
+PATCH {{server}}/odata/v4/admin/AribaCustomers/AribaCustomers-9358238
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "AribaId": "AribaCustomers-9358238",
+  "Name": "Name-9358238",
+  "FiscalCode": "FiscalCode-9358238",
+  "VAT": "VAT-9358238",
+  "SupplierIDDomain": "SupplierIDDomain-9358238"
+}
+
+
+### AribaCustomers
+# @name AribaCustomers_DELETE
+DELETE {{server}}/odata/v4/admin/AribaCustomers/AribaCustomers-9358238
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+
+### getInvoices
+# @name getInvoices_POST
+POST {{server}}/odata/v4/admin/getInvoices
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{}
+
+
+### getCustomers
+# @name getCustomers_POST
+POST {{server}}/odata/v4/admin/getCustomers
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "DateFrom": "2001-04-06T00:00:00.000Z",
+  "DateTo": "2007-06-05T00:00:00.000Z"
+}
+
+
+### sendInvoices
+# @name sendInvoices_POST
+POST {{server}}/odata/v4/admin/sendInvoices
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{}
+
+
+### retryInvoices
+# @name retryInvoices_POST
+POST {{server}}/odata/v4/admin/retryInvoices
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{}

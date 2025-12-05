@@ -1,0 +1,173 @@
+@server=http://localhost:4004
+@username=alice
+@password=
+
+
+### Invoices
+# @name Invoices_GET
+GET {{server}}/odata/v4/processor/Invoices
+Authorization: Basic {{username}}:{{password}}
+
+
+### Invoices
+# @name Invoices_POST
+POST {{server}}/odata/v4/processor/Invoices
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "ID": "Invoices-5017600",
+  "title": "title-5017600",
+  "content": "content-5017600",
+  "contentType": "contentType-5017600",
+  "createdAt": "2012-06-28T00:00:00.000Z"
+}
+
+
+### Invoices
+# @name Invoices_PATCH
+PATCH {{server}}/odata/v4/processor/Invoices/Invoices-5017600
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "ID": "Invoices-5017600",
+  "title": "title-5017600",
+  "content": "content-5017600",
+  "contentType": "contentType-5017600",
+  "createdAt": "2012-06-28T00:00:00.000Z"
+}
+
+
+### Invoices
+# @name Invoices_DELETE
+DELETE {{server}}/odata/v4/processor/Invoices/Invoices-5017600
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+
+### InvoicesStatus
+# @name InvoicesStatus_GET
+GET {{server}}/odata/v4/processor/InvoicesStatus
+Authorization: Basic {{username}}:{{password}}
+
+
+### InvoicesStatus
+# @name InvoicesStatus_POST
+POST {{server}}/odata/v4/processor/InvoicesStatus
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "ID": "InvoicesStatus-9012335",
+  "title": "title-9012335",
+  "createdAt": "2019-11-30T00:00:00.000Z",
+  "status": "status-9012335",
+  "sendedAt": "2022-10-19T00:00:00.000Z",
+  "message": "message-9012335"
+}
+
+
+### InvoicesStatus
+# @name InvoicesStatus_PATCH
+PATCH {{server}}/odata/v4/processor/InvoicesStatus/InvoicesStatus-9012335
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "ID": "InvoicesStatus-9012335",
+  "title": "title-9012335",
+  "createdAt": "2019-11-30T00:00:00.000Z",
+  "status": "status-9012335",
+  "sendedAt": "2022-10-19T00:00:00.000Z",
+  "message": "message-9012335"
+}
+
+
+### InvoicesStatus
+# @name InvoicesStatus_DELETE
+DELETE {{server}}/odata/v4/processor/InvoicesStatus/InvoicesStatus-9012335
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+
+### AribaCustomers
+# @name AribaCustomers_GET
+GET {{server}}/odata/v4/processor/AribaCustomers
+Authorization: Basic {{username}}:{{password}}
+
+
+### AribaCustomers
+# @name AribaCustomers_POST
+POST {{server}}/odata/v4/processor/AribaCustomers
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "AribaId": "AribaCustomers-10407710",
+  "Name": "Name-10407710",
+  "FiscalCode": "FiscalCode-10407710",
+  "VAT": "VAT-10407710",
+  "SupplierIDDomain": "SupplierIDDomain-10407710"
+}
+
+
+### AribaCustomers
+# @name AribaCustomers_PATCH
+PATCH {{server}}/odata/v4/processor/AribaCustomers/AribaCustomers-10407710
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "AribaId": "AribaCustomers-10407710",
+  "Name": "Name-10407710",
+  "FiscalCode": "FiscalCode-10407710",
+  "VAT": "VAT-10407710",
+  "SupplierIDDomain": "SupplierIDDomain-10407710"
+}
+
+
+### AribaCustomers
+# @name AribaCustomers_DELETE
+DELETE {{server}}/odata/v4/processor/AribaCustomers/AribaCustomers-10407710
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+
+### getInvoices
+# @name getInvoices_POST
+POST {{server}}/odata/v4/processor/getInvoices
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{}
+
+
+### getCustomers
+# @name getCustomers_POST
+POST {{server}}/odata/v4/processor/getCustomers
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "DateFrom": "2023-01-29T00:00:00.000Z",
+  "DateTo": "2007-05-24T00:00:00.000Z"
+}
+
+
+### sendInvoices
+# @name sendInvoices_POST
+POST {{server}}/odata/v4/processor/sendInvoices
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{}
+
+
+### retryInvoices
+# @name retryInvoices_POST
+POST {{server}}/odata/v4/processor/retryInvoices
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{}
