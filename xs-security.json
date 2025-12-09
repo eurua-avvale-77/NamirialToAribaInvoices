@@ -1,6 +1,46 @@
 {
-  "scopes": [],
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.User",
+      "description": "User"
+    },
+    {
+      "name": "$XSAPPNAME.jobscheduler",
+      "description": "JobScheduler Scope",
+      "grant-as-authority-to-apps": [
+        "$XSSERVICENAME(JobSchedulingService-DEV)"
+      ]
+    }
+  ],
   "attributes": [],
-  "role-templates": [],
-  "authorities-inheritance": false
+  "role-templates": [
+    {
+      "name": "User",
+      "description": "Lawyer Portal - User",
+      "scope-references": [
+        "$XSAPPNAME.User"
+      ],
+      "attribute-references": []
+    }
+  ],
+  "role-collections": [
+    {
+      "name": "RC_User",
+      "description": "Lawyer Portal - User",
+      "role-template-references": [
+        "$XSAPPNAME.User"
+      ]
+    }
+  ],
+  "authorities-inheritance": false,
+  "oauth2-configuration": {
+    "credential-types": [
+      "binding-secret",
+      "x509"
+    ],
+    "redirect-uris": [
+      "*.eu10cf.applicationstudio.cloud.sap/login/callback",
+      "https://*.cfapps.eu10-004.hana.ondemand.com/login/callback"
+    ]
+  }
 }
