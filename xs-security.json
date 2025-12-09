@@ -16,7 +16,7 @@
   "role-templates": [
     {
       "name": "User",
-      "description": "Lawyer Portal - User",
+      "description": "NamirialToAriba - User",
       "scope-references": [
         "$XSAPPNAME.User"
       ],
@@ -26,7 +26,7 @@
   "role-collections": [
     {
       "name": "RC_User",
-      "description": "Lawyer Portal - User",
+      "description": "NamirialToAriba - User",
       "role-template-references": [
         "$XSAPPNAME.User"
       ]
