@@ -23,6 +23,14 @@
       "type": "node",
       "localRoot": "${workspaceFolder}",
       "remoteRoot": ""
+    },
+    {
+      "name": "Attach to a Cloud Foundry Instance on Port 9229",
+      "port": 9229,
+      "request": "attach",
+      "type": "node",
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/home/vcap/app"
     }
   ]
 }
