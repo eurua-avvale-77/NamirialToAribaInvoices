@@ -16,7 +16,7 @@ export const transformPost = (req, res, p1, p2, p3, p4) => {
 	//const { "stylesheet": stylesheetFileName } = req.query;
 	const timestamp = new Date().toISOString();
   const payloadID = `${Date.now()}-${crypto.randomUUID()}@btpania.com`;
-	const stylesheetFilePath = ('/home/user/projects/NamirialToAribaInvoices/srv/external/NamirialToAribaxsltmapping.json');
+	const stylesheetFilePath = ('./srv/external/NamirialToAribaxsltmapping.json');
 	const source = req;
 	const params = {'aribaId' : p1,
     'domainId' : p2,

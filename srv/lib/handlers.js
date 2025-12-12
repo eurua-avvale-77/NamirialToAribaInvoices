@@ -298,8 +298,8 @@ async function retryInvoices(req) {
 
   return LtIds; //V1.4 Cambiata tabella Output
     } catch (err) {
-        req.error(err.code, err.message);
-    }
+    req.error(err.code, err.message);
+}
 }
 
 
