@@ -13,12 +13,15 @@ service ProcessorService {
     entity InvoicesStatus as projection on my.InvoicesStatus;
     entity AribaCustomers as projection on my.AribaCustomers;
     
-    action getInvoices() returns Invoices;
+    action getInvoices(NamirialCustomer : String,
+                       NamirialPassword : String) returns Invoices;
     action getCustomers(
         DateFrom : DateTime,
-        DateTo   : DateTime) returns AribaCustomers;
-    action sendInvoices() returns InvoicesStatus;
-    action retryInvoices() returns InvoicesStatus;
+        DateTo   : DateTime,
+        Realm    : String,
+        ApiKey   : String) returns AribaCustomers;
+    action sendInvoices(Identity : String) returns InvoicesStatus;
+    action retryInvoices(Identity : String) returns InvoicesStatus;
 }
 
 /**
@@ -29,12 +32,15 @@ service AdminService {
     entity InvoicesStatus as projection on my.InvoicesStatus;
     entity AribaCustomers as projection on my.AribaCustomers;
     
-    action getInvoices() returns Invoices;
+    action getInvoices(NamirialCustomer : String,
+                       NamirialPassword : String) returns Invoices;
     action getCustomers( 
         DateFrom : DateTime,
-        DateTo   : DateTime) returns AribaCustomers;
-    action sendInvoices() returns InvoicesStatus;
-    action retryInvoices() returns InvoicesStatus;
+        DateTo   : DateTime,
+        Realm    : String,
+        ApiKey   : String ) returns AribaCustomers;
+    action sendInvoices(Identity : String) returns InvoicesStatus;
+    action retryInvoices(Identity : String) returns InvoicesStatus;
     }
 
     

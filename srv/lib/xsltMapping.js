@@ -11,7 +11,7 @@ export const transformGet = (req, res) => {
 };
 
 /* POST request */
-export const transformPost = (req, res, p1, p2, p3, p4) => {
+export const transformPost = (req, res, p1, p2, p3, p4, p5) => {
 	
 	//const { "stylesheet": stylesheetFileName } = req.query;
 	const timestamp = new Date().toISOString();
@@ -24,6 +24,7 @@ export const transformPost = (req, res, p1, p2, p3, p4) => {
     'CustomerVAT' : p4,
     'timestamp'   : timestamp,
     'payloadID'   : payloadID,
+    'identity'    : p5
    };
   
     /*const xcml = SaxonJS.transform({

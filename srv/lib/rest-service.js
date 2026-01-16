@@ -11,7 +11,7 @@ const { XMLParser } = require('fast-xml-parser');
 const cds = require('@sap/cds');
 
 
-async function sendToAriba(Invoice, Customers) {
+async function sendToAriba(Invoice, Customers, Identity) {
    try {
         //Dal campo dati fattura dovrei mappare i dati per il servizio Ariba
         //Conversione Dal Base64 Scaricato da Namirial
@@ -62,7 +62,7 @@ async function sendToAriba(Invoice, Customers) {
       const CustomerVAT = CustomerPiva;
 
       //Chiamo Conversione xslt
-      const cxmlFiles = await transformPost(base64, res, AribaId, DomainId, SupplierVAT, CustomerVAT); 
+      const cxmlFiles = await transformPost(base64, res, AribaId, DomainId, SupplierVAT, CustomerVAT, Identity); 
       
       
       //Lettura Tabella Customers

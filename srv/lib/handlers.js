@@ -37,8 +37,8 @@ async function getInvoices(req) {
         // Set the parameters for the GetElectronic Invoices method of the sevice 
         const param =  {
           auth : {
-                CustomerCode: "0000001Test0024762",
-                Password: "RTYxOTY5MUY0RUY4NjFFODM1MENDOUNCM0ZGOTU3OTM="
+                CustomerCode: req.data.NamirialCustomer,
+                Password: req.data.NamirialPassword
                 },
           paramFilter :   {
             StateDataProcessing : 'ToDownload'
@@ -60,8 +60,8 @@ async function getInvoices(req) {
 
         // Set the parameters for the GetFattura method of the sevice 
                    const paramFattura =  {
-                codiceCliente: "0000001Test0024762",
-                passwordServizi: "RTYxOTY5MUY0RUY4NjFFODM1MENDOUNCM0ZGOTU3OTM=",
+                codiceCliente: req.data.NamirialCustomer,
+                passwordServizi: req.data.NamirialPassword,
                 codiceUfficio: DatiFattura.CodiceUfficio,
                 idSdi: DatiFattura.IdSdi
         };
@@ -114,8 +114,8 @@ async function getInvoices(req) {
         // Set the parameters for the SetStatesDataProcessingPassiveElectronicInvoice method of the sevice 
         const param2 =  {
           auth : {
-                CustomerCode: "0000001Test0024762",
-                Password: "RTYxOTY5MUY0RUY4NjFFODM1MENDOUNCM0ZGOTU3OTM="
+                CustomerCode: req.data.NamirialCustomer,
+                Password: req.data.NamirialPassword
                 },
           idSdiList :{
                             "arr:long": sdiIds2
@@ -164,7 +164,7 @@ const updatedDateTo = toIsoNoMs(new Date(Date.UTC(
 
         const DateInterval = {"updatedDateFrom" : updatedDateFrom,
                               "updatedDateTo" : updatedDateTo}
-        const Customerparams = { realm :'ania-1-t',
+        const Customerparams = { realm : req.data.Realm,
                                  filters : JSON.stringify(DateInterval)
         };
         const destination = 'AribaRequisitionCustomViewDora';
@@ -172,7 +172,7 @@ const updatedDateTo = toIsoNoMs(new Date(Date.UTC(
         const CustomerEndpoint = "procurement-reporting-details/v2/prod/views/SupplierCustomView"
         const body = [];
         const method = 'GET';
-        const apikey = 'u1V2UNOXqCQJQYWdlXlMut0uavLOE2A8';
+        const apikey = req.data.ApiKey;
         //const responseData = await AttachmentDownOperationalProcurementSynchronousApi.fileDownloadWithUniqueId(uniqueAttachmentId, { realm: myRealm }).execute({ destinationName: myDestinationName });
         const Customers = await apiRequest(destination, method, CustomerEndpoint , body, Customerparams, apikey );
     
@@ -220,7 +220,7 @@ async function sendInvoices(req) {
         //Estraggo Una Fattura Per volta
         const Invoice = await SELECT.from(Invoices).where('ID =', InvoiceStatus.ID)
         //Chiamata alla funzione di converisone e invio ad Ariba
-        const { esito } = await sendToAriba(Invoice, Customers);
+        const { esito } = await sendToAriba(Invoice, Customers, req.data.Identity);
 
                  if (esito[0].status === 'AribaStored'){ LtIdsOks.push({
                     ID : Invoice[0].ID
@@ -268,7 +268,7 @@ async function retryInvoices(req) {
         //Estraggo Una Fattura Per volta
         const Invoice = await SELECT.from(Invoices).where('ID =', InvoiceStatus.ID)
 
-         const { esito } = await sendToAriba(Invoice, Customers);
+         const { esito } = await sendToAriba(Invoice, Customers, req.data.Identity);
 
                  if (esito[0].status === 'AribaStored'){ LtIdsOks.push({
                     ID : Invoice[0].ID

@@ -20,7 +20,7 @@
   <xsl:param name="CustomerVAT"/>
   <xsl:param name="timestamp"/>
   <xsl:param name="payloadID"/>
-
+  <xsl:param name="identity"/>
 
 
   <!-- Template principale -->
@@ -59,12 +59,12 @@
             <Identity>CHILD1</Identity>
           </Credential>
           <Credential domain="NetworkID">
-            <Identity>AN11182646989-T</Identity>
+            <Identity><xsl:value-of select="$identity"/></Identity>
           </Credential>
         </To>
         <Sender>
           <Credential domain="NetworkID">
-            <Identity>CHILD1-AN11182646989-T</Identity>
+            <Identity>CHILD1-<xsl:value-of select="$identity"/></Identity>
             <SharedSecret>ARIBA123</SharedSecret>
           </Credential>
           <UserAgent>Buyer</UserAgent>

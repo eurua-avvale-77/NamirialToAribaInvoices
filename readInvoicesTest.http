@@ -1,20 +1,35 @@
 ## Lancia La lettura delle fatture da Namirial
 POST http://localhost:4004/odata/v4/processor/getInvoices
 Content-Type: application/json
+
+{
+ "NamirialCustomer" : "0000001Test0024762",
+ "NamirialPassword" : "RTYxOTY5MUY0RUY4NjFFODM1MENDOUNCM0ZGOTU3OTM="
+}
 ### Lancia La lettura dei Clienti Ariba
 POST http://localhost:4004/odata/v4/processor/getCustomers
 Content-Type: application/json
 
 {
     "DateFrom" : "2025-11-28T00:00:00Z",
-    "DateTo"   : "2025-12-03T23:59:59Z"
+    "DateTo"   : "2025-12-03T23:59:59Z",
+    "Realm"    : "ania-1-t",
+    "ApiKey"   : "u1V2UNOXqCQJQYWdlXlMut0uavLOE2A8"
 }
 ### Lancia Invio delle fatture verso Ariba
 POST http://localhost:4004/odata/v4/processor/sendInvoices
 Content-Type: application/json
+
+{
+    "Identity" : "AN11182646989-T"
+}
+
 ### Lancia Il Retry Delle Fatture verso Ariba
 POST http://localhost:4004/odata/v4/processor/retryInvoices
 Content-Type: application/json
 
+{
+    "Identity" : "AN11182646989-T"
+}
 ### Lancia Il Retry Delle Fatture verso Ariba
 GET http://localhost:4004/odata/v4/processor/InvoicesStatus
